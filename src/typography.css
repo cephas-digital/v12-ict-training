@@ -1,0 +1,76 @@
+@font-face {
+  font-family: Neurial Grotesk;
+  font-weight: 400;
+  font-style: normal;
+  src: url("./assets/fonts/NeurialGrotesk-Regular.otf");
+}
+@font-face {
+  font-family: Neurial Grotesk;
+  font-weight: 500;
+  font-style: normal;
+  src: url("./assets/fonts/NeurialGrotesk-Medium.otf");
+}
+@font-face {
+  font-family: Neurial Grotesk;
+  font-weight: 700;
+  font-style: normal;
+  src: url("./assets/fonts/NeurialGrotesk-Bold.otf");
+}
+@font-face {
+  font-family: Neurial Grotesk;
+  font-weight: 800;
+  font-style: normal;
+  src: url("./assets/fonts/NeurialGrotesk-Extrabold.otf");
+}
+@font-face {
+  font-family: Neurial Grotesk;
+  font-weight: 300;
+  font-style: normal;
+  src: url("./assets/fonts/NeurialGrotesk-Light.otf");
+}
+@font-face {
+  font-family: Neurial Grotesk;
+  font-style: italic;
+  src: url("./assets/fonts/NeurialGrotesk-Italic.otf");
+}
+@font-face {
+  font-family: Inter;
+  font-weight: 400;
+  font-style: normal;
+  src: url("./assets/fonts/Inter-Regular.otf");
+}
+@font-face {
+  font-family: Inter;
+  font-weight: 500;
+  font-style: normal;
+  src: url("./assets/fonts/Inter-Medium.otf");
+}
+@font-face {
+  font-family: Inter;
+  font-weight: 600;
+  font-style: normal;
+  src: url("./assets/fonts/Inter-SemiBold.otf");
+}
+@font-face {
+  font-family: Inter;
+  font-weight: 700;
+  font-style: normal;
+  src: url("./assets/fonts/Inter-Bold.otf");
+}
+@font-face {
+  font-family: Inter;
+  font-weight: 800;
+  font-style: normal;
+  src: url("./assets/fonts/Inter-ExtraBold.otf");
+}
+@font-face {
+  font-family: Inter;
+  font-weight: 200;
+  font-style: normal;
+  src: url("./assets/fonts/Inter-ExtraLight-BETA.otf");
+}
+@font-face {
+  font-family: Inter;
+  font-style: italic;
+  src: url("./assets/fonts/Inter-Italic.otf");
+}
