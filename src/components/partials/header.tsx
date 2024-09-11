@@ -1,4 +1,5 @@
 import React from "react";
+import Logo from "../layouts/logo";
 
 const Header = () => {
   const links = [
@@ -20,9 +21,7 @@ const Header = () => {
       <div className="w-full relative h-28 bg-transparent">
         <div className="section-container flex h-full items-center justify-between">
           <div>
-            <h4 className="text-2xl inter font-extrabold text-white">
-              Water & Sanitation Tools Map
-            </h4>
+            <Logo />
           </div>
           <div className="flex gap-10 items-center capitalize text-base h-full text-white inter font-medium">
             {links?.map((l, i) => (
