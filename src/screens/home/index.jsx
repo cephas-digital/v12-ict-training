@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import Header from "../../components/partials/header";
-import Wave1 from "../../assets/images/water-animation1.png";
+// import Wave1 from "../../assets/images/water-animation1.png";
 import Frame1 from "../../assets/images/frame1.png";
-import Frame2 from "../../assets/images/frame2.png";
+// import Frame2 from "../../assets/images/frame2.png";
 import System from "../../assets/images/system.png";
 import Chart1 from "../../assets/images/chart1.png";
 import Mouse from "../../assets/icons/mouse.svg";
@@ -53,10 +53,10 @@ const HeroSection = () => {
             <div>
               <div className="flex gap-4 items-center">
                 <h1 className="text-5lg text-white font-bold">Visiting with</h1>
-                <img src={Wave1} alt="" className="" />
+                {/* <img src={Wave1} alt="" className="" /> */}
               </div>
               <h1 className="text-5lg leading-[80px] text-white font-bold">
-                Water & Sanitation Tools Mapping Platform
+                Water & Sanitation <br /> Tools Mapping Platform
               </h1>
               <p className="text-xl mt-4 font-normal text-white inter">
                 Water and sanitation tools dashboard for water, sanitation and

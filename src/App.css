@@ -58,3 +58,22 @@
   background-position: left center;
   background-repeat: no-repeat;
 }
+.noscroll {
+  overflow: hidden; /* Hides the scrollbar */
+  overflow-y: scroll; /* Allows vertical scrolling */
+}
+
+/* For webkit browsers (Chrome, Safari) */
+.noscroll::-webkit-scrollbar {
+  display: none; /* Hides the scrollbar */
+}
+
+/* For Firefox */
+.noscroll {
+  scrollbar-width: none; /* Hides the scrollbar */
+}
+
+/* For Edge and IE */
+.noscroll {
+  -ms-overflow-style: none; /* Hides the scrollbar */
+}
