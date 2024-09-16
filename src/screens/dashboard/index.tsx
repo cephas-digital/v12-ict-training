@@ -174,7 +174,7 @@ const Dashboard = () => {
             />
             <MainBtn
               icon={CompareIcon}
-              text={"Conpare Tools"}
+              text={"Compare Tools"}
               onClick={() => navigate("/compare-tools")}
             />{" "}
             <MainBtn
