@@ -14,11 +14,21 @@ import ProductTable from "../../components/partials/tables";
 import StartMapping from "../../components/modals/startmaping";
 import Seemore from "../../assets/icons/seemore.svg";
 import Nwasco from "../../assets/icons/nwasco.svg";
+import SelectRegion from "../../components/modals/selectregion";
+import { useNavigate } from "react-router";
+
+const contact = ["www.nwasco.org.zm/", "mails@nwasco.org.zm"],
+  webinar = ["https://www.youtube.com/watch?v=uhyYaGvzTP0"],
+  resources = [
+    { name: "EDAMS Technology", link: "mails@nwasco.org.zm" },
+    { name: "EDAMS Technology", link: "mails@nwasco.org.zm" },
+  ];
 
 const Dashboard = () => {
   const [start, setStart] = useState(false),
     [modal, setModal] = useState(""),
     [tab, setTab] = useState("overview"),
+    navigate = useNavigate(),
     [hoveredTool, setHoveredTool] = useState(null);
   const tabs = ["overview", "about data tool"];
   const products = [
@@ -165,12 +175,12 @@ const Dashboard = () => {
             <MainBtn
               icon={CompareIcon}
               text={"Conpare Tools"}
-              onClick={() => console.log("object")}
+              onClick={() => navigate("/compare-tools")}
             />{" "}
             <MainBtn
               icon={SelectIcon}
               text={"Select Region"}
-              onClick={() => console.log("object")}
+              onClick={() => setModal("region")}
             />
             <PrimaryBtn
               icon={Menu}
@@ -340,12 +350,94 @@ const Dashboard = () => {
                 <div className="mt-6 grid grid-cols-3 gap-8">
                   <div className="col-span-1">
                     <WhiteBox>
-                      <div></div>
+                      <h4 className="text-base font-medium text-[#000929]">
+                        Contact Details
+                      </h4>
+                      <div className="mt-5 space-y-3">
+                        {contact?.map((c) => (
+                          <div className="flex items-center gap-2">
+                            <div
+                              className={`h-3 rounded-tr-3xl w-12 ${
+                                start ? "bg-[#3787FF]" : "bg-[#D2D7D4]"
+                              }`}
+                            ></div>
+                            {start && (
+                              <h6 className="text-sm font-normal text-da-blue-600">
+                                {c}
+                              </h6>
+                            )}
+                          </div>
+                        ))}
+                      </div>
+                      <div className="mt-5">
+                        <h4 className="text-base font-medium text-[#000929]">
+                          Contact Details
+                        </h4>
+                        <div className="mt-5 space-y-3">
+                          {webinar?.map((c) => (
+                            <div className="flex items-center gap-2">
+                              <div
+                                className={`h-3 rounded-tr-3xl w-12 ${
+                                  start ? "bg-[#3787FF]" : "bg-[#D2D7D4]"
+                                }`}
+                              ></div>
+                              {start && (
+                                <h6 className="text-sm font-normal text-[#3787FF]">
+                                  <a href={c}> {c}</a>
+                                </h6>
+                              )}
+                            </div>
+                          ))}
+                        </div>
+                      </div>
                     </WhiteBox>
                   </div>
                   <div className="col-span-2">
                     <WhiteBox>
-                      <div></div>
+                      <h4 className="text-base font-medium text-[#000929]">
+                        Resources
+                      </h4>
+                      <div
+                        style={{
+                          border: "1px solid #E2E8F0",
+                        }}
+                        className="mt-5 h-10 w-full grid grid-cols-3"
+                      >
+                        <div className="cols-span-1 border-r border-r-[#E2E8F0] flex justify-center items-center h-full w-full">
+                          <h4 className="text-sm font-medium text-da-blue-600">
+                            Learning Materials
+                          </h4>
+                        </div>
+                        <div className="cols-span-2 h-full flex items-center pl-6">
+                          <h4 className="text-sm font-medium text-da-blue-600">
+                            Link
+                          </h4>
+                        </div>
+                      </div>
+                      {resources?.map((r) => (
+                        <div
+                          style={{
+                            border: "1px solid #E2E8F0",
+                          }}
+                          className="h-10 w-full grid grid-cols-3"
+                        >
+                          <div className="cols-span-1 border-r border-r-[#E2E8F0] flex items-center h-full w-full">
+                            <ul className="list-disc ml-6 list-inside">
+                              <li className="text-sm font-normal text-da-blue-600">
+                                {r?.name}
+                              </li>
+                            </ul>
+                          </div>
+                          <div className="cols-span-2 h-full flex items-center pl-6">
+                            <a
+                              href={r?.link}
+                              className="text-sm font-normal text-da-blue-100"
+                            >
+                              {r?.link}
+                            </a>
+                          </div>
+                        </div>
+                      ))}
                     </WhiteBox>
                   </div>
                 </div>
@@ -358,6 +450,12 @@ const Dashboard = () => {
         <StartMapping
           setStart={() => setStart(true)}
           handleClose={() => setModal("")}
+        />
+      )}
+      {modal === "region" && (
+        <SelectRegion
+          handleClose={() => setModal("")}
+          setStart={() => setStart(true)}
         />
       )}
     </div>

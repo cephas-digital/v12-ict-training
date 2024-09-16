@@ -7,38 +7,34 @@ import { NormalBtn } from "../partials/buttons";
 
 const filters = [
   {
-    id: "application",
-    label: "Application Level",
-    options: ["National", "Regulatory", "Utility / Municipal"],
-    type: "radio",
-  },
-  {
-    id: "subsector",
-    label: "Sub-sector",
-    options: ["Water", "Sanitation", "Integrated Water and Sanitation"],
+    id: "region",
+    label: "Region",
+    options: [
+      "All Regions",
+      "Central Africa",
+      "Eastern Africa",
+      "Sourthern Africa",
+      "South Asis",
+      "Western Africa",
+    ],
     type: "checkbox",
   },
   {
-    id: "toolPurpose",
-    label: "Tool Purpose",
-    options: ["Off the shelf", "Fit for Purpose"],
-    type: "checkbox",
-  },
-  {
-    id: "cost",
-    label: "Cost",
-    options: ["Open-source", "Licensed"],
-    type: "checkbox",
-  },
-  {
-    id: "dataHosting",
-    label: "Data Hosting",
-    options: ["Cloud based", "On-premise"],
+    id: "country",
+    label: "Country",
+    options: [
+      "Angola",
+      "Botswana",
+      "Cameroon",
+      "Central African Republic",
+      "Chad",
+      "Democratic Republic of the Congo",
+    ],
     type: "checkbox",
   },
 ];
 
-const StartMapping = ({ handleClose, setStart }) => {
+const SelectRegion = ({ handleClose, setStart }) => {
   const [selectedOptions, setSelectedOptions] = useState(
     filters.reduce((acc, filter) => {
       acc[filter.id] = filter.type === "radio" ? "" : [];
@@ -72,9 +68,6 @@ const StartMapping = ({ handleClose, setStart }) => {
       [filterId]: type === "radio" ? "" : [],
     }));
   };
-  const anyOptionsSelected = Object.values(selectedOptions).some((options) =>
-    Array.isArray(options) ? options.length > 0 : options !== ""
-  );
   return (
     <div>
       <SideModalcontainer>
@@ -84,7 +77,9 @@ const StartMapping = ({ handleClose, setStart }) => {
           }}
           className="h-12 w-full px-4 flex justify-between items-center"
         >
-          <h5 className="text-base font-medium text-black">Start Mapping</h5>
+          <h5 className="text-base font-medium text-black">
+            Filter by Geography
+          </h5>
           <img onClick={handleClose} src={Close} alt="" className="" />
         </div>
         <div className="p-4 space-y-6">
@@ -137,7 +132,7 @@ const StartMapping = ({ handleClose, setStart }) => {
             className="border border-[#A3A3A3] text-[#475569] bg-transparent"
           />
           <NormalBtn
-            text={anyOptionsSelected ? "Apply Filter" : "Save Selection"}
+            text={"Apply Filter"}
             onClick={() => {
               setStart();
               handleClose();
@@ -150,4 +145,4 @@ const StartMapping = ({ handleClose, setStart }) => {
   );
 };
 
-export default StartMapping;
+export default SelectRegion;
