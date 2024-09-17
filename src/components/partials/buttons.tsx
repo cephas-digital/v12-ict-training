@@ -1,11 +1,11 @@
 import React from "react";
 
-const PrimaryBtn = ({ icon, text, onClick }) => {
+const PrimaryBtn = ({ icon, text, onClick, className = "" }) => {
   return (
     <div>
       <button
         onClick={onClick}
-        className="flex items-center gap-1 justify-center px-5 h-10 rounded-lg bg-da-blue-100"
+        className={`flex items-center gap-1 justify-center px-5 h-10 rounded-lg bg-da-blue-100 ${className}`}
       >
         <img src={icon} alt="" className="" />
         <span className="text-sm font-normal text-white inter">{text}</span>
