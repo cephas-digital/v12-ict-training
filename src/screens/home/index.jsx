@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import Header from "../../components/partials/header";
-// import Wave1 from "../../assets/images/water-animation1.png";
 import Frame1 from "../../assets/images/frame1.png";
-// import Frame2 from "../../assets/images/frame2.png";
 import System from "../../assets/images/system.png";
 import Chart1 from "../../assets/images/chart1.png";
 import Mouse from "../../assets/icons/mouse.svg";
@@ -45,17 +43,19 @@ const HeroSection = () => {
       }}
     >
       <div>
-        <section className="w-full relative h-[120vh] hero-section">
+        <section className="w-full relative lg:h-[120vh] py-20 lg:py-0 hero-section">
           <div className="absolute z-50 left-0 right-0 top-0">
             <Header />
           </div>
-          <div className="section-container relative h-full flex items-center">
+          <div className="section-container mt-10 lg:mt-0 relative h-full flex items-center">
             <div>
               <div className="flex gap-4 items-center">
-                <h1 className="text-5lg text-white font-bold">Visiting with</h1>
+                <h1 className="lg:text-5lg text-2xl text-white font-bold">
+                  Visiting with
+                </h1>
                 {/* <img src={Wave1} alt="" className="" /> */}
               </div>
-              <h1 className="text-5lg leading-[80px] text-white font-bold">
+              <h1 className="lg:text-5lg text-2xl lg:leading-[80px] text-white font-bold">
                 Water & Sanitation <br /> Tools Mapping Platform
               </h1>
               <p className="text-xl mt-4 font-normal text-white inter">
@@ -75,15 +75,19 @@ const HeroSection = () => {
           <img
             src={Frame1}
             alt=""
-            className="absolute bottom-60 right-10 h-96"
+            className="absolute hidden lg:block bottom-60 right-10 h-96"
           />
         </section>
-        <div className="w-full about-section pt-10 bg-white">
-          <div className="section-container  grid grid-cols-2 items-center gap-16">
+        <div className="w-full about-section lg:pt-10 bg-white">
+          <div className="section-container grid lg:grid-cols-2 items-center gap-16">
             <div className="h-full w-full">
-              <img src={System} alt="" className="ml-24 mt-16" />
+              <img
+                src={System}
+                alt=""
+                className="ml-24 lg:mt-16  hidden lg:block"
+              />
             </div>
-            <div className="ml-16">
+            <div className="lg:ml-16 p-6">
               <h3 className="text-4xl text-black font-bold">
                 What Does It Do?
               </h3>
@@ -105,12 +109,12 @@ const HeroSection = () => {
 const DiscoverSection = () => {
   return (
     <section className="w-full py-20">
-      <div className="section-container flex gap-6">
+      <div className="section-container flex flex-col lg:flex-row gap-6">
         <div
           style={{
             border: "0.4px solid #000000",
           }}
-          className="h-96 w-[55%] rounded-xl bg-white flex items-center px-8 gap-8"
+          className="h-96 lg:w-[55%] rounded-xl bg-white flex items-center px-8 gap-8"
         >
           <div>
             <h2 className="text-2xl capitalize font-medium text-black">
@@ -137,18 +141,18 @@ const DiscoverSection = () => {
             />
           </div>
         </div>
-        <div className="w-[45%] h-96 flex flex-col gap-4">
+        <div className="lg:w-[45%] h-96 flex flex-col gap-4">
           <div
             style={{
               border: "0.4px solid #000000",
             }}
-            className="w-full h-full rounded-xl flex justify-between items-center px-6"
+            className="w-full h-full rounded-xl flex justify-between items-center lg:px-6 p-4 lg:p-0"
           >
             <div>
-              <h4 className="text-2xl font-medium text-black">
+              <h4 className="lg:text-2xl text-base font-medium text-black">
                 Export Visualization
               </h4>
-              <p className="text-lg inter mt-2 text-black max-w-72">
+              <p className="lg:text-lg text-xs inter mt-2 text-black max-w-72">
                 Export your visualization for further review and reporting.
               </p>
             </div>
@@ -158,11 +162,13 @@ const DiscoverSection = () => {
             style={{
               border: "0.4px solid #000000",
             }}
-            className="w-full h-full rounded-xl flex justify-between items-center px-6"
+            className="w-full h-full rounded-xl flex justify-between items-center lg:px-6 p-4 lg:p-0"
           >
             <div>
-              <h4 className="text-2xl font-medium text-black">Compare Tools</h4>
-              <p className="text-lg inter mt-2 text-black max-w-72">
+              <h4 className="lg:text-2xl text-base font-medium text-black">
+                Compare Tools
+              </h4>
+              <p className="lg:text-lg text-sm inter mt-2 text-black max-w-72">
                 Easily compare various tools to identify the best options for
                 your needs.
               </p>
@@ -189,7 +195,7 @@ const CtaSection = () => {
         </p>
       </div>
 
-      <div className="mt-8 mySwiper hero-section py-16">
+      <div className="mt-8 mySwiper hidden lg:block hero-section py-16">
         <Swiper
           className=""
           slidesPerView={1}
@@ -312,8 +318,8 @@ const CtaSection = () => {
 const WshSection = () => {
   return (
     <section className="py-16">
-      <div className="section-container flex items-center gap-12">
-        <div className="w-[40%]">
+      <div className="section-container flex flex-col lg:flex-row items-center gap-12">
+        <div className="lg:w-[40%]">
           <h2 className="text-4xl font-bold text-black">WSH Webinar Series</h2>
           <p className="mt-5 text-xl font-normal text-black">
             The WSH webinar series is part of the Bill & Melinda Gates
@@ -336,7 +342,7 @@ const WshSection = () => {
             Join the Webinar Series
           </button>
         </div>
-        <div className="w-[60%]">
+        <div className="lg:w-[60%]">
           <img src={Webinar} alt="" className="" />
         </div>
       </div>
@@ -398,7 +404,7 @@ const FaqSection = () => {
                 onClick={() => toggleActive(i)}
                 className="flex justify-between cursor-pointer items-center"
               >
-                <h5 className="text-xl font-medium inter text-da-blue-500">
+                <h5 className="lg:text-xl text-base font-medium inter text-da-blue-500">
                   Q: {it?.question}
                 </h5>
                 {active === i ? (
@@ -418,7 +424,7 @@ const FaqSection = () => {
                 )}
               </div>
               {active === i && (
-                <p className="text-[#667085] mt-4 font-medium inter text-xl">
+                <p className="text-[#667085] mt-4 font-medium inter lg:text-xl text-sm">
                   Answer: {it?.answer}
                 </p>
               )}

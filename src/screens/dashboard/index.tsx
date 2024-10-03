@@ -18,6 +18,8 @@ import SelectRegion from "../../components/modals/selectregion";
 import { useNavigate } from "react-router";
 import Shepherd from "shepherd.js";
 import "shepherd.js/dist/css/shepherd.css";
+import "intro.js/introjs.css";
+import introJs from "intro.js";
 
 const contact = ["www.nwasco.org.zm/", "mails@nwasco.org.zm"],
   webinar = ["https://www.youtube.com/watch?v=uhyYaGvzTP0"],
@@ -28,71 +30,38 @@ const contact = ["www.nwasco.org.zm/", "mails@nwasco.org.zm"],
 
 const Dashboard = () => {
   useEffect(() => {
-    const tour = new Shepherd.Tour({
-      defaultStepOptions: {
-        cancelIcon: {
-          enabled: true,
-        },
-        classes: "shepherd-theme-arrows",
-        scrollTo: { behavior: "smooth", block: "center" },
-      },
-    });
+    const intro = introJs();
 
-    tour.addStep({
-      title: "Step 1 of 3",
-      text: 'Click "Start Mapping" to select different criteria and parameters to visualize information about tools.',
-      attachTo: {
-        element: ".start-mapping-btn",
-        on: "bottom",
-      },
-      buttons: [
+    // Define your steps
+    intro.setOptions({
+      steps: [
         {
-          text: "Next",
-          action: tour.next,
+          intro: "Welcome to the Water and Sanitation Tools Map!",
+        },
+        {
+          element: ".start-mapping-btn",
+          intro:
+            'Click "Start Mapping" to select different criteria and parameters to visualize information about tools.',
+        },
+        {
+          element: ".export-btn",
+          intro:
+            "You can also export or compare tools using the buttons above.",
+        },
+        {
+          element: ".tools-mapped-section",
+          intro: "Finally, you can view mapped tools and regions here.",
         },
       ],
+      showProgress: true, // Adds "1 of X steps"
+      showStepNumbers: true, // Shows the step number
+      exitOnOverlayClick: false, // Prevents closing when clicking on overlay
+      overlayOpacity: 0.7, // Make background semi-transparent
+      tooltipClass: "customTooltip", // Add custom CSS class for tooltip styling
     });
 
-    tour.addStep({
-      title: "Step 2 of 3",
-      text: "You can also export or compare tools using the buttons above.",
-      attachTo: {
-        element: ".export-btn",
-        on: "bottom",
-      },
-      buttons: [
-        {
-          text: "Back",
-          action: tour.back,
-        },
-        {
-          text: "Next",
-          action: tour.next,
-        },
-      ],
-    });
-
-    tour.addStep({
-      title: "Step 3 of 3",
-      text: "Finally, you can view mapped tools and regions here.",
-      attachTo: {
-        element: ".tools-mapped-section",
-        on: "right",
-      },
-      buttons: [
-        {
-          text: "Back",
-          action: tour.back,
-        },
-        {
-          text: "Finish",
-          action: tour.complete,
-        },
-      ],
-    });
-
-    // Start the tour
-    tour.start();
+    // Start the intro
+    intro.start();
   }, []);
   const [start, setStart] = useState(false),
     [modal, setModal] = useState(""),
@@ -254,7 +223,7 @@ const Dashboard = () => {
             <PrimaryBtn
               icon={Menu}
               text="Start Mapping"
-              className=".start-mapping-btn"
+              className="start-mapping-btn"
               onClick={() => setModal("start")}
             />
           </div>

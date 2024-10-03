@@ -3,6 +3,7 @@ import Logo from "../layouts/logo";
 import { useNavigate } from "react-router";
 import Notification from "../../assets/icons/notification.svg";
 import Messaging from "../../assets/icons/messaging.svg";
+import { Icon } from "@iconify/react";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -22,12 +23,22 @@ const Header = () => {
   ];
   return (
     <div>
-      <div className="w-full relative h-28 bg-transparent">
+      <div className="w-full relative lg:h-28 h-20 bg-transparent">
         <div className="section-container flex h-full items-center justify-between">
           <div>
             <Logo />
           </div>
-          <div className="flex gap-10 items-center capitalize text-base h-full text-white inter font-medium">
+          <div>
+            <Icon
+              icon={"material-symbols:menu"}
+              color="white"
+              className="block lg:hidden"
+              style={{
+                fontSize: "24px",
+              }}
+            />
+          </div>
+          <div className="lg:flex hidden gap-10 items-center capitalize text-base h-full text-white inter font-medium">
             {links?.map((l, i) => (
               <h6 key={i} className="cursor-pointer">
                 {l?.name}

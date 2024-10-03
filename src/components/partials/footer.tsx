@@ -14,7 +14,7 @@ const Footer = () => {
   return (
     <div className="pt-20 hero-section pb-10">
       <div className="section-container">
-        <div className="flex justify-between gap-6">
+        <div className="flex flex-col lg:flex-row justify-between gap-6">
           <div>
             <Logo />
             <p
