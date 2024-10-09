@@ -326,7 +326,7 @@ const Dashboard = () => {
                   <WhiteBox className="h-full">
                     <div className="flex justify-between items-center">
                       <h5 className="text-base text-da-blue-600 font-medium">
-                        Infrassture and Stability
+                        Infrastructure and Stability
                       </h5>
                       <img src={Info} alt="" className="" />
                     </div>

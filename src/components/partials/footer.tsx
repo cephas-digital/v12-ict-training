@@ -2,13 +2,13 @@ import React from "react";
 import Logo from "../layouts/logo";
 import Youtube from "../../assets/icons/youtube.svg";
 import Linkedln from "../../assets/icons/linkedlin.png";
-import Twitter from "../../assets/icons/twitter.svg";
+// import Twitter from "../../assets/icons/twitter.svg";
 import MainLogo from "../../assets/icons/logo.svg";
 import Esawas from "../../assets/icons/ESAWAS LOGO PNG-11 2.svg";
 // import HandShake from "../../assets/icons/handshake.svg";
 
 const Footer = () => {
-  const support = ["FAQs", "Expert Support"];
+  const support = ["FAQs", "Get Involved"];
   const resources = ["WSH Webinar Series", "Learning Materials"];
   const legal = ["Terms of Services", "Privacy Policy / GDPR"];
   return (
@@ -21,17 +21,17 @@ const Footer = () => {
               className="text-base mt-6
              font-normal inter text-[#ddddde]"
             >
-              Developed by Dev- Afrique in collaboration with Esawas
+              Developed by Dev-Afrique in collaboration with ESAWAS
             </p>
             <div className="mt-6 flex gap-3 items-center">
               <img src={MainLogo} alt="" className="" />
-              <span className="text-xl font-normal">🤝</span>
+              <span className="text-xl font-normal">||</span>
               <img src={Esawas} alt="" className="" />
             </div>
             <div className="flex mt-6 gap-5">
               <img src={Youtube} alt="" className="" />
               <img src={Linkedln} alt="" className="" />
-              <img src={Twitter} alt="" className="" />
+              {/* <img src={Twitter} alt="" className="" /> */}
             </div>
           </div>
           <div className="">
@@ -55,7 +55,7 @@ const Footer = () => {
             </div>
           </div>
           <div className="">
-            <h5 className="text-xl inter text-white font-bold">Lega</h5>
+            <h5 className="text-xl inter text-white font-bold">Legal</h5>
             <div className="mt-6 space-y-5">
               {legal?.map((it) => (
                 <h6 className="text-[#DDDDDE] text-base font-normal inter">

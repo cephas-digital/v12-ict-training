@@ -21,6 +21,7 @@ import Institution from "../../assets/images/institution.png";
 import Webinar from "../../assets/images/webinar.png";
 import { CiCirclePlus, CiCircleMinus } from "react-icons/ci";
 import Footer from "../../components/partials/footer";
+import { useNavigate } from "react-router";
 
 const Home = () => {
   return (
@@ -36,6 +37,7 @@ const Home = () => {
 };
 
 const HeroSection = () => {
+  const navigate = useNavigate();
   return (
     <div
       style={{
@@ -66,6 +68,7 @@ const HeroSection = () => {
                 style={{
                   border: "1px solid #FFFFFF",
                 }}
+                onClick={() => navigate("/dashboard")}
                 className="mt-10 h-12 w-80 bg-da-blue-100 rounded-xl text-base font-bold text-blue-200"
               >
                 Get Started
@@ -354,17 +357,17 @@ const FaqSection = () => {
   const [active, setActive] = useState(null);
   const Arr = [
     {
-      question: "How do i compare tools?",
+      question: "How do I compare tools?",
       answer:
         "Use the comparison feature on the dashboard to evaluate various tools based on theirperformance in key areas.",
     },
     {
-      question: "Can i export the analysis?",
+      question: "Can I export the analysis?",
       answer:
         "Use the comparison feature on the dashboard to evaluate various tools based on theirperformance in key areas.",
     },
     {
-      question: "Where can i find more resources?",
+      question: "Where can I find more resources?",
       answer:
         "Use the comparison feature on the dashboard to evaluate various tools based on theirperformance in key areas.",
     },
