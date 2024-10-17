@@ -140,7 +140,7 @@ const DiscoverSection = () => {
               }}
               src={Chart1}
               alt=""
-              className="h-64 mt-5"
+              className="h-64 lg:block hidden mt-5"
             />
           </div>
         </div>
@@ -328,7 +328,7 @@ const WshSection = () => {
           <h2 className="lg:text-4xl text-2xl font-bold text-black">
             WSH Webinar Series
           </h2>
-          <p className="mt-5 lg:text-xl text-base font-normal text-black">
+          <p className="mt-5 lg:text-xl text-sm font-normal text-black">
             The WSH webinar series is part of the Bill & Melinda Gates
             Foundation-funded project “Public Service Data Systems: Landscaping,
             Learning, and Technical Assistance.”{" "}
