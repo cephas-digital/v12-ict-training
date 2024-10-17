@@ -57,10 +57,10 @@ const HeroSection = () => {
                 </h1>
                 {/* <img src={Wave1} alt="" className="" /> */}
               </div>
-              <h1 className="lg:text-5lg text-2xl lg:leading-[80px] text-white font-bold">
+              <h1 className="lg:text-5lg text-xl lg:leading-[80px] text-white font-bold">
                 Water & Sanitation <br /> Tools Mapping Platform
               </h1>
-              <p className="text-xl mt-4 font-normal text-white inter">
+              <p className="lg:text-xl text-base mt-4 font-normal text-white inter">
                 Water and sanitation tools dashboard for water, sanitation and
                 hygiene (WSH) stakeholders
               </p>
@@ -91,10 +91,10 @@ const HeroSection = () => {
               />
             </div>
             <div className="lg:ml-16 p-6">
-              <h3 className="text-4xl text-black font-bold">
+              <h3 className="lg:text-4xl text-2xl text-black font-bold">
                 What Does It Do?
               </h3>
-              <p className="text-xl font-normal text-black max-w-xl mt-6">
+              <p className="lg:text-xl text-base font-normal text-black max-w-xl mt-6">
                 The water and sanitation tools mapping dashboard provides an
                 overview of water and sanitation data system tools used for
                 decision-making, service delivery, and performance management
@@ -120,7 +120,7 @@ const DiscoverSection = () => {
           className="h-96 lg:w-[55%] rounded-xl bg-white flex items-center px-8 gap-8"
         >
           <div>
-            <h2 className="text-2xl capitalize font-medium text-black">
+            <h2 className="lg:text-2xl text-xl capitalize font-medium text-black">
               <span className="font-bold text-da-blue-200">Discover</span>
               <br />
               <span className="whitespace-nowrap">
@@ -186,10 +186,12 @@ const DiscoverSection = () => {
 
 const CtaSection = () => {
   return (
-    <section className="w-full py-20">
+    <section className="w-full lg:py-20 py-">
       <div className="section-container">
-        <h3 className="text-4xl text-black font-bold">What can you map?</h3>
-        <p className="text-xl font-normal text-black mt-5">
+        <h3 className="lg:text-4xl text-xl text-black font-bold">
+          What can you map?
+        </h3>
+        <p className="lg:text-xl text-sm font-normal text-black mt-5">
           Based on four critical success factors, visualize various utilities
           and municipalities tools across sub-Saharan Africa and Southeast Asia.
           Each critical success factor indicates the expected outcomes that a
@@ -323,13 +325,15 @@ const WshSection = () => {
     <section className="py-16">
       <div className="section-container flex flex-col lg:flex-row items-center gap-12">
         <div className="lg:w-[40%]">
-          <h2 className="text-4xl font-bold text-black">WSH Webinar Series</h2>
-          <p className="mt-5 text-xl font-normal text-black">
+          <h2 className="lg:text-4xl text-2xl font-bold text-black">
+            WSH Webinar Series
+          </h2>
+          <p className="mt-5 lg:text-xl text-base font-normal text-black">
             The WSH webinar series is part of the Bill & Melinda Gates
             Foundation-funded project “Public Service Data Systems: Landscaping,
             Learning, and Technical Assistance.”{" "}
           </p>
-          <p className="mt-5 text-xl font-normal text-black">
+          <p className="mt-5 lg:text-xl text-base font-normal text-black">
             Dev-Afrique Development Advisors is hosting this series to spotlight
             sanitation data system tools in the WSH sector across Sub-Saharan
             Africa and South Asia. The webinars aim to facilitate learning and
@@ -388,10 +392,10 @@ const FaqSection = () => {
   return (
     <section className="py-20">
       <div className="section-container">
-        <h2 className="text-4xl font-semibold inter text-center text-da-blue-500">
+        <h2 className="lg:text-4xl text-xl font-semibold inter text-center text-da-blue-500">
           Frequently asked questions
         </h2>
-        <p className="mt-4 text-center text-xl font-medium text-[#667085] inter">
+        <p className="mt-4 text-center lg:text-xl text-sm font-medium text-[#667085] inter">
           Everything you need to know about the sanitation mapping platform.
         </p>
         <div className="mt-6 space-y-6">

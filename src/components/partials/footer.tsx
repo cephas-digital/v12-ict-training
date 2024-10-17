@@ -12,13 +12,13 @@ const Footer = () => {
   const resources = ["WSH Webinar Series", "Learning Materials"];
   const legal = ["Terms of Services", "Privacy Policy / GDPR"];
   return (
-    <div className="pt-20 hero-section pb-10">
+    <div className="lg:pt-20 pt-10 hero-section pb-10">
       <div className="section-container">
         <div className="flex flex-col lg:flex-row justify-between gap-6">
           <div>
             <Logo />
             <p
-              className="text-base mt-6
+              className="lg:text-base text-sm mt-6
              font-normal inter text-[#ddddde]"
             >
               Developed by Dev-Afrique in collaboration with ESAWAS
@@ -35,30 +35,36 @@ const Footer = () => {
             </div>
           </div>
           <div className="">
-            <h5 className="text-xl inter text-white font-bold">Support</h5>
-            <div className="mt-6 space-y-5">
+            <h5 className="lg:text-xl text-sm inter text-white font-bold">
+              Support
+            </h5>
+            <div className="mt-6 lg:space-y-5 space-y-3">
               {support?.map((it) => (
-                <h6 className="text-[#DDDDDE] text-base font-normal inter">
+                <h6 className="text-[#DDDDDE] lg:text-base text-sm font-normal inter">
                   {it}
                 </h6>
               ))}
             </div>
           </div>
           <div className="">
-            <h5 className="text-xl inter text-white font-bold">Resources</h5>
-            <div className="mt-6 space-y-5">
+            <h5 className="lg:text-xl text-sm inter text-white font-bold">
+              Resources
+            </h5>
+            <div className="mt-6 lg:space-y-5 space-y-3">
               {resources?.map((it) => (
-                <h6 className="text-[#DDDDDE] text-base font-normal inter">
+                <h6 className="text-[#DDDDDE] lg:text-base text-sm font-normal inter">
                   {it}
                 </h6>
               ))}
             </div>
           </div>
           <div className="">
-            <h5 className="text-xl inter text-white font-bold">Legal</h5>
-            <div className="mt-6 space-y-5">
+            <h5 className="lg:text-xl text-sm inter text-white font-bold">
+              Legal
+            </h5>
+            <div className="mt-6 lg:space-y-5 space-y-3">
               {legal?.map((it) => (
-                <h6 className="text-[#DDDDDE] text-base font-normal inter">
+                <h6 className="text-[#DDDDDE] lg:text-base text-sm font-normal inter">
                   {it}
                 </h6>
               ))}
