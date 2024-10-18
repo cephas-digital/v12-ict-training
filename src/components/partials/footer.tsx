@@ -12,7 +12,7 @@ const Footer = () => {
   const resources = ["WSH Webinar Series", "Learning Materials"];
   const legal = ["Terms of Services", "Privacy Policy / GDPR"];
   return (
-    <div className="lg:pt-20 pt-10 hero-section pb-10">
+    <div id="help" className="lg:pt-20 pt-10 hero-section pb-10">
       <div className="section-container">
         <div className="flex flex-col lg:flex-row justify-between gap-6">
           <div>
@@ -24,9 +24,9 @@ const Footer = () => {
               Developed by Dev-Afrique in collaboration with ESAWAS
             </p>
             <div className="mt-6 flex gap-3 items-center">
-              <img src={MainLogo} alt="" className="" />
-              <span className="text-xl font-normal">||</span>
-              <img src={Esawas} alt="" className="" />
+              <img src={MainLogo} alt="" className="lg:h-full h-8" />
+              <span className="text-xl font-normal text-white">||</span>
+              <img src={Esawas} alt="" className="lg:h-full h-8" />
             </div>
             <div className="flex mt-6 gap-5">
               <img src={Youtube} alt="" className="" />

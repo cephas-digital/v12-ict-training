@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Logo from "../layouts/logo";
 import { useNavigate } from "react-router";
 import Notification from "../../assets/icons/notification.svg";
@@ -7,6 +7,13 @@ import { Icon } from "@iconify/react";
 
 const Header = () => {
   const navigate = useNavigate();
+  const [menu, setMenu] = useState(false);
+  const scrollToSection = (sectionId) => {
+    const section = document.getElementById(sectionId);
+    if (section) {
+      section.scrollIntoView({ behavior: "smooth" });
+    }
+  };
   const links = [
     {
       name: "about",
@@ -36,11 +43,16 @@ const Header = () => {
               style={{
                 fontSize: "24px",
               }}
+              onClick={() => setMenu(true)}
             />
           </div>
           <div className="lg:flex hidden gap-10 items-center capitalize text-base h-full text-white inter font-medium">
             {links?.map((l, i) => (
-              <h6 key={i} className="cursor-pointer">
+              <h6
+                onClick={() => scrollToSection(l?.name)}
+                key={i}
+                className="cursor-pointer"
+              >
                 {l?.name}
               </h6>
             ))}
@@ -56,6 +68,31 @@ const Header = () => {
           </div>
         </div>
       </div>
+      {menu && (
+        <div className="absolute top-0 w-full bg-white p-6">
+          <div className="flex justify-end">
+            <Icon
+              icon={"mingcute:close-fill"}
+              color="#002A54"
+              className="block lg:hidden"
+              style={{
+                fontSize: "24px",
+              }}
+              onClick={() => setMenu(false)}
+            />
+          </div>
+          <div className="mt-5 space-y-4">
+            {links?.map((link) => (
+              <h6
+                onClick={() => scrollToSection(link?.name)}
+                className="text-xl font-medium capitalize text-da-blue-600 cursor-pointer"
+              >
+                {link?.name}
+              </h6>
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   );
 };
