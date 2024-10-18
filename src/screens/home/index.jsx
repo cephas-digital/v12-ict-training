@@ -21,7 +21,7 @@ import Institution from "../../assets/images/institution.png";
 import Webinar from "../../assets/images/webinar.png";
 import { CiCirclePlus, CiCircleMinus } from "react-icons/ci";
 import Footer from "../../components/partials/footer";
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
   return (
