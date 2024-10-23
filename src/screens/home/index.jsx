@@ -50,17 +50,17 @@ const HeroSection = () => {
             <Header />
           </div>
           <div className="section-container mt-10 lg:mt-0 relative h-full flex items-center">
-            <div>
+            <div data-aos="zoom-in" data-aos-duration="1500">
               <div className="flex gap-4 items-center">
-                <h1 className="lg:text-5lg text-2xl text-white font-bold">
+                <h1 className="lg:text-5lg text-2xl text-white lg:leading-[80px] font-extrabold">
                   Visiting with
                 </h1>
                 {/* <img src={Wave1} alt="" className="" /> */}
               </div>
-              <h1 className="lg:text-5lg text-xl lg:leading-[80px] text-white font-bold">
+              <h1 className="lg:text-5lg text-2xl lg:leading-[80px] text-white font-extrabold">
                 Water & Sanitation <br /> Tools Mapping Platform
               </h1>
-              <p className="lg:text-xl text-base mt-4 font-normal text-white inter">
+              <p className="lg:text-xl text-sm mt-4 max-w-xl lg:font-normal font-light text-white inter">
                 Water and sanitation tools dashboard for water, sanitation and
                 hygiene (WSH) stakeholders
               </p>
@@ -77,6 +77,8 @@ const HeroSection = () => {
           </div>
           <img
             src={Frame1}
+            data-aos="zoom-in-down"
+            data-aos-duration="1500"
             alt=""
             className="absolute hidden lg:block bottom-60 right-10 h-96"
           />
@@ -86,11 +88,17 @@ const HeroSection = () => {
             <div className="h-full w-full">
               <img
                 src={System}
+                data-aos="zoom-out-down"
+                data-aos-duration="1500"
                 alt=""
                 className="ml-24 lg:mt-16  hidden lg:block"
               />
             </div>
-            <div className="lg:ml-16 p-6">
+            <div
+              data-aos="fade-up"
+              data-aos-duration="1500"
+              className="lg:ml-16 p-6"
+            >
               <h3 className="lg:text-4xl text-2xl text-black font-bold">
                 What Does It Do?
               </h3>
@@ -111,9 +119,11 @@ const HeroSection = () => {
 
 const DiscoverSection = () => {
   return (
-    <section className="w-full py-20">
+    <section id="about" className="w-full py-20">
       <div className="section-container flex flex-col lg:flex-row gap-6">
         <div
+          data-aos="flip-right"
+          data-aos-duration="1500"
           style={{
             border: "0.4px solid #000000",
           }}
@@ -144,11 +154,17 @@ const DiscoverSection = () => {
             />
           </div>
         </div>
-        <div className="lg:w-[45%] h-96 flex flex-col gap-4">
+        <div
+          data-aos="flip-left"
+          data-aos-duration="1500"
+          className="lg:w-[45%] h-96 flex flex-col gap-4"
+        >
           <div
             style={{
               border: "0.4px solid #000000",
             }}
+            data-aos="flip-left"
+            data-aos-duration="1500"
             className="w-full h-full rounded-xl flex justify-between items-center lg:px-6 p-4 lg:p-0"
           >
             <div>
@@ -165,6 +181,8 @@ const DiscoverSection = () => {
             style={{
               border: "0.4px solid #000000",
             }}
+            data-aos="flip-up"
+            data-aos-duration="1500"
             className="w-full h-full rounded-xl flex justify-between items-center lg:px-6 p-4 lg:p-0"
           >
             <div>
@@ -186,12 +204,20 @@ const DiscoverSection = () => {
 
 const CtaSection = () => {
   return (
-    <section className="w-full lg:py-20 py-">
+    <section id="resources" className="w-full lg:py-20 py-">
       <div className="section-container">
-        <h3 className="lg:text-4xl text-xl text-black font-bold">
+        <h3
+          data-aos="fade-up"
+          data-aos-duration="1500"
+          className="lg:text-4xl text-xl text-black font-bold"
+        >
           What can you map?
         </h3>
-        <p className="lg:text-xl text-sm font-normal text-black mt-5">
+        <p
+          data-aos="fade-down"
+          data-aos-duration="1500"
+          className="lg:text-xl text-sm font-normal text-black mt-5"
+        >
           Based on four critical success factors, visualize various utilities
           and municipalities tools across sub-Saharan Africa and Southeast Asia.
           Each critical success factor indicates the expected outcomes that a
@@ -324,7 +350,11 @@ const WshSection = () => {
   return (
     <section className="py-16">
       <div className="section-container flex flex-col lg:flex-row items-center gap-12">
-        <div className="lg:w-[40%]">
+        <div
+          data-aos="fade-down"
+          data-aos-duration="1500"
+          className="lg:w-[40%]"
+        >
           <h2 className="lg:text-4xl text-2xl font-bold text-black">
             WSH Webinar Series
           </h2>
@@ -349,7 +379,7 @@ const WshSection = () => {
             Join the Webinar Series
           </button>
         </div>
-        <div className="lg:w-[60%]">
+        <div data-aos="fade-up" data-aos-duration="1500" className="lg:w-[60%]">
           <img src={Webinar} alt="" className="" />
         </div>
       </div>
@@ -392,10 +422,18 @@ const FaqSection = () => {
   return (
     <section className="py-20">
       <div className="section-container">
-        <h2 className="lg:text-4xl text-xl font-semibold inter text-center text-da-blue-500">
+        <h2
+          data-aos="zoom-in"
+          data-aos-duration="1500"
+          className="lg:text-4xl text-xl font-semibold inter text-center text-da-blue-500"
+        >
           Frequently asked questions
         </h2>
-        <p className="mt-4 text-center lg:text-xl text-sm font-medium text-[#667085] inter">
+        <p
+          data-aos="zoom-in"
+          data-aos-duration="1500"
+          className="mt-4 text-center lg:text-xl text-sm font-medium text-[#667085] inter"
+        >
           Everything you need to know about the sanitation mapping platform.
         </p>
         <div className="mt-6 space-y-6">
@@ -408,6 +446,8 @@ const FaqSection = () => {
               className="rounded-lg p-6"
             >
               <div
+                data-aos="fade-up"
+                data-aos-duration="1500"
                 onClick={() => toggleActive(i)}
                 className="flex justify-between cursor-pointer items-center"
               >
