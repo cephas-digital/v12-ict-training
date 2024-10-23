@@ -8,7 +8,10 @@ import Export from "../../assets/icons/exporticon.svg";
 import CompareIcon from "../../assets/icons/compareicon.svg";
 import SelectIcon from "../../assets/icons/calendar 01.svg";
 import Map from "../../assets/images/map.png";
-import WhiteBox, { WhiteBox2 } from "../../components/partials/box";
+import WhiteBox, {
+	ToolsKPIsData,
+	WhiteBox2,
+} from "../../components/partials/box";
 import Info from "../../assets/icons/information.svg";
 import ProductTable from "../../components/partials/tables";
 import StartMapping from "../../components/modals/startmaping";
@@ -29,59 +32,59 @@ export const createMarkup = html => {
 	};
 };
 
-
 const Dashboard = () => {
-  const [start, setStart] = useState(false),
-    [modal, setModal] = useState(""),
-    [tab, setTab] = useState("overview"),
-    navigate = useNavigate(),
-    [hoveredTool, setHoveredTool] = useState(null);
-  const tabs = ["overview", "about data tool"];
-  const products = [
-      { name: "Asset inventory", status: "good" },
-      { name: "Asset (system) renewal/replacement", status: "good" },
-      { name: "Sewerage system integrity", status: "bad" },
-      { name: "Planned maintenance", status: "bad" },
-      { name: "Sanitation Facilities Database", status: "bad" },
-    ],
-    optimization = [
-      { name: "Resource Optimization", status: "good" },
-      { name: "Performance Monitoring", status: "good" },
-      { name: "Seewerage management efficiency", status: "bad" },
-      { name: "Non Sewered Sanitation Service Management", status: "bad" },
-    ],
-    resiliency = [
-      { name: "Recordable incidents of injury or illness", status: "good" },
-      { name: "Risk assessment and response preparedness", status: "bad" },
-      { name: "Ongoing operational resilliency", status: "good" },
-    ];
-    
-  // const sanitationTools = [
-  //   { name: "APAM", details: "APAM is a management tool..." },
-  //   { name: "EDAMS IMS", details: "EDAMS IMS information..." },
-  //   { name: "Equiserve", details: "Equiserve details..." },
-  //   { name: "ERP System - Nakuru", details: "ERP System for Nakuru..." },
-  //   {
-  //     name: "Indah Water Malaysia Planning tool",
-  //     details: "NWASCO NIS details...",
-  //   },
-  //   {
-  //     name: "Integrated Management Information System (IMIS)",
-  //     details: "Real-time monitoring system...",
-  //   },
-  //   {
-  //     name: "IMIS Dhaka",
-  //     details:
-  //       "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s",
-  //   },
-  //   {
-  //     name: "Lusaka  Sanitation System",
-  //     details:
-  //       "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s",
-  //   },
-  // ];
+	const [start, setStart] = useState(false),
+		[modal, setModal] = useState(""),
+		[tab, setTab] = useState("overview"),
+		navigate = useNavigate(),
+		[hoveredTool, setHoveredTool] = useState(null);
+	const tabs = ["overview", "about data tool"];
+	const products = [
+			{ name: "Asset inventory", status: "good" },
+			{ name: "Asset (system) renewal/replacement", status: "good" },
+			{ name: "Sewerage system integrity", status: "bad" },
+			{ name: "Planned maintenance", status: "bad" },
+			{ name: "Sanitation Facilities Database", status: "bad" },
+		],
+		optimization = [
+			{ name: "Resource Optimization", status: "good" },
+			{ name: "Performance Monitoring", status: "good" },
+			{ name: "Seewerage management efficiency", status: "bad" },
+			{ name: "Non Sewered Sanitation Service Management", status: "bad" },
+		],
+		resiliency = [
+			{ name: "Recordable incidents of injury or illness", status: "good" },
+			{ name: "Risk assessment and response preparedness", status: "bad" },
+			{ name: "Ongoing operational resilliency", status: "good" },
+		];
 
-  let { getDynamicLogger, getLogger, data, mapTools}:any = useRawdataStore(),
+	// const sanitationTools = [
+	//   { name: "APAM", details: "APAM is a management tool..." },
+	//   { name: "EDAMS IMS", details: "EDAMS IMS information..." },
+	//   { name: "Equiserve", details: "Equiserve details..." },
+	//   { name: "ERP System - Nakuru", details: "ERP System for Nakuru..." },
+	//   {
+	//     name: "Indah Water Malaysia Planning tool",
+	//     details: "NWASCO NIS details...",
+	//   },
+	//   {
+	//     name: "Integrated Management Information System (IMIS)",
+	//     details: "Real-time monitoring system...",
+	//   },
+	//   {
+	//     name: "IMIS Dhaka",
+	//     details:
+	//       "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s",
+	//   },
+	//   {
+	//     name: "Lusaka  Sanitation System",
+	//     details:
+	//       "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s",
+	//   },
+	// ];
+
+	let { getDynamicLogger, getLogger, data } = useRawdataStore(),
+		{ mapTools, kpidata }: any = useRawdataStore(),
 		tools = data?.docs?.sort(
 			(
 				a: { category: { toString: () => string } },
@@ -92,16 +95,17 @@ const Dashboard = () => {
 			}
 		),
 		[selection, setSelection] = useState<any>(null),
-    [currentTool, setCurrentTool]=useState<any>(null)
+		[currentTool, setCurrentTool] = useState<any>(null),
+		[formInfo, setFormInfo] = useState(null);
 
 	useEffect(() => {
-    getDynamicLogger({},"mapTools")
+		getDynamicLogger({}, "mapTools");
+		// apiCall({
+		// 	type: "get",
+		// 	url: `/api/v1/rawdata/manage-kpis?pagination=not`,
+		// 	getter: (d: any) => getDynamicLogger(d, "kpidata"),
+		// });
 		apiCall({
-			type: "get",
-			url: `/api/v1/rawdata/manage-kpis?pagination=not`,
-			getter: (d: any) => getDynamicLogger(d, "kpidata"),
-		});
-    apiCall({
 			type: "get",
 			url: `/api/v1/rawdata?pagination=not`,
 			getter: (d: any) => getLogger(d),
@@ -109,77 +113,104 @@ const Dashboard = () => {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
-    useEffect(() => {
-      if (!selection) {
-				const intro = introJs();
+	useEffect(() => {
+		if (!selection) {
+			const intro = introJs();
 
-				// Define your steps
-				intro.setOptions({
-					steps: [
-						{
-							intro: "Welcome to the Water and Sanitation Tools Map!",
-						},
-						{
-							element: ".start-mapping-btn",
-							intro:
-								'Click "Start Mapping" to select different criteria and parameters to visualize information about tools.',
-						},
-						{
-							element: ".export-btn",
-							intro:
-								"You can also export or compare tools using the buttons above.",
-						},
-						{
-							element: ".tools-mapped-section",
-							intro: "Finally, you can view mapped tools and regions here.",
-						},
-					],
-					showProgress: true, // Adds "1 of X steps"
-					showStepNumbers: true, // Shows the step number
-					exitOnOverlayClick: false, // Prevents closing when clicking on overlay
-					overlayOpacity: 0.7, // Make background semi-transparent
-					tooltipClass: "customTooltip", // Add custom CSS class for tooltip styling
-				});
+			// Define your steps
+			intro.setOptions({
+				steps: [
+					{
+						intro: "Welcome to the Water and Sanitation Tools Map!",
+					},
+					{
+						element: ".start-mapping-btn",
+						intro:
+							'Click "Start Mapping" to select different criteria and parameters to visualize information about tools.',
+					},
+					{
+						element: ".export-btn",
+						intro:
+							"You can also export or compare tools using the buttons above.",
+					},
+					{
+						element: ".tools-mapped-section",
+						intro: "Finally, you can view mapped tools and regions here.",
+					},
+				],
+				showProgress: true, // Adds "1 of X steps"
+				showStepNumbers: true, // Shows the step number
+				exitOnOverlayClick: false, // Prevents closing when clicking on overlay
+				overlayOpacity: 0.7, // Make background semi-transparent
+				tooltipClass: "customTooltip", // Add custom CSS class for tooltip styling
+			});
 
-				// Start the intro
-				intro.start();
-			}
-		}, [selection]);
-	
-  useEffect(() => {
-    if (selection){
-      setCurrentTool(null)
-      apiCall({
-        type: "post",
-        url: `/api/v1/tools/manage-tools?pagination=not`,
-        getter: (d: any) => getDynamicLogger(d, "mapTools"),
-        data: {
-          toolSelection: Object.entries(selection).map(([key, value]) => ({
-            category: key,
-            data: Array.isArray(value) ? value : [value], // Ensure data is always an array
-          }))?.filter(it=> it?.data?.length > 0),
-        },
-      });
-    }
+			// Start the intro
+			intro.start();
+		}
+	}, [selection]);
+
+	useEffect(() => {
+		if (selection) {
+			setCurrentTool(null);
+			apiCall({
+				type: "post",
+				url: `/api/v1/tools/manage-tools?pagination=not`,
+				getter: (d: any) => getDynamicLogger(d, "mapTools"),
+				data: {
+					toolSelection: Object.entries(selection)
+						.map(([key, value]) => ({
+							category: key,
+							data: Array.isArray(value) ? value : [value], // Ensure data is always an array
+						}))
+						?.filter(it => it?.data?.length > 0),
+				},
+			});
+		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [selection]);
 
-  useEffect(() => {
-    if (mapTools && mapTools?.totalDocs > 0 && selection){
-      setCurrentTool(mapTools?.docs?.[0])
-    }
-    
+	useEffect(() => {
+		if (mapTools && mapTools?.totalDocs > 0 && selection) {
+			setCurrentTool(mapTools?.docs?.[0]);
+		}
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [mapTools]);
 
-  const contact = [currentTool?.website, currentTool?.contactEmailAddress],
-		webinar = [currentTool?.webinar],
-		resources = [
-			{ name: "EDAMS Technology", link: "mails@nwasco.org.zm" },
-			{ name: "EDAMS Technology", link: "mails@nwasco.org.zm" },
-		];
+	const contact = [currentTool?.website, currentTool?.contactEmailAddress],
+		webinar = [currentTool?.webinar];
+	// resources = [
+	// 	{ name: "EDAMS Technology", link: "mails@nwasco.org.zm" },
+	// 	{ name: "EDAMS Technology", link: "mails@nwasco.org.zm" },
+	// ];
 
-  return (
+	useEffect(() => {
+		let appLevel = currentTool?.toolSelection?.find(
+			(it: any) => it?.category === "APPLICATION LEVEL"
+		);
+		if (appLevel && kpidata) {
+			setFormInfo([...kpidata?.docs]);
+		}
+	}, [kpidata, currentTool]);
+
+	useEffect(() => {
+		if (currentTool) {
+			let appLevel = currentTool?.toolSelection?.find(
+				(it: any) => it?.category === "APPLICATION LEVEL"
+			);
+			if (appLevel) {
+				apiCall({
+					type: "get",
+					url: `/api/v1/rawdata/manage-kpis?category=APPLICATION LEVEL&data=${appLevel?.data?.[0]}&pagination=not`,
+					getter: (d: any) => getDynamicLogger(d, "kpidata"),
+				});
+			}
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [currentTool]);
+
+	return (
 		<div>
 			<PageHeader />
 			<div className="w-full flex">
@@ -395,41 +426,56 @@ const Dashboard = () => {
 										</WhiteBox>
 									</div>
 								</div>
-								<div className="mt-5 grid grid-cols-3 gap-5">
-									<WhiteBox className="h-full">
-										<div className="flex justify-between items-center">
-											<h5 className="text-base text-da-blue-600 font-medium">
-												Infrastructure and Stability
-											</h5>
-											<img src={Info} alt="" className="" />
-										</div>
-										<div className="mt-2">
-											<ProductTable start={start} products={products} />
-										</div>
-									</WhiteBox>
-									<WhiteBox className="h-full">
-										<div className="flex justify-between items-center">
-											<h5 className="text-base text-da-blue-600 font-medium">
-												Operational Optimization
-											</h5>
-											<img src={Info} alt="" className="" />
-										</div>
-										<div className="mt-2">
-											<ProductTable start={start} products={optimization} />
-										</div>
-									</WhiteBox>
-									<WhiteBox className="h-full">
-										<div className="flex justify-between items-center">
-											<h5 className="text-base text-da-blue-600 font-medium">
-												Operational Resilency
-											</h5>
-											<img src={Info} alt="" className="" />
-										</div>
-										<div className="mt-2">
-											<ProductTable start={start} products={resiliency} />
-										</div>
-									</WhiteBox>
-								</div>
+								{!currentTool && (
+									<div className="mt-5 grid grid-cols-3 gap-5">
+										<WhiteBox className="h-full">
+											<div className="flex justify-between items-center">
+												<h5 className="text-base text-da-blue-600 font-medium">
+													Infrastructure and Stability
+												</h5>
+												<img src={Info} alt="" className="" />
+											</div>
+											<div className="mt-2">
+												<ProductTable start={false} products={products} />
+											</div>
+										</WhiteBox>
+										<WhiteBox className="h-full">
+											<div className="flex justify-between items-center">
+												<h5 className="text-base text-da-blue-600 font-medium">
+													Operational Optimization
+												</h5>
+												<img src={Info} alt="" className="" />
+											</div>
+											<div className="mt-2">
+												<ProductTable start={false} products={optimization} />
+											</div>
+										</WhiteBox>
+										<WhiteBox className="h-full">
+											<div className="flex justify-between items-center">
+												<h5 className="text-base text-da-blue-600 font-medium">
+													Operational Resilency
+												</h5>
+												<img src={Info} alt="" className="" />
+											</div>
+											<div className="mt-2">
+												<ProductTable start={false} products={resiliency} />
+											</div>
+										</WhiteBox>
+									</div>
+								)}
+								{currentTool && (
+									<div className="mt-5 grid grid-cols-3 gap-5">
+										{formInfo?.map((tool: any, i: number) => (
+											<ToolsKPIsData
+												start
+												data={tool?.data}
+												title={tool?.category}
+												key={i}
+												prevData={currentTool?.kpiSelection}
+											/>
+										))}
+									</div>
+								)}
 							</div>
 						)}
 						{tab === "about data tool" && (
@@ -449,7 +495,9 @@ const Dashboard = () => {
 										className="
                     text-sm font-normal text-da-blue-600 mt-4
                     "
-										dangerouslySetInnerHTML={createMarkup(currentTool?.description)}
+										dangerouslySetInnerHTML={createMarkup(
+											currentTool?.description
+										)}
 									/>
 								</WhiteBox2>
 								<div className="mt-6 grid grid-cols-3 gap-8">
@@ -516,8 +564,9 @@ const Dashboard = () => {
 													</h4>
 												</div>
 											</div>
-											{resources?.map(r => (
+											{currentTool?.resources?.map((r: any, i: number) => (
 												<div
+													key={i}
 													style={{
 														border: "1px solid #E2E8F0",
 													}}
@@ -525,7 +574,7 @@ const Dashboard = () => {
 													<div className="cols-span-1 border-r border-r-[#E2E8F0] flex items-center h-full w-full">
 														<ul className="list-disc ml-6 list-inside">
 															<li className="text-sm font-normal text-da-blue-600">
-																{r?.name}
+																{r?.material || r?.name}
 															</li>
 														</ul>
 													</div>
