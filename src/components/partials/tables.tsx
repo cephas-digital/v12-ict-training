@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Pending from "../../assets/icons/pending.svg";
 import Arrows from "../../assets/icons/arrows.svg";
 import Good from "../../assets/icons/good.svg";
@@ -12,151 +12,167 @@ import MapActive from "../../assets/icons/map-active.svg";
 import Infra from "../../assets/icons/infra.svg";
 import BigMap from "../../assets/icons/bigmap.svg";
 import SelectToolModal from "../modals/selecttool";
+import { apiCall } from "../../data/useFetcher";
+import { useRawdataStore } from "../../data/stores/loggerStore";
 
 const ProductTable = ({ products, start }) => {
-  return (
-    <div className="">
-      <div
-        style={{
-          borderBottom: "1px solid #F1F5F9",
-        }}
-        className="flex px-1 justify-between items-center h-8 w-full bg-[#F8FAFC]"
-      >
-        <div className="flex gap-1 items-center">
-          <h6 className="text-base font-medium text-da-blue-600">
-            Product Info
-          </h6>
-          <img src={Arrows} alt="" className="" />
-        </div>
-        <div className="flex gap-1 items-center">
-          <h6 className="text-base font-medium text-da-blue-600">Status</h6>
-          <img src={Arrows} alt="" className="" />
-        </div>
-      </div>
+	return (
+		<div className="">
+			<div
+				style={{
+					borderBottom: "1px solid #F1F5F9",
+				}}
+				className="flex px-1 justify-between items-center h-8 w-full bg-[#F8FAFC]">
+				<div className="flex gap-1 items-center">
+					<h6 className="text-base font-medium text-da-blue-600">
+						Product Info
+					</h6>
+					<img src={Arrows} alt="" className="" />
+				</div>
+				<div className="flex gap-1 items-center">
+					<h6 className="text-base font-medium text-da-blue-600">Status</h6>
+					<img src={Arrows} alt="" className="" />
+				</div>
+			</div>
 
-      <div>
-        {products.map((product, index) => (
-          <div
-            style={{
-              borderBottom: "1px solid #F1F5F9",
-            }}
-            key={index}
-            className={`${
-              index % 2 === 0 ? "bg-white" : "bg-[#F8FAFC]"
-            } flex justify-between px-1 h-8 items-center w-full`}
-          >
-            <span className=" text-da-blue-600 text-xs truncate w-5/6">
-              {product.name}
-            </span>
-            <div className="flex justify-end">
-              {!start && (
-                <button className="w-[25px] h-[25px] flex justify-center items-center text-xl font-bold bg-[#D2D7D4]">
-                  <img src={Pending} alt="" className="" />
-                </button>
-              )}
-              {start && (
-                <>
-                  {product?.status === "good" ? (
-                    <button className="w-[25px] h-[25px] flex justify-center items-center text-xl font-bold bg-[#BAFED2]">
-                      <img src={Good} alt="" className="" />
-                    </button>
-                  ) : (
-                    <button className="w-[25px] h-[25px] flex justify-center items-center text-xl font-bold bg-[#EF444433]">
-                      <img src={Bad} alt="" className="" />
-                    </button>
-                  )}
-                </>
-              )}
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
+			<div>
+				{products.map((product, index) => (
+					<div
+						style={{
+							borderBottom: "1px solid #F1F5F9",
+						}}
+						key={index}
+						className={`${
+							index % 2 === 0 ? "bg-white" : "bg-[#F8FAFC]"
+						} flex justify-between px-1 h-8 items-center w-full`}>
+						<span className=" text-da-blue-600 text-xs truncate w-5/6">
+							{product.name}
+						</span>
+						<div className="flex justify-end">
+							{!start && (
+								<button className="w-[25px] h-[25px] flex justify-center items-center text-xl font-bold bg-[#D2D7D4]">
+									<img src={Pending} alt="" className="" />
+								</button>
+							)}
+							{start && (
+								<>
+									{product?.status === "good" ? (
+										<button className="w-[25px] h-[25px] flex justify-center items-center text-xl font-bold bg-[#BAFED2]">
+											<img src={Good} alt="" className="" />
+										</button>
+									) : (
+										<button className="w-[25px] h-[25px] flex justify-center items-center text-xl font-bold bg-[#EF444433]">
+											<img src={Bad} alt="" className="" />
+										</button>
+									)}
+								</>
+							)}
+						</div>
+					</div>
+				))}
+			</div>
+		</div>
+	);
 };
 
 const tableData = [
-  {
-    category: "Technical (Operations and Maintenance)",
-    subcategories: [
-      {
-        name: "Infrastructure and Stability",
-        rows: [
-          { label: "Asset inventory", tool1: "pending", tool2: false },
-          {
-            label: "Asset (system) renewal / replacement",
-            tool1: "pending",
-            tool2: true,
-          },
-          { label: "Sewerage system integrity", tool1: true, tool2: false },
-          { label: "Planned maintenance", tool1: false, tool2: true },
-        ],
-      },
-      {
-        name: "Operational Optimization",
-        rows: [
-          { label: "Resource Optimization", tool1: false, tool2: false },
-          {
-            label: "Sewerage management efficiency",
-            tool1: true,
-            tool2: false,
-          },
-        ],
-      },
-      {
-        name: "Operational Resiliency",
-        rows: [
-          {
-            label: "Recordable incidents of injury or illness",
-            tool1: true,
-            tool2: false,
-          },
-          {
-            label: "Risk assessment and response preparedness",
-            tool1: true,
-            tool2: false,
-          },
-        ],
-      },
-    ],
-  },
-  {
-    category: "Commercial (Consumer / Payor Demands)",
-    subcategories: [
-      {
-        name: "Customer Satisfaction",
-        rows: [
-          { label: "Customer complaints", tool1: "pending", tool2: true },
-          {
-            label: "Customer service delivery",
-            tool1: false,
-            tool2: "pending",
-          },
-          { label: "Customer satisfaction", tool1: true, tool2: false },
-        ],
-      },
-    ],
-  },
+	{
+		category: "Technical (Operations and Maintenance)",
+		subcategories: [
+			{
+				name: "Infrastructure and Stability",
+				rows: [
+					{ label: "Asset inventory", tool1: "pending", tool2: false },
+					{
+						label: "Asset (system) renewal / replacement",
+						tool1: "pending",
+						tool2: true,
+					},
+					{ label: "Sewerage system integrity", tool1: true, tool2: false },
+					{ label: "Planned maintenance", tool1: false, tool2: true },
+				],
+			},
+			{
+				name: "Operational Optimization",
+				rows: [
+					{ label: "Resource Optimization", tool1: false, tool2: false },
+					{
+						label: "Sewerage management efficiency",
+						tool1: true,
+						tool2: false,
+					},
+				],
+			},
+			{
+				name: "Operational Resiliency",
+				rows: [
+					{
+						label: "Recordable incidents of injury or illness",
+						tool1: true,
+						tool2: false,
+					},
+					{
+						label: "Risk assessment and response preparedness",
+						tool1: true,
+						tool2: false,
+					},
+				],
+			},
+		],
+	},
+	{
+		category: "Commercial (Consumer / Payor Demands)",
+		subcategories: [
+			{
+				name: "Customer Satisfaction",
+				rows: [
+					{ label: "Customer complaints", tool1: "pending", tool2: true },
+					{
+						label: "Customer service delivery",
+						tool1: false,
+						tool2: "pending",
+					},
+					{ label: "Customer satisfaction", tool1: true, tool2: false },
+				],
+			},
+		],
+	},
 ];
 
 export const ToolsTable = () => {
 	const navigate = useNavigate();
 	const [tab, setTab] = useState("list");
-	const [modal, setModal] = useState("");
+	const [modal, setModal] = useState<"one" | "two" | "">("");
 	const keys = [
-		{
-			color: "#3787FF",
-			name: "both tools available",
-		},
-		{
-			color: "#16A34A",
-			name: "both tools available",
-		},
-		{
-			color: "#E7A00C",
-			name: "None selected",
-		},
-	];
+			{
+				color: "#3787FF",
+				name: "both tools available",
+			},
+			{
+				color: "#16A34A",
+				name: "both tools available",
+			},
+			{
+				color: "#E7A00C",
+				name: "None selected",
+			},
+		],
+		[selectedTools, setSelectedTools] = useState<any>(null),
+		[selectedAppLevel, setSelectedAppLevel] = useState<any>(null),
+		{ getDynamicLogger } = useRawdataStore(),
+		{ kpidata }: any = useRawdataStore();
+
+	useEffect(() => {
+		if (selectedAppLevel) {
+			apiCall({
+				type: "get",
+				url: `/api/v1/rawdata/manage-kpis?category=APPLICATION LEVEL&data=${selectedAppLevel?.title}&pagination=not`,
+				getter: (d: any) => getDynamicLogger(d, "kpidata"),
+			});
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [selectedAppLevel]);
+
 	return (
 		<div>
 			<div className="w-full mt-12 grid grid-cols-6">
@@ -204,13 +220,13 @@ export const ToolsTable = () => {
 					className="col-span-1 h-24 p-2">
 					<h6 className="text-sm font-medium inter text-[#1E293B]">Compare</h6>
 					<div
-						onClick={() => setModal("select")}
+						onClick={() => setModal("one")}
 						style={{
 							border: "1px solid #E2E8F0",
 						}}
 						className="h-10 mt-2 cursor-pointer w-full rounded-lg bg-white px-2 flex items-center justify-between">
-						<span className="text-sm font-medium text-[#334155]">
-							Select Sanitation tool
+						<span className="text-sm font-medium text-[#334155] line-clamp-1">
+							{selectedTools?.one?.toolName || `Select Sanitation tool`}
 						</span>
 						<FaAngleDown />
 					</div>
@@ -227,122 +243,214 @@ export const ToolsTable = () => {
 						style={{
 							border: "1px solid #E2E8F0",
 						}}
-						onClick={() => setModal("select")}
+						onClick={() => {
+							if (selectedTools?.one) setModal("two");
+						}}
 						className="h-10 mt-2 w-full cursor-pointer rounded-lg bg-white px-2 flex items-center justify-between">
-						<span className="text-sm font-medium text-[#334155]">
-							Select Sanitation tool
+						<span className="text-sm font-medium text-[#334155] line-clamp-1">
+							{selectedTools?.two?.toolName || `Select Sanitation tool`}
 						</span>
 						<FaAngleDown />
 					</div>
 				</div>
 			</div>
 			{tab === "list" && (
-				<div>
-					{tableData?.map((t, i: number) => (
-						<div
-							key={i}
-							style={{
-								borderWidth: "0.4px 0 0 0.4px",
-								borderStyle: "solid",
-								borderColor: "#000000",
-							}}
-							className="w-full grid grid-cols-6">
+				<>
+					<div className={selectedTools?.one ? "hidden" : ""}>
+						{tableData?.map((t, i: number) => (
 							<div
+								key={i}
 								style={{
-									borderWidth: "0px 0 0.4px 0px",
+									borderWidth: "0.4px 0 0 0.4px",
 									borderStyle: "solid",
 									borderColor: "#000000",
 								}}
-								className="col-span-1 pt-8 px-3">
-								<p className="text-base font-bold text-[#334155]">
-									{t?.category}
-								</p>
-							</div>
+								className="w-full grid grid-cols-6">
+								<div
+									style={{
+										borderWidth: "0px 0 0.4px 0px",
+										borderStyle: "solid",
+										borderColor: "#000000",
+									}}
+									className="col-span-1 pt-8 px-3">
+									<p className="text-base font-bold text-[#334155]">
+										{t?.category}
+									</p>
+								</div>
 
+								<div
+									style={{
+										borderWidth: "0px 0.4px 0 0.4px",
+										borderStyle: "solid",
+										borderColor: "#000000",
+									}}
+									className="col-span-5">
+									{t?.subcategories?.map((sub, index, array) => (
+										<div className="grid grid-cols-5 w-full">
+											<div
+												key={index}
+												style={{
+													borderWidth:
+														index !== 0 && index === array.length - 1
+															? "0px"
+															: "0px 0 0.4px 0",
+													borderStyle: "solid",
+													borderColor: "#000000",
+												}}
+												className="flex px-3 col-span-1 min-h-14 items-center gap-3">
+												<img src={Infra} alt="" className="" />
+												<small className="text-base font-medium text-[#334155]">
+													{sub.name}
+												</small>
+											</div>
+											<div
+												style={{
+													borderWidth: "0px 0 0 0.4px",
+													borderStyle: "solid",
+													borderColor: "#000000",
+												}}
+												className="col-span-4">
+												{sub?.rows?.map((row, idx, arr) => (
+													<div key={idx} className="grid grid-cols-4 w-full">
+														<div
+															style={{
+																borderWidth: "0px 0 0.4px 0",
+																borderStyle: "solid",
+																borderColor: "#000000",
+															}}
+															className="min-h-14 col-span-2 w-full px-2 flex items-center">
+															<span className="text-base font-normal text-[#334155] inter">
+																{row?.label}
+															</span>
+														</div>
+														<div
+															style={{
+																borderWidth: "0px 0 0.4px 0.4px",
+																borderStyle: "solid",
+																borderColor: "#000000",
+															}}
+															className="col-span-1 flex justify-center items-center">
+															{row?.tool1 === "pending" ? (
+																<PendingComp />
+															) : row?.tool1 === true ? (
+																<GoodComp />
+															) : (
+																<BadComp />
+															)}
+														</div>
+														<div
+															style={{
+																borderWidth: "0px 0 0.4px 0.4px",
+																borderStyle: "solid",
+																borderColor: "#000000",
+															}}
+															className="col-span-1 flex justify-center items-center">
+															{row?.tool2 === "pending" ? (
+																<PendingComp />
+															) : row?.tool2 === true ? (
+																<GoodComp />
+															) : (
+																<BadComp />
+															)}
+														</div>
+													</div>
+												))}
+											</div>
+										</div>
+									))}
+								</div>
+							</div>
+						))}
+					</div>
+					<div className={!selectedTools?.one ? "hidden" : "pb-10"}>
+						{kpidata?.docs?.map((sub: any, index: number) => (
 							<div
 								style={{
-									borderWidth: "0px 0.4px 0 0.4px",
+									borderWidth: "0.4px 0 0 0.4px",
 									borderStyle: "solid",
 									borderColor: "#000000",
 								}}
-								className="col-span-5">
-								{t?.subcategories?.map((sub, index, array) => (
-									<div className="grid grid-cols-5 w-full">
-										<div
-											key={index}
-											style={{
-												borderWidth:
-													index !== 0 && index === array.length - 1
-														? "0px"
-														: "0px 0 0.4px 0",
-												borderStyle: "solid",
-												borderColor: "#000000",
-											}}
-											className="flex px-3 col-span-1 min-h-14 items-center gap-3">
-											<img src={Infra} alt="" className="" />
-											<small className="text-base font-medium text-[#334155]">
-												{sub.name}
-											</small>
+								className="grid grid-cols-6 w-full">
+								<div
+									key={index}
+									style={{
+										borderWidth: "0px 0 0.4px 0px",
+										borderStyle: "solid",
+										borderColor: "#000000",
+									}}
+									className="flex px-3 col-span-2 min-h-14 items-center gap-3">
+									<img src={Infra} alt="" className="" />
+									<small className="text-base font-medium text-[#334155]">
+										{sub?.name || sub?.category}
+									</small>
+								</div>
+								<div
+									style={{
+										borderWidth: "0px 0 0 0.4px",
+										borderStyle: "solid",
+										borderColor: "#000000",
+									}}
+									className="col-span-4">
+									{sub?.data?.map((row: any, idx: number, arr: any[]) => (
+										<div key={idx} className="grid grid-cols-4 w-full">
+											<div
+												style={{
+													borderWidth: "0px 0 0.4px 0.4px",
+													borderStyle: "solid",
+													borderColor: "#000000",
+												}}
+												className="min-h-14 col-span-2 w-full px-2 flex items-center">
+												<span className="text-base font-normal text-[#334155] inter">
+													{row?.title}
+												</span>
+											</div>
+											<div
+												style={{
+													borderWidth: "0px 0 0.4px 0.4px",
+													borderStyle: "solid",
+													borderColor: "#000000",
+												}}
+												className="col-span-1 flex justify-center items-center">
+												{/* {row?.tool1 === "pending" ? (
+													<PendingComp />
+												) : row?.tool1 === true ? (
+													<GoodComp />
+												) : (
+													<BadComp />
+												)} */}
+												<ProductTableShow
+													prevData={selectedTools?.one?.kpiSelection}
+													product={row}
+													title={sub?.category}
+												/>
+											</div>
+											<div
+												style={{
+													borderWidth: "0 0.4px 0.4px 0.4px",
+													borderStyle: "solid",
+													borderColor: "#000000",
+												}}
+												className="col-span-1 flex justify-center items-center">
+												{/* {row?.tool2 === "pending" ? (
+													<PendingComp />
+												) : row?.tool2 === true ? (
+													<GoodComp />
+												) : (
+													<BadComp />
+												)} */}
+												<ProductTableShow
+													prevData={selectedTools?.two?.kpiSelection}
+													product={row}
+													title={sub?.category}
+												/>
+											</div>
 										</div>
-										<div
-											style={{
-												borderWidth: "0px 0 0 0.4px",
-												borderStyle: "solid",
-												borderColor: "#000000",
-											}}
-											className="col-span-4">
-											{sub?.rows?.map((row, idx, arr) => (
-												<div key={idx} className="grid grid-cols-4 w-full">
-													<div
-														style={{
-															borderWidth: "0px 0 0.4px 0",
-															borderStyle: "solid",
-															borderColor: "#000000",
-														}}
-														className="min-h-14 col-span-2 w-full px-2 flex items-center">
-														<span className="text-base font-normal text-[#334155] inter">
-															{row?.label}
-														</span>
-													</div>
-													<div
-														style={{
-															borderWidth: "0px 0 0.4px 0.4px",
-															borderStyle: "solid",
-															borderColor: "#000000",
-														}}
-														className="col-span-1 flex justify-center items-center">
-														{row?.tool1 === "pending" ? (
-															<PendingComp />
-														) : row?.tool1 === true ? (
-															<GoodComp />
-														) : (
-															<BadComp />
-														)}
-													</div>
-													<div
-														style={{
-															borderWidth: "0px 0 0.4px 0.4px",
-															borderStyle: "solid",
-															borderColor: "#000000",
-														}}
-														className="col-span-1 flex justify-center items-center">
-														{row?.tool2 === "pending" ? (
-															<PendingComp />
-														) : row?.tool2 === true ? (
-															<GoodComp />
-														) : (
-															<BadComp />
-														)}
-													</div>
-												</div>
-											))}
-										</div>
-									</div>
-								))}
+									))}
+								</div>
 							</div>
-						</div>
-					))}
-				</div>
+						))}
+					</div>
+				</>
 			)}
 			{tab === "map" && (
 				<div
@@ -372,12 +480,28 @@ export const ToolsTable = () => {
 					</div>
 				</div>
 			)}
-			{modal === "select" && (
-				<SelectToolModal handleClose={() => setModal("")} />
+			{["one", "two"]?.includes(modal) && (
+				<SelectToolModal
+					handleClose={() => setModal("")}
+					selectLevel={modal ? modal : null}
+					preActive={selectedAppLevel}
+					preSelection={selectedTools}
+					handleSelect={(da: any) => {
+						if (da?.selection) {
+							setSelectedTools(da?.selection);
+						}
+						if (da?.active) {
+							setSelectedAppLevel(da?.active);
+						}
+						setModal("");
+					}}
+				/>
 			)}
 		</div>
 	);
 };
+
+export const CheckerDecider = () => {};
 
 export const PendingComp = () => {
 	return (
@@ -470,3 +594,33 @@ export default ProductTable;
 //     </table>
 //   </div>
 // </div>
+
+export const ProductTableShow = ({ product, prevData, title }) => {
+	let [show, setShow] = useState("");
+
+	// console.log({ prevData, product, title });
+
+	useEffect(() => {
+		if (prevData) {
+			let findOne = prevData?.find(it => it?.category === title);
+			if (findOne) {
+				let findTwo = findOne?.data?.find(it => it?.title === product?.title);
+				if (findTwo) {
+					setShow(findTwo?.status);
+				}
+			}
+		} else setShow(product?.status);
+	}, [prevData, product, title]);
+
+	return (
+		<>
+			{["good", "yes"]?.includes(show) ? (
+				<GoodComp />
+			) : ["bad", "no"]?.includes(show) ? (
+				<BadComp />
+			) : (
+				<PendingComp />
+			)}
+		</>
+	);
+};

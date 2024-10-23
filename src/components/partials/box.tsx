@@ -1,5 +1,4 @@
-import { useEffect, useState } from "react";
-import { BadComp, GoodComp, PendingComp } from "./tables";
+import { PendingComp, ProductTableShow } from "./tables";
 import Arrows from "../../assets/icons/arrows.svg";
 import Info from "../../assets/icons/information.svg";
 
@@ -55,36 +54,6 @@ export const ProductTableRadio = ({ handleKpi, formIndex, product, index }) => {
 					checked={product?.status === "no"}
 				/>
 			</button>
-		</>
-	);
-};
-
-export const ProductTableShow = ({ product, prevData, title }) => {
-	let [show, setShow] = useState("");
-
-	// console.log({ prevData, product, title });
-
-	useEffect(() => {
-		if (prevData) {
-			let findOne = prevData?.find(it => it?.category === title);
-			if (findOne) {
-				let findTwo = findOne?.data?.find(it => it?.title === product?.title);
-				if (findTwo) {
-					setShow(findTwo?.status);
-				}
-			}
-		} else setShow(product?.status);
-	}, [prevData, product, title]);
-
-	return (
-		<>
-			{["good", "yes"]?.includes(show) ? (
-				<GoodComp />
-			) : ["bad", "no"]?.includes(show) ? (
-				<BadComp />
-			) : (
-				<PendingComp />
-			)}
 		</>
 	);
 };
