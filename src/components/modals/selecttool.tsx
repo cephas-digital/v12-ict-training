@@ -39,7 +39,9 @@ const SelectToolModal = ({
 		);
 		if (findApp) {
 			let filterData = findApp?.data?.filter((item: any) =>
-				["utility", "regulatory"]?.includes(item?.title?.toLowerCase())
+				["utility/municipal", "regulatory"]?.includes(
+					item?.title?.toLowerCase()
+				)
 			);
 			setOptions(filterData);
 		}

@@ -160,7 +160,8 @@ export const ToolsTable = () => {
 		[selectedTools, setSelectedTools] = useState<any>(null),
 		[selectedAppLevel, setSelectedAppLevel] = useState<any>(null),
 		{ getDynamicLogger } = useRawdataStore(),
-		{ kpidata }: any = useRawdataStore();
+		{ kpidata }: any = useRawdataStore(),
+		[newKpiMapper, setNewKpiMapper] = useState<any>(null);
 
 	useEffect(() => {
 		if (selectedAppLevel) {
@@ -172,6 +173,38 @@ export const ToolsTable = () => {
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [selectedAppLevel]);
+
+	useEffect(() => {
+		if (kpidata) {
+			let someChecker = kpidata?.docs?.some(it => it?.upperCategory);
+			if (someChecker) {
+				let thisData = kpidata?.docs;
+
+				let groups = thisData?.reduce((groups, game) => {
+					let date = game?.upperCategory;
+					if (!groups[date]) {
+						groups[date] = [];
+					}
+					groups[date].push(game);
+					return groups;
+				}, {});
+				const groupArrays = Object.keys(groups).map(date => {
+					return {
+						category: date,
+						data: groups[date],
+					};
+				});
+				setNewKpiMapper({
+					level: "3 Step",
+					data: { ...kpidata, docs: groupArrays?.reverse() },
+				});
+			} else {
+				setNewKpiMapper({ level: "2 Step", data: kpidata });
+			}
+		}
+	}, [kpidata]);
+
+	console.log({ newKpiMapper });
 
 	return (
 		<div>
@@ -363,92 +396,195 @@ export const ToolsTable = () => {
 						))}
 					</div>
 					<div className={!selectedTools?.one ? "hidden" : "pb-10"}>
-						{kpidata?.docs?.map((sub: any, index: number) => (
-							<div
-								style={{
-									borderWidth: "0.4px 0 0 0.4px",
-									borderStyle: "solid",
-									borderColor: "#000000",
-								}}
-								className="grid grid-cols-6 w-full">
-								<div
-									key={index}
-									style={{
-										borderWidth: "0px 0 0.4px 0px",
-										borderStyle: "solid",
-										borderColor: "#000000",
-									}}
-									className="flex px-3 col-span-2 min-h-14 items-center gap-3">
-									<img src={Infra} alt="" className="" />
-									<small className="text-base font-medium text-[#334155]">
-										{sub?.name || sub?.category}
-									</small>
-								</div>
-								<div
-									style={{
-										borderWidth: "0px 0 0 0.4px",
-										borderStyle: "solid",
-										borderColor: "#000000",
-									}}
-									className="col-span-4">
-									{sub?.data?.map((row: any, idx: number, arr: any[]) => (
-										<div key={idx} className="grid grid-cols-4 w-full">
-											<div
-												style={{
-													borderWidth: "0px 0 0.4px 0.4px",
-													borderStyle: "solid",
-													borderColor: "#000000",
-												}}
-												className="min-h-14 col-span-2 w-full px-2 flex items-center">
-												<span className="text-base font-normal text-[#334155] inter">
-													{row?.title}
-												</span>
-											</div>
-											<div
-												style={{
-													borderWidth: "0px 0 0.4px 0.4px",
-													borderStyle: "solid",
-													borderColor: "#000000",
-												}}
-												className="col-span-1 flex justify-center items-center">
-												{/* {row?.tool1 === "pending" ? (
+						{newKpiMapper?.level === "3 Step"
+							? newKpiMapper?.data?.docs?.map((t: any, i: number) => (
+									<div
+										key={i}
+										style={{
+											borderWidth: "0.4px 0 0 0.4px",
+											borderStyle: "solid",
+											borderColor: "#000000",
+										}}
+										className="w-full grid grid-cols-6">
+										<div
+											style={{
+												borderWidth: "0px 0 0.4px 0px",
+												borderStyle: "solid",
+												borderColor: "#000000",
+											}}
+											className="col-span-1 pt-8 px-3">
+											<p className="text-base font-bold text-[#334155]">
+												{t?.category}
+											</p>
+										</div>
+
+										<div
+											style={{
+												borderWidth: "0px 0.4px 0 0.4px",
+												borderStyle: "solid",
+												borderColor: "#000000",
+											}}
+											className="col-span-5">
+											{t?.data?.map((sub: any, index: number, array: any[]) => (
+												<div className="grid grid-cols-5 w-full">
+													<div
+														key={index}
+														style={{
+															borderWidth:
+																index !== 0 && index === array.length - 1
+																	? "0px"
+																	: "0px 0 0.4px 0",
+															borderStyle: "solid",
+															borderColor: "#000000",
+														}}
+														className="flex px-3 col-span-1 min-h-14 items-center gap-3">
+														<img src={Infra} alt="" className="" />
+														<small className="text-base font-medium text-[#334155]">
+															{sub?.category}
+														</small>
+													</div>
+													<div
+														style={{
+															borderWidth: "0px 0 0 0.4px",
+															borderStyle: "solid",
+															borderColor: "#000000",
+														}}
+														className="col-span-4">
+														{sub?.data?.map((row: any, idx: number) => (
+															<div
+																key={idx}
+																className="grid grid-cols-4 w-full">
+																<div
+																	style={{
+																		borderWidth: "0px 0 0.4px 0",
+																		borderStyle: "solid",
+																		borderColor: "#000000",
+																	}}
+																	className="min-h-14 col-span-2 w-full px-2 flex items-center">
+																	<span className="text-base font-normal text-[#334155] inter">
+																		{row?.title}
+																	</span>
+																</div>
+																<div
+																	style={{
+																		borderWidth: "0px 0 0.4px 0.4px",
+																		borderStyle: "solid",
+																		borderColor: "#000000",
+																	}}
+																	className="col-span-1 flex justify-center items-center">
+																	<ProductTableShow
+																		prevData={selectedTools?.one?.kpiSelection}
+																		product={row}
+																		title={sub?.category}
+																	/>
+																</div>
+																<div
+																	style={{
+																		borderWidth: "0px 0 0.4px 0.4px",
+																		borderStyle: "solid",
+																		borderColor: "#000000",
+																	}}
+																	className="col-span-1 flex justify-center items-center">
+																	<ProductTableShow
+																		prevData={selectedTools?.two?.kpiSelection}
+																		product={row}
+																		title={sub?.category}
+																	/>
+																</div>
+															</div>
+														))}
+													</div>
+												</div>
+											))}
+										</div>
+									</div>
+							  ))
+							: newKpiMapper?.data?.docs?.map((sub: any, index: number) => (
+									<div
+										style={{
+											borderWidth: "0.4px 0 0 0.4px",
+											borderStyle: "solid",
+											borderColor: "#000000",
+										}}
+										className="grid grid-cols-6 w-full">
+										<div
+											key={index}
+											style={{
+												borderWidth: "0px 0 0.4px 0px",
+												borderStyle: "solid",
+												borderColor: "#000000",
+											}}
+											className="flex px-3 col-span-2 min-h-14 items-center gap-3">
+											<img src={Infra} alt="" className="" />
+											<small className="text-base font-medium text-[#334155]">
+												{sub?.name || sub?.category}
+											</small>
+										</div>
+										<div
+											style={{
+												borderWidth: "0px 0 0 0.4px",
+												borderStyle: "solid",
+												borderColor: "#000000",
+											}}
+											className="col-span-4">
+											{sub?.data?.map((row: any, idx: number, arr: any[]) => (
+												<div key={idx} className="grid grid-cols-4 w-full">
+													<div
+														style={{
+															borderWidth: "0px 0 0.4px 0.4px",
+															borderStyle: "solid",
+															borderColor: "#000000",
+														}}
+														className="min-h-14 col-span-2 w-full px-2 flex items-center">
+														<span className="text-base font-normal text-[#334155] inter">
+															{row?.title}
+														</span>
+													</div>
+													<div
+														style={{
+															borderWidth: "0px 0 0.4px 0.4px",
+															borderStyle: "solid",
+															borderColor: "#000000",
+														}}
+														className="col-span-1 flex justify-center items-center">
+														{/* {row?.tool1 === "pending" ? (
 													<PendingComp />
 												) : row?.tool1 === true ? (
 													<GoodComp />
 												) : (
 													<BadComp />
 												)} */}
-												<ProductTableShow
-													prevData={selectedTools?.one?.kpiSelection}
-													product={row}
-													title={sub?.category}
-												/>
-											</div>
-											<div
-												style={{
-													borderWidth: "0 0.4px 0.4px 0.4px",
-													borderStyle: "solid",
-													borderColor: "#000000",
-												}}
-												className="col-span-1 flex justify-center items-center">
-												{/* {row?.tool2 === "pending" ? (
+														<ProductTableShow
+															prevData={selectedTools?.one?.kpiSelection}
+															product={row}
+															title={sub?.category}
+														/>
+													</div>
+													<div
+														style={{
+															borderWidth: "0 0.4px 0.4px 0.4px",
+															borderStyle: "solid",
+															borderColor: "#000000",
+														}}
+														className="col-span-1 flex justify-center items-center">
+														{/* {row?.tool2 === "pending" ? (
 													<PendingComp />
 												) : row?.tool2 === true ? (
 													<GoodComp />
 												) : (
 													<BadComp />
 												)} */}
-												<ProductTableShow
-													prevData={selectedTools?.two?.kpiSelection}
-													product={row}
-													title={sub?.category}
-												/>
-											</div>
+														<ProductTableShow
+															prevData={selectedTools?.two?.kpiSelection}
+															product={row}
+															title={sub?.category}
+														/>
+													</div>
+												</div>
+											))}
 										</div>
-									))}
-								</div>
-							</div>
-						))}
+									</div>
+							  ))}
 					</div>
 				</>
 			)}
