@@ -452,39 +452,57 @@ const Dashboard = () => {
 												Data Type Generated
 											</h4>
 											<div className="mt-5 space-y-3">
-												<div className="flex items-center gap-2">
-													<div
-														className={`h-3 rounded-tr-3xl w-12 ${
-															start ? "bg-[#3787FF]" : "bg-[#D2D7D4]"
-														}`}></div>
-													{start && (
-														<h6 className="text-sm font-normal text-da-blue-600">
-															Quality of Service KPIs
-														</h6>
-													)}
-												</div>
-												<div className="flex items-center gap-2">
-													<div
-														className={`h-3 rounded-tr-3xl w-12 ${
-															start ? "bg-[#3787FF]" : "bg-[#D2D7D4]"
-														}`}></div>
-													{start && (
-														<h6 className="text-sm font-normal text-da-blue-600">
-															Quality of Service KPIs
-														</h6>
-													)}
-												</div>
-												<div className="flex items-center gap-2">
-													<div
-														className={`h-3 rounded-tr-3xl w-12 ${
-															start ? "bg-[#3787FF]" : "bg-[#D2D7D4]"
-														}`}></div>
-													{start && (
-														<h6 className="text-sm font-normal text-da-blue-600">
-															Quality of Service KPIs
-														</h6>
-													)}
-												</div>
+												{!start && !currentTool && (
+													<>
+														<div className="flex items-center gap-2">
+															<div
+																className={`h-3 rounded-tr-3xl w-12 ${
+																	start ? "bg-[#3787FF]" : "bg-[#D2D7D4]"
+																}`}></div>
+															{start && (
+																<h6 className="text-sm font-normal text-da-blue-600">
+																	Quality of Service KPIs
+																</h6>
+															)}
+														</div>
+														<div className="flex items-center gap-2">
+															<div
+																className={`h-3 rounded-tr-3xl w-12 ${
+																	start ? "bg-[#3787FF]" : "bg-[#D2D7D4]"
+																}`}></div>
+															{start && (
+																<h6 className="text-sm font-normal text-da-blue-600">
+																	Quality of Service KPIs
+																</h6>
+															)}
+														</div>
+														<div className="flex items-center gap-2">
+															<div
+																className={`h-3 rounded-tr-3xl w-12 ${
+																	start ? "bg-[#3787FF]" : "bg-[#D2D7D4]"
+																}`}></div>
+															{start && (
+																<h6 className="text-sm font-normal text-da-blue-600">
+																	Quality of Service KPIs
+																</h6>
+															)}
+														</div>
+													</>
+												)}
+												{currentTool &&
+													formInfo?.map((tool, i) => (
+														<div key={i} className="flex items-center gap-2">
+															<div
+																className={`h-3 rounded-tr-3xl w-12 ${
+																	start ? "bg-[#3787FF]" : "bg-[#D2D7D4]"
+																}`}></div>
+															{start && (
+																<h6 className="text-sm font-normal text-da-blue-600 capitalize">
+																	{tool?.category?.toLowerCase()}
+																</h6>
+															)}
+														</div>
+													))}
 											</div>
 										</WhiteBox>
 									</div>
