@@ -413,8 +413,8 @@ export const ToolsTable = () => {
 												borderColor: "#000000",
 											}}
 											className="col-span-1 pt-8 px-3">
-											<p className="text-base font-bold text-[#334155]">
-												{t?.category}
+											<p className="text-base font-bold text-[#334155] capitalize">
+												{t?.category?.toLowerCase()}
 											</p>
 										</div>
 
@@ -439,8 +439,8 @@ export const ToolsTable = () => {
 														}}
 														className="flex px-3 col-span-1 min-h-14 items-center gap-3">
 														<img src={Infra} alt="" className="" />
-														<small className="text-base font-medium text-[#334155]">
-															{sub?.category}
+														<small className="text-base font-medium text-[#334155] capitalize">
+															{sub?.category?.toLowerCase()}
 														</small>
 													</div>
 													<div

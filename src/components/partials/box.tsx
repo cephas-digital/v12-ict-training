@@ -133,7 +133,9 @@ export const ToolsKPIsData = ({
 	return (
 		<WhiteBox className="h-full" shadow={shadow}>
 			<div className="flex justify-between items-center">
-				<h5 className="text-base text-da-blue-600 font-medium">{title}</h5>
+				<h5 className="text-base text-da-blue-600 font-medium capitalize">
+					{title ? title?.toLowerCase() : ""}
+				</h5>
 				<img src={Info} alt="" className="" />
 			</div>
 			<div className="mt-2">
