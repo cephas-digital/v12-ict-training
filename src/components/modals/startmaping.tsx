@@ -113,8 +113,10 @@ const StartMapping = ({
 					{(data || filters).map((filter, i: number) => (
 						<div key={filter?._id || filter?.id || i} className="">
 							<div className="flex justify-between items-center">
-								<h5 className="text-base text-da-blue-600 font-medium">
-									{filter?.category || filter?.label}
+								<h5 className="text-base text-da-blue-600 font-medium capitalize">
+									{filter?.category
+										? filter?.category?.toLowerCase()
+										: filter?.label}
 								</h5>
 								<img
 									onClick={() =>
@@ -135,7 +137,11 @@ const StartMapping = ({
 							</div>
 							<div className="mt-3">
 								<SearchInput
-									placeholder={`Search ${filter?.category || filter?.label}`}
+									placeholder={`Search ${
+										filter?.category
+											? filter?.category?.toLowerCase()
+											: filter?.label
+									}`}
 								/>
 							</div>
 							<div className="mt-4">
@@ -165,7 +171,7 @@ const StartMapping = ({
 						text={anyOptionsSelected ? "Apply Filter" : "Save Selection"}
 						onClick={() => {
 							console.log({ selectedOptions });
-							if (setStart) setStart()
+							if (setStart) setStart();
 							if (handleComplete) {
 								handleComplete(selectedOptions);
 							} else handleClose();
