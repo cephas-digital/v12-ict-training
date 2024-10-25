@@ -80,7 +80,7 @@ const HeroSection = () => {
             data-aos="zoom-in-down"
             data-aos-duration="1500"
             alt=""
-            className="absolute hidden lg:block bottom-60 right-10 h-96"
+            className="absolute hidden lg:block bottom-28 right-10 h-96 object-contain"
           />
         </section>
         <div className="w-full about-section lg:pt-10 bg-white">

@@ -396,7 +396,7 @@ const Dashboard = () => {
                       <h4 className="text-base font-medium text-[#000929]">
                         Countries using sanitation data tools
                       </h4>
-                      <div className="w-full h-44">
+                      {/* <div className="w-full h-44">
                         <MapContainer
                           center={[39.8283, -98.5795] as L.LatLngExpression}
                           zoom={4}
@@ -431,8 +431,8 @@ const Dashboard = () => {
                             </Marker>
                           ))}
                         </MapContainer>
-                      </div>
-                      {/* <img src={Map} alt="" className="mt-4" /> */}
+                      </div> */}
+                      <img src={Map} alt="" className="mt-4" />
                     </div>
                     <div>
                       <h5 className="text-base font-medium text-[#000929]">
