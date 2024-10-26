@@ -102,7 +102,7 @@ const Dashboard = () => {
 	// ];
 
 	let { getDynamicLogger, getLogger, data } = useRawdataStore(),
-		{ mapTools, kpidata }: any = useRawdataStore(),
+		{ mapTools, kpidata, regionCountry }: any = useRawdataStore(),
 		tools = data?.docs?.sort(
 			(
 				a: { category: { toString: () => string } },
@@ -112,6 +112,7 @@ const Dashboard = () => {
 				return a?.category?.toString()?.localeCompare(b?.category?.toString());
 			}
 		),
+		regionTools = regionCountry?.docs,
 		[selection, setSelection] = useState<any>(null),
 		[currentTool, setCurrentTool] = useState<any>(null),
 		[formInfo, setFormInfo] = useState(null);
@@ -127,6 +128,11 @@ const Dashboard = () => {
 			type: "get",
 			url: `/api/v1/rawdata?pagination=not`,
 			getter: (d: any) => getLogger(d),
+		});
+		apiCall({
+			type: "get",
+			url: `/api/v1/tools/manage-region-country?pagination=not`,
+			getter: (d: any) => getDynamicLogger(d, "regionCountry"),
 		});
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
@@ -202,6 +208,7 @@ const Dashboard = () => {
 	// 	{ name: "EDAMS Technology", link: "mails@nwasco.org.zm" },
 	// 	{ name: "EDAMS Technology", link: "mails@nwasco.org.zm" },
 	// ];
+	console.log({ regionCountry });
 
 	useEffect(() => {
 		let appLevel = currentTool?.toolSelection?.find(
@@ -692,7 +699,13 @@ const Dashboard = () => {
 			{modal === "region" && (
 				<SelectRegion
 					handleClose={() => setModal("")}
-					setStart={() => setStart(true)}
+					data={regionTools}
+					defaultSelection={selection}
+					handleComplete={da => {
+						setSelection(da);
+						setModal("");
+						setStart(true);
+					}}
 				/>
 			)}
 		</div>

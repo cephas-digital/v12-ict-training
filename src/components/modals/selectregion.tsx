@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import SideModalcontainer from "./sidemodalcontainer";
 import Close from "../../assets/icons/close.svg";
 import Reset from "../../assets/icons/reset.svg";
 import SearchInput from "../partials/inputs";
 import { NormalBtn } from "../partials/buttons";
 import { InputReloader } from "./startmaping";
+import { apiCall } from "../../data/useFetcher";
+import { useRawdataStore } from "../../data/stores/loggerStore";
 
 const filters = [
 	{
@@ -49,18 +51,19 @@ const SelectRegion = ({
 	defaultSelection?: any;
 }) => {
 	const [selectedOptions, setSelectedOptions] = useState(
-		defaultSelection ||
-			(data || filters).reduce((acc, filter) => {
-				acc[data ? filter?.category : filter?.id] = data
-					? filter?.category?.toLowerCase() === "application level"
+			defaultSelection ||
+				(data || filters).reduce((acc, filter) => {
+					acc[data ? filter?.category : filter?.id] = data
+						? filter?.category?.toLowerCase() === "application level"
+							? ""
+							: []
+						: filter?.type === "radio"
 						? ""
-						: []
-					: filter?.type === "radio"
-					? ""
-					: [];
-				return acc;
-			}, {})
-	);
+						: [];
+					return acc;
+				}, {})
+		),
+		{ getDynamicLogger } = useRawdataStore();
 
 	const handleOptionChange = (
 		filterId: string,
@@ -95,6 +98,30 @@ const SelectRegion = ({
 	const anyOptionsSelected = Object.values(selectedOptions).some(options =>
 		Array.isArray(options) ? options.length > 0 : options !== ""
 	);
+
+	useEffect(() => {
+		if (selectedOptions["REGION"]?.length > 0) {
+			let newObj = { REGION: selectedOptions?.["REGION"] };
+			handleReset("COUNTRY", "checkbox");
+			apiCall({
+				type: "post",
+				url: `/api/v1/tools/manage-region-country?pagination=not`,
+				data: {
+					toolSelection: Object.entries(newObj)
+						.map(([key, value]) => ({
+							category: key,
+							data: Array.isArray(value) ? value : [value], // Ensure data is always an array
+						}))
+						?.filter(it => it?.data?.length > 0),
+				},
+				getter: (d: any) => getDynamicLogger(d, "regionCountry"),
+			});
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [selectedOptions?.["REGION"]]);
+
+	// console.log({ selectedOptions });
+
 	return (
 		<div>
 			<SideModalcontainer>
