@@ -26,6 +26,7 @@ import { apiCall } from "../../data/useFetcher";
 import DOMPurify from "dompurify";
 import { ComposableMap, Geographies, Geography } from "react-simple-maps";
 import { feature } from "topojson-client";
+import InfoModal from "../../components/modals/infomodal";
 
 const toolAvailability = {
   toolA: ["USA", "CAN", "MEX"],
@@ -41,6 +42,7 @@ export const createMarkup = (html) => {
 
 const Dashboard = () => {
   const [start, setStart] = useState(false),
+    [info, setInfo] = useState(""),
     [modal, setModal] = useState(""),
     [tab, setTab] = useState("overview"),
     navigate = useNavigate(),
@@ -408,7 +410,7 @@ const Dashboard = () => {
                       <h4 className="text-base font-medium text-[#000929]">
                         Countries using sanitation data tools
                       </h4>
-                      <div className="mt-6 h-60 w-96">
+                      <div className="mt-3 h-60 w-80">
                         <ComposableMap projection="geoMercator">
                           <Geographies geography={geoData}>
                             {({ geographies }) =>
@@ -527,7 +529,12 @@ const Dashboard = () => {
                         <h5 className="text-base text-da-blue-600 font-medium">
                           Infrastructure and Stability
                         </h5>
-                        <img src={Info} alt="" className="" />
+                        <img
+                          src={Info}
+                          onClick={() => setInfo("infra")}
+                          alt=""
+                          className="cursor-pointer"
+                        />
                       </div>
                       <div className="mt-2">
                         <ProductTable start={false} products={products} />
@@ -538,7 +545,7 @@ const Dashboard = () => {
                         <h5 className="text-base text-da-blue-600 font-medium">
                           Operational Optimization
                         </h5>
-                        <img src={Info} alt="" className="" />
+                        <img src={Info} alt="" className="cursor-pointer" />
                       </div>
                       <div className="mt-2">
                         <ProductTable start={false} products={optimization} />
@@ -717,6 +724,12 @@ const Dashboard = () => {
             setModal("");
             setStart(true);
           }}
+        />
+      )}
+      {info === "infra" && (
+        <InfoModal
+          handleClose={() => setInfo("")}
+          title={"Infrastructure and Stability"}
         />
       )}
     </div>
