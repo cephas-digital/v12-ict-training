@@ -9,8 +9,8 @@ import CompareIcon from "../../assets/icons/compareicon.svg";
 import SelectIcon from "../../assets/icons/calendar 01.svg";
 import Map from "../../assets/images/map.png";
 import WhiteBox, {
-  ToolsKPIsData,
-  WhiteBox2,
+	ToolsKPIsData,
+	WhiteBox2,
 } from "../../components/partials/box";
 import Info from "../../assets/icons/information.svg";
 import ProductTable from "../../components/partials/tables";
@@ -26,7 +26,7 @@ import introJs from "intro.js";
 import { useRawdataStore } from "../../data/stores/loggerStore";
 import { apiCall } from "../../data/useFetcher";
 import DOMPurify from "dompurify";
-import {
+// import {
   ComposableMap,
   Geographies,
   Geography,
@@ -45,12 +45,28 @@ const data = [
   { country: "BRA", value: 55 },
 ];
 
-export const createMarkup = (html) => {
-  return {
-    __html: DOMPurify.sanitize(html),
-  };
+export const createMarkup = html => {
+	return {
+		__html: DOMPurify.sanitize(html),
+	};
+};
+interface Location {
+  id: number;
+  lat: number;
+  lng: number;
+  name: string;
+}
+const LiveLocationMap = () => {
+  const [locations, setLocations] = useState<Location[]>([
+    { id: 1, lat: 40.7128, lng: -74.006, name: "New York" },
+    { id: 2, lat: 34.0522, lng: -118.2437, name: "Los Angeles" },
+  ]);
 };
 const Dashboard = () => {
+  const [locations, setLocations] = useState<Location[]>([
+    { id: 1, lat: 40.7128, lng: -74.006, name: "New York" },
+    { id: 2, lat: 34.0522, lng: -118.2437, name: "Los Angeles" },
+  ]);
   const [start, setStart] = useState(false),
     [modal, setModal] = useState(""),
     [tab, setTab] = useState("overview"),
@@ -76,141 +92,148 @@ const Dashboard = () => {
       { name: "Ongoing operational resilliency", status: "good" },
     ];
 
-  // const sanitationTools = [
-  //   { name: "APAM", details: "APAM is a management tool..." },
-  //   { name: "EDAMS IMS", details: "EDAMS IMS information..." },
-  //   { name: "Equiserve", details: "Equiserve details..." },
-  //   { name: "ERP System - Nakuru", details: "ERP System for Nakuru..." },
-  //   {
-  //     name: "Indah Water Malaysia Planning tool",
-  //     details: "NWASCO NIS details...",
-  //   },
-  //   {
-  //     name: "Integrated Management Information System (IMIS)",
-  //     details: "Real-time monitoring system...",
-  //   },
-  //   {
-  //     name: "IMIS Dhaka",
-  //     details:
-  //       "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s",
-  //   },
-  //   {
-  //     name: "Lusaka  Sanitation System",
-  //     details:
-  //       "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s",
-  //   },
-  // ];
+	// const sanitationTools = [
+	//   { name: "APAM", details: "APAM is a management tool..." },
+	//   { name: "EDAMS IMS", details: "EDAMS IMS information..." },
+	//   { name: "Equiserve", details: "Equiserve details..." },
+	//   { name: "ERP System - Nakuru", details: "ERP System for Nakuru..." },
+	//   {
+	//     name: "Indah Water Malaysia Planning tool",
+	//     details: "NWASCO NIS details...",
+	//   },
+	//   {
+	//     name: "Integrated Management Information System (IMIS)",
+	//     details: "Real-time monitoring system...",
+	//   },
+	//   {
+	//     name: "IMIS Dhaka",
+	//     details:
+	//       "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s",
+	//   },
+	//   {
+	//     name: "Lusaka  Sanitation System",
+	//     details:
+	//       "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s",
+	//   },
+	// ];
 
-  let { getDynamicLogger, getLogger, data } = useRawdataStore(),
-    { mapTools, kpidata }: any = useRawdataStore(),
-    tools = data?.docs?.sort(
-      (
-        a: { category: { toString: () => string } },
-        b: { category: { toString: () => any } }
-      ) => {
-        // Compare the values of the specified key in a case-insensitive manner
-        return a?.category?.toString()?.localeCompare(b?.category?.toString());
-      }
-    ),
-    [selection, setSelection] = useState<any>(null),
-    [currentTool, setCurrentTool] = useState<any>(null),
-    [formInfo, setFormInfo] = useState(null);
+	let { getDynamicLogger, getLogger, data } = useRawdataStore(),
+		{ mapTools, kpidata, regionCountry }: any = useRawdataStore(),
+		tools = data?.docs?.sort(
+			(
+				a: { category: { toString: () => string } },
+				b: { category: { toString: () => any } }
+			) => {
+				// Compare the values of the specified key in a case-insensitive manner
+				return a?.category?.toString()?.localeCompare(b?.category?.toString());
+			}
+		),
+		regionTools = regionCountry?.docs,
+		[selection, setSelection] = useState<any>(null),
+		[currentTool, setCurrentTool] = useState<any>(null),
+		[formInfo, setFormInfo] = useState(null);
 
-  useEffect(() => {
-    getDynamicLogger({}, "mapTools");
-    // apiCall({
-    // 	type: "get",
-    // 	url: `/api/v1/rawdata/manage-kpis?pagination=not`,
-    // 	getter: (d: any) => getDynamicLogger(d, "kpidata"),
-    // });
-    apiCall({
-      type: "get",
-      url: `/api/v1/rawdata?pagination=not`,
-      getter: (d: any) => getLogger(d),
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+	useEffect(() => {
+		getDynamicLogger({}, "mapTools");
+		// apiCall({
+		// 	type: "get",
+		// 	url: `/api/v1/rawdata/manage-kpis?pagination=not`,
+		// 	getter: (d: any) => getDynamicLogger(d, "kpidata"),
+		// });
+		apiCall({
+			type: "get",
+			url: `/api/v1/rawdata?pagination=not`,
+			getter: (d: any) => getLogger(d),
+		});
+		apiCall({
+			type: "get",
+			url: `/api/v1/tools/manage-region-country?pagination=not`,
+			getter: (d: any) => getDynamicLogger(d, "regionCountry"),
+		});
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
 
-  useEffect(() => {
-    if (!selection) {
-      const intro = introJs();
+	useEffect(() => {
+		if (!selection) {
+			const intro = introJs();
 
-      // Define your steps
-      intro.setOptions({
-        steps: [
-          {
-            intro: "Welcome to the Water and Sanitation Tools Map!",
-          },
-          {
-            element: ".start-mapping-btn",
-            intro:
-              'Click "Start Mapping" to select different criteria and parameters to visualize information about tools.',
-          },
-          {
-            element: ".export-btn",
-            intro:
-              "You can also export or compare tools using the buttons above.",
-          },
-          {
-            element: ".tools-mapped-section",
-            intro: "Finally, you can view mapped tools and regions here.",
-          },
-        ],
-        showProgress: true, // Adds "1 of X steps"
-        showStepNumbers: true, // Shows the step number
-        exitOnOverlayClick: false, // Prevents closing when clicking on overlay
-        overlayOpacity: 0.7, // Make background semi-transparent
-        tooltipClass: "customTooltip", // Add custom CSS class for tooltip styling
-      });
+			// Define your steps
+			intro.setOptions({
+				steps: [
+					{
+						intro: "Welcome to the Water and Sanitation Tools Map!",
+					},
+					{
+						element: ".start-mapping-btn",
+						intro:
+							'Click "Start Mapping" to select different criteria and parameters to visualize information about tools.',
+					},
+					{
+						element: ".export-btn",
+						intro:
+							"You can also export or compare tools using the buttons above.",
+					},
+					{
+						element: ".tools-mapped-section",
+						intro: "Finally, you can view mapped tools and regions here.",
+					},
+				],
+				showProgress: true, // Adds "1 of X steps"
+				showStepNumbers: true, // Shows the step number
+				exitOnOverlayClick: false, // Prevents closing when clicking on overlay
+				overlayOpacity: 0.7, // Make background semi-transparent
+				tooltipClass: "customTooltip", // Add custom CSS class for tooltip styling
+			});
 
-      // Start the intro
-      intro.start();
-    }
-  }, [selection]);
+			// Start the intro
+			intro.start();
+		}
+	}, [selection]);
 
-  useEffect(() => {
-    if (selection) {
-      setCurrentTool(null);
-      apiCall({
-        type: "post",
-        url: `/api/v1/tools/manage-tools?pagination=not`,
-        getter: (d: any) => getDynamicLogger(d, "mapTools"),
-        data: {
-          toolSelection: Object.entries(selection)
-            .map(([key, value]) => ({
-              category: key,
-              data: Array.isArray(value) ? value : [value], // Ensure data is always an array
-            }))
-            ?.filter((it) => it?.data?.length > 0),
-        },
-      });
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selection]);
+	useEffect(() => {
+		if (selection) {
+			setCurrentTool(null);
+			apiCall({
+				type: "post",
+				url: `/api/v1/tools/manage-tools?pagination=not`,
+				getter: (d: any) => getDynamicLogger(d, "mapTools"),
+				data: {
+					toolSelection: Object.entries(selection)
+						.map(([key, value]) => ({
+							category: key,
+							data: Array.isArray(value) ? value : [value], // Ensure data is always an array
+						}))
+						?.filter(it => it?.data?.length > 0),
+				},
+			});
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [selection]);
 
-  useEffect(() => {
-    if (mapTools && mapTools?.totalDocs > 0 && selection) {
-      setCurrentTool(mapTools?.docs?.[0]);
-    }
+	useEffect(() => {
+		if (mapTools && mapTools?.totalDocs > 0 && selection) {
+			setCurrentTool(mapTools?.docs?.[0]);
+		}
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [mapTools]);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [mapTools]);
 
-  const contact = [currentTool?.website, currentTool?.contactEmailAddress],
-    webinar = [currentTool?.webinar];
-  // resources = [
-  // 	{ name: "EDAMS Technology", link: "mails@nwasco.org.zm" },
-  // 	{ name: "EDAMS Technology", link: "mails@nwasco.org.zm" },
-  // ];
+	const contact = [currentTool?.website, currentTool?.contactEmailAddress],
+		webinar = [currentTool?.webinar];
+	// resources = [
+	// 	{ name: "EDAMS Technology", link: "mails@nwasco.org.zm" },
+	// 	{ name: "EDAMS Technology", link: "mails@nwasco.org.zm" },
+	// ];
+	console.log({ regionCountry });
 
-  useEffect(() => {
-    let appLevel = currentTool?.toolSelection?.find(
-      (it: any) => it?.category === "APPLICATION LEVEL"
-    );
-    if (appLevel && kpidata) {
-      setFormInfo([...kpidata?.docs]);
-    }
-  }, [kpidata, currentTool]);
+	useEffect(() => {
+		let appLevel = currentTool?.toolSelection?.find(
+			(it: any) => it?.category === "APPLICATION LEVEL"
+		);
+		if (appLevel && kpidata) {
+			setFormInfo([...kpidata?.docs]);
+		}
+	}, [kpidata, currentTool]);
 
   useEffect(() => {
     if (currentTool) {
@@ -227,16 +250,16 @@ const Dashboard = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentTool]);
-  const [selectedTool, setSelectedTool] = useState("toolA"); // Default selected tool
 
-  const countryColors = {
-    available: "#FF5733",
-    notAvailable: "#EAEAEA",
-  };
-  const toolAvailability = {
-    toolA: ["USA", "CAN", "MEX", "NGA", "ENG", "GHA"],
-    toolB: ["FRA", "DEU", "ITA"],
-  };
+  //   delete L.Icon.Default.prototype._getIconUrl;
+  L.Icon.Default.mergeOptions({
+    iconRetinaUrl:
+      "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon-2x.png",
+    iconUrl:
+      "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png",
+    shadowUrl:
+      "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png",
+  });
   return (
     <div>
       <PageHeader />
@@ -396,37 +419,43 @@ const Dashboard = () => {
                       <h4 className="text-base font-medium text-[#000929]">
                         Countries using sanitation data tools
                       </h4>
-                      <div className="h-56 mt-5 w-80">
-                        <ComposableMap projection="geoMercator">
-                          <Geographies geography="/features.json">
-                            {({ geographies }) =>
-                              geographies.map((geo) => {
-                                const countryCode = geo.properties.ISO_A3; // Adjust if necessary
-                                console.log(countryCode); // Log country code
-                                const fillColor = toolAvailability[
-                                  selectedTool
-                                ].includes(countryCode)
-                                  ? countryColors.available
-                                  : countryColors.notAvailable;
-
-                                console.log(
-                                  `Country: ${countryCode}, Fill Color: ${fillColor}`
-                                ); // Log color decision
-
-                                return (
-                                  <Geography
-                                    key={geo.rsmKey}
-                                    geography={geo}
-                                    fill={fillColor}
-                                    stroke="#FFFFFF"
-                                  />
-                                );
-                              })
-                            }
-                          </Geographies>
-                        </ComposableMap>
-                      </div>
-                      {/* <img src={Map} alt="" className="mt-4" /> */}
+                      {/* <div className="w-full h-44">
+                        <MapContainer
+                          center={[39.8283, -98.5795] as L.LatLngExpression}
+                          zoom={4}
+                          scrollWheelZoom={true}
+                          className="w-full h-full"
+                          style={{ height: "100%", width: "100%" }}
+                        >
+                          <TileLayer
+                            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                          />
+                          {locations.map((location) => (
+                            <Marker
+                              key={location.id}
+                              position={
+                                [
+                                  location.lat,
+                                  location.lng,
+                                ] as L.LatLngExpression
+                              }
+                            >
+                              <Popup>
+                                <div className="p-2">
+                                  <h3 className="font-bold">{location.name}</h3>
+                                  <p className="text-sm">
+                                    Lat: {location.lat.toFixed(4)}
+                                    <br />
+                                    Lng: {location.lng.toFixed(4)}
+                                  </p>
+                                </div>
+                              </Popup>
+                            </Marker>
+                          ))}
+                        </MapContainer>
+                      </div> */}
+                      <img src={Map} alt="" className="mt-4" />
                     </div>
                     <div>
                       <h5 className="text-base font-medium text-[#000929]">
@@ -561,132 +590,133 @@ const Dashboard = () => {
                     className="
                     text-sm font-normal text-da-blue-600 mt-4
                     "
-                    dangerouslySetInnerHTML={createMarkup(
-                      currentTool?.description
-                    )}
-                  />
-                </WhiteBox2>
-                <div className="mt-6 grid grid-cols-3 gap-8">
-                  <div className="col-span-1">
-                    <WhiteBox>
-                      <h4 className="text-base font-medium text-[#000929]">
-                        Contact Details
-                      </h4>
-                      <div className="mt-5 space-y-3">
-                        {contact?.map((c) => (
-                          <div className="flex items-center gap-2">
-                            <div
-                              className={`h-3 rounded-tr-3xl w-12 ${
-                                start ? "bg-[#3787FF]" : "bg-[#D2D7D4]"
-                              }`}
-                            ></div>
-                            {start && (
-                              <h6 className="text-sm font-normal text-da-blue-600">
-                                {c}
-                              </h6>
-                            )}
-                          </div>
-                        ))}
-                      </div>
-                      <div className="mt-5">
-                        <h4 className="text-base font-medium text-[#000929]">
-                          Webinar
-                        </h4>
-                        <div className="mt-5 space-y-3">
-                          {webinar?.map((c) => (
-                            <div className="flex items-center gap-2">
-                              <div
-                                className={`h-3 rounded-tr-3xl w-12 ${
-                                  start ? "bg-[#3787FF]" : "bg-[#D2D7D4]"
-                                }`}
-                              ></div>
-                              {start && (
-                                <h6 className="text-sm font-normal text-[#3787FF]">
-                                  <a href={c}> {c}</a>
-                                </h6>
-                              )}
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                    </WhiteBox>
-                  </div>
-                  <div className="col-span-2">
-                    <WhiteBox>
-                      <h4 className="text-base font-medium text-[#000929]">
-                        Resources
-                      </h4>
-                      <div
-                        style={{
-                          border: "1px solid #E2E8F0",
-                        }}
-                        className="mt-5 h-10 w-full grid grid-cols-3"
-                      >
-                        <div className="cols-span-1 border-r border-r-[#E2E8F0] flex justify-center items-center h-full w-full">
-                          <h4 className="text-sm font-medium text-da-blue-600">
-                            Learning Materials
-                          </h4>
-                        </div>
-                        <div className="cols-span-2 h-full flex items-center pl-6">
-                          <h4 className="text-sm font-medium text-da-blue-600">
-                            Link
-                          </h4>
-                        </div>
-                      </div>
-                      {currentTool?.resources?.map((r: any, i: number) => (
-                        <div
-                          key={i}
-                          style={{
-                            border: "1px solid #E2E8F0",
-                          }}
-                          className="h-10 w-full grid grid-cols-3"
-                        >
-                          <div className="cols-span-1 border-r border-r-[#E2E8F0] flex items-center h-full w-full">
-                            <ul className="list-disc ml-6 list-inside">
-                              <li className="text-sm font-normal text-da-blue-600">
-                                {r?.material || r?.name}
-                              </li>
-                            </ul>
-                          </div>
-                          <div className="cols-span-2 h-full flex items-center pl-6">
-                            <a
-                              href={r?.link}
-                              className="text-sm font-normal text-da-blue-100"
-                            >
-                              {r?.link}
-                            </a>
-                          </div>
-                        </div>
-                      ))}
-                    </WhiteBox>
-                  </div>
-                </div>
-              </div>
-            )}
-          </div>
-        </div>
-      </div>
-      {modal === "start" && (
-        <StartMapping
-          // setStart={() => setStart(true)}
-          handleClose={() => setModal("")}
-          data={tools}
-          defaultSelection={selection}
-          handleComplete={(da) => {
-            setSelection(da);
-            setModal("");
-            setStart(true);
-          }}
-        />
-      )}
-      {modal === "region" && (
-        <SelectRegion
-          handleClose={() => setModal("")}
-          setStart={() => setStart(true)}
-        />
-      )}
-    </div>
-  );
+										dangerouslySetInnerHTML={createMarkup(
+											currentTool?.description
+										)}
+									/>
+								</WhiteBox2>
+								<div className="mt-6 grid grid-cols-3 gap-8">
+									<div className="col-span-1">
+										<WhiteBox>
+											<h4 className="text-base font-medium text-[#000929]">
+												Contact Details
+											</h4>
+											<div className="mt-5 space-y-3">
+												{contact?.map(c => (
+													<div className="flex items-center gap-2">
+														<div
+															className={`h-3 rounded-tr-3xl w-12 ${
+																start ? "bg-[#3787FF]" : "bg-[#D2D7D4]"
+															}`}></div>
+														{start && (
+															<h6 className="text-sm font-normal text-da-blue-600">
+																{c}
+															</h6>
+														)}
+													</div>
+												))}
+											</div>
+											<div className="mt-5">
+												<h4 className="text-base font-medium text-[#000929]">
+													Webinar
+												</h4>
+												<div className="mt-5 space-y-3">
+													{webinar?.map(c => (
+														<div className="flex items-center gap-2">
+															<div
+																className={`h-3 rounded-tr-3xl w-12 ${
+																	start ? "bg-[#3787FF]" : "bg-[#D2D7D4]"
+																}`}></div>
+															{start && (
+																<h6 className="text-sm font-normal text-[#3787FF]">
+																	<a href={c}> {c}</a>
+																</h6>
+															)}
+														</div>
+													))}
+												</div>
+											</div>
+										</WhiteBox>
+									</div>
+									<div className="col-span-2">
+										<WhiteBox>
+											<h4 className="text-base font-medium text-[#000929]">
+												Resources
+											</h4>
+											<div
+												style={{
+													border: "1px solid #E2E8F0",
+												}}
+												className="mt-5 h-10 w-full grid grid-cols-3">
+												<div className="cols-span-1 border-r border-r-[#E2E8F0] flex justify-center items-center h-full w-full">
+													<h4 className="text-sm font-medium text-da-blue-600">
+														Learning Materials
+													</h4>
+												</div>
+												<div className="cols-span-2 h-full flex items-center pl-6">
+													<h4 className="text-sm font-medium text-da-blue-600">
+														Link
+													</h4>
+												</div>
+											</div>
+											{currentTool?.resources?.map((r: any, i: number) => (
+												<div
+													key={i}
+													style={{
+														border: "1px solid #E2E8F0",
+													}}
+													className="h-10 w-full grid grid-cols-3">
+													<div className="cols-span-1 border-r border-r-[#E2E8F0] flex items-center h-full w-full">
+														<ul className="list-disc ml-6 list-inside">
+															<li className="text-sm font-normal text-da-blue-600">
+																{r?.material || r?.name}
+															</li>
+														</ul>
+													</div>
+													<div className="cols-span-2 h-full flex items-center pl-6">
+														<a
+															href={r?.link}
+															className="text-sm font-normal text-da-blue-100">
+															{r?.link}
+														</a>
+													</div>
+												</div>
+											))}
+										</WhiteBox>
+									</div>
+								</div>
+							</div>
+						)}
+					</div>
+				</div>
+			</div>
+			{modal === "start" && (
+				<StartMapping
+					// setStart={() => setStart(true)}
+					handleClose={() => setModal("")}
+					data={tools}
+					defaultSelection={selection}
+					handleComplete={da => {
+						setSelection(da);
+						setModal("");
+						setStart(true);
+					}}
+				/>
+			)}
+			{modal === "region" && (
+				<SelectRegion
+					handleClose={() => setModal("")}
+					data={regionTools}
+					defaultSelection={selection}
+					handleComplete={da => {
+						setSelection(da);
+						setModal("");
+						setStart(true);
+					}}
+				/>
+			)}
+		</div>
+	);
 };
 
 export default Dashboard;

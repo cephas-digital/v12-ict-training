@@ -171,6 +171,7 @@ const StartMapping = ({
 						text={anyOptionsSelected ? "Apply Filter" : "Save Selection"}
 						onClick={() => {
 							console.log({ selectedOptions });
+							if (!anyOptionsSelected) return;
 							if (setStart) setStart();
 							if (handleComplete) {
 								handleComplete(selectedOptions);
