@@ -25,6 +25,7 @@ import { useRawdataStore } from "../../data/stores/loggerStore";
 import { apiCall } from "../../data/useFetcher";
 import DOMPurify from "dompurify";
 import { ComposableMap, Geographies, Geography } from "react-simple-maps";
+import { feature } from "topojson-client";
 
 const toolAvailability = {
   toolA: ["USA", "CAN", "MEX"],
@@ -224,11 +225,28 @@ const Dashboard = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentTool]);
   const [selectedTool, setSelectedTool] = useState("toolA");
-
+  const [topoData, setTopoData] = useState(null);
   const countryColors = {
-    available: "#FF5733",
+    available: "#3787FF",
     notAvailable: "#EAEAEA",
   };
+
+  // Updated to include both ISO_A3 and ISO_A2 formats for testing
+  const toolAvailability = {
+    toolA: ["USA", "CAN", "MEX", "US", "CA", "MX", "KIR", "NGA"], // Ensure KIR is included if needed
+    toolB: ["FRA", "DEU", "ITA", "FR", "DE", "IT"],
+  };
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await fetch("/features.json"); // Path to your TopoJSON
+      const data = await response.json();
+      setTopoData(data); // Store TopoJSON data
+    };
+
+    fetchData();
+  }, []);
+  if (!topoData || !topoData.objects || !topoData.objects.world) return null;
+  const geoData = feature(topoData, topoData.objects.world);
   return (
     <div>
       <PageHeader />
@@ -390,34 +408,52 @@ const Dashboard = () => {
                       <h4 className="text-base font-medium text-[#000929]">
                         Countries using sanitation data tools
                       </h4>
-                      <ComposableMap projection="geoMercator">
-                        <Geographies geography="/features.json">
-                          {({ geographies }) =>
-                            geographies.map((geo) => {
-                              const countryCode = geo.properties.ISO_A3; // Adjust if necessary
-                              console.log(countryCode); // Log country code
-                              const fillColor = toolAvailability[
-                                selectedTool
-                              ].includes(countryCode)
-                                ? countryColors.available
-                                : countryColors.notAvailable;
+                      <div className="mt-6 h-60 w-96">
+                        <ComposableMap projection="geoMercator">
+                          <Geographies geography={geoData}>
+                            {({ geographies }) =>
+                              geographies.map((geo) => {
+                                const countryCode = geo.id;
+                                const isAvailable =
+                                  toolAvailability[selectedTool].includes(
+                                    countryCode
+                                  );
+                                return (
+                                  <Geography
+                                    key={geo.rsmKey}
+                                    geography={geo}
+                                    fill={
+                                      isAvailable
+                                        ? countryColors.available
+                                        : countryColors.notAvailable
+                                    }
+                                    stroke="#FFFFFF"
+                                    strokeWidth={0.5}
+                                    style={{
+                                      default: {
+                                        fill: isAvailable
+                                          ? countryColors.available
+                                          : countryColors.notAvailable,
+                                        outline: "none",
+                                      },
+                                      hover: {
+                                        fill: isAvailable
+                                          ? "#3787FF"
+                                          : "#D3D3D3",
+                                        outline: "none",
+                                      },
+                                      pressed: {
+                                        outline: "none",
+                                      },
+                                    }}
+                                  />
+                                );
+                              })
+                            }
+                          </Geographies>
+                        </ComposableMap>
+                      </div>
 
-                              console.log(
-                                `Country: ${countryCode}, Fill Color: ${fillColor}`
-                              ); // Log color decision
-
-                              return (
-                                <Geography
-                                  key={geo.rsmKey}
-                                  geography={geo}
-                                  fill={fillColor}
-                                  stroke="#FFFFFF"
-                                />
-                              );
-                            })
-                          }
-                        </Geographies>
-                      </ComposableMap>
                       {/* <img src={Map} alt="" className="mt-4" /> */}
                     </div>
                     <div>
