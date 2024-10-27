@@ -26,31 +26,31 @@ import introJs from "intro.js";
 import { useRawdataStore } from "../../data/stores/loggerStore";
 import { apiCall } from "../../data/useFetcher";
 import DOMPurify from "dompurify";
-import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
-import "leaflet/dist/leaflet.css";
-import L from "leaflet";
+import {
+  ComposableMap,
+  Geographies,
+  Geography,
+  Marker,
+  ZoomableGroup,
+} from "react-simple-maps";
+import { scaleLinear } from "d3-scale";
+
+const geoUrl =
+  "https://raw.githubusercontent.com/deldersveld/topojson/master/world-countries.json";
+
+const data = [
+  { country: "USA", value: 100 },
+  { country: "CHN", value: 85 },
+  { country: "IND", value: 70 },
+  { country: "BRA", value: 55 },
+];
+
 export const createMarkup = (html) => {
   return {
     __html: DOMPurify.sanitize(html),
   };
 };
-interface Location {
-  id: number;
-  lat: number;
-  lng: number;
-  name: string;
-}
-const LiveLocationMap = () => {
-  const [locations, setLocations] = useState<Location[]>([
-    { id: 1, lat: 40.7128, lng: -74.006, name: "New York" },
-    { id: 2, lat: 34.0522, lng: -118.2437, name: "Los Angeles" },
-  ]);
-};
 const Dashboard = () => {
-  const [locations, setLocations] = useState<Location[]>([
-    { id: 1, lat: 40.7128, lng: -74.006, name: "New York" },
-    { id: 2, lat: 34.0522, lng: -118.2437, name: "Los Angeles" },
-  ]);
   const [start, setStart] = useState(false),
     [modal, setModal] = useState(""),
     [tab, setTab] = useState("overview"),
@@ -227,16 +227,16 @@ const Dashboard = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentTool]);
+  const [selectedTool, setSelectedTool] = useState("toolA"); // Default selected tool
 
-  //   delete L.Icon.Default.prototype._getIconUrl;
-  L.Icon.Default.mergeOptions({
-    iconRetinaUrl:
-      "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon-2x.png",
-    iconUrl:
-      "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png",
-    shadowUrl:
-      "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png",
-  });
+  const countryColors = {
+    available: "#FF5733",
+    notAvailable: "#EAEAEA",
+  };
+  const toolAvailability = {
+    toolA: ["USA", "CAN", "MEX", "NGA", "ENG", "GHA"],
+    toolB: ["FRA", "DEU", "ITA"],
+  };
   return (
     <div>
       <PageHeader />
@@ -396,43 +396,37 @@ const Dashboard = () => {
                       <h4 className="text-base font-medium text-[#000929]">
                         Countries using sanitation data tools
                       </h4>
-                      {/* <div className="w-full h-44">
-                        <MapContainer
-                          center={[39.8283, -98.5795] as L.LatLngExpression}
-                          zoom={4}
-                          scrollWheelZoom={true}
-                          className="w-full h-full"
-                          style={{ height: "100%", width: "100%" }}
-                        >
-                          <TileLayer
-                            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                          />
-                          {locations.map((location) => (
-                            <Marker
-                              key={location.id}
-                              position={
-                                [
-                                  location.lat,
-                                  location.lng,
-                                ] as L.LatLngExpression
-                              }
-                            >
-                              <Popup>
-                                <div className="p-2">
-                                  <h3 className="font-bold">{location.name}</h3>
-                                  <p className="text-sm">
-                                    Lat: {location.lat.toFixed(4)}
-                                    <br />
-                                    Lng: {location.lng.toFixed(4)}
-                                  </p>
-                                </div>
-                              </Popup>
-                            </Marker>
-                          ))}
-                        </MapContainer>
-                      </div> */}
-                      <img src={Map} alt="" className="mt-4" />
+                      <div className="h-56 mt-5 w-80">
+                        <ComposableMap projection="geoMercator">
+                          <Geographies geography="/features.json">
+                            {({ geographies }) =>
+                              geographies.map((geo) => {
+                                const countryCode = geo.properties.ISO_A3; // Adjust if necessary
+                                console.log(countryCode); // Log country code
+                                const fillColor = toolAvailability[
+                                  selectedTool
+                                ].includes(countryCode)
+                                  ? countryColors.available
+                                  : countryColors.notAvailable;
+
+                                console.log(
+                                  `Country: ${countryCode}, Fill Color: ${fillColor}`
+                                ); // Log color decision
+
+                                return (
+                                  <Geography
+                                    key={geo.rsmKey}
+                                    geography={geo}
+                                    fill={fillColor}
+                                    stroke="#FFFFFF"
+                                  />
+                                );
+                              })
+                            }
+                          </Geographies>
+                        </ComposableMap>
+                      </div>
+                      {/* <img src={Map} alt="" className="mt-4" /> */}
                     </div>
                     <div>
                       <h5 className="text-base font-medium text-[#000929]">
