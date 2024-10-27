@@ -8,7 +8,7 @@ const Logo = () => {
     <div>
       <h3
         onClick={() => navigate("/")}
-        className="lg:text-lg text-sm cursor-pointer text-white inter font-extrabold"
+        className="lg:text-lg text-base cursor-pointer text-white inter font-extrabold"
       >
         Water & Sanitation Tools Map
       </h3>

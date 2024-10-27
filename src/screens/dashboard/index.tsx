@@ -19,20 +19,12 @@ import Seemore from "../../assets/icons/seemore.svg";
 // import Nwasco from "../../assets/icons/nwasco.svg";
 import SelectRegion from "../../components/modals/selectregion";
 import { useNavigate } from "react-router";
-// import Shepherd from "shepherd.js";
-import "shepherd.js/dist/css/shepherd.css";
 import "intro.js/introjs.css";
 import introJs from "intro.js";
 import { useRawdataStore } from "../../data/stores/loggerStore";
 import { apiCall } from "../../data/useFetcher";
 import DOMPurify from "dompurify";
-import {
-  ComposableMap,
-  Geographies,
-  Geography,
-  Marker,
-  ZoomableGroup,
-} from "react-simple-maps";
+import { ComposableMap, Geographies, Geography } from "react-simple-maps";
 
 const toolAvailability = {
   toolA: ["USA", "CAN", "MEX"],
@@ -136,8 +128,6 @@ const Dashboard = () => {
   useEffect(() => {
     if (!selection) {
       const intro = introJs();
-
-      // Define your steps
       intro.setOptions({
         steps: [
           {
@@ -149,13 +139,16 @@ const Dashboard = () => {
               'Click "Start Mapping" to select different criteria and parameters to visualize information about tools.',
           },
           {
-            element: ".export-btn",
-            intro:
-              "You can also export or compare tools using the buttons above.",
+            element: ".tool-list",
+            intro: "Select a tool to view its information on the dashboard.",
           },
           {
-            element: ".tools-mapped-section",
-            intro: "Finally, you can view mapped tools and regions here.",
+            element: ".compare-btn",
+            intro: "Click “Compare Tools” to compare two tools.",
+          },
+          {
+            intro:
+              "All done, let’s start mapping!. You can start exploring the system.",
           },
         ],
         showProgress: true, // Adds "1 of X steps"
@@ -266,7 +259,7 @@ const Dashboard = () => {
               className="w-full text-sm pl-14 text-[#777E90] h-full bg-transparent rounded-lg"
             />
           </div>
-          <div className="mt-10">
+          <div className="mt-10 tool-list">
             {start ? (
               <div>
                 <div className="space-y-1">
@@ -338,11 +331,13 @@ const Dashboard = () => {
           <div className="h-20 flex justify-end gap-6 items-center pr-6">
             <MainBtn
               icon={Export}
+              className="export-btn"
               text={"Export"}
               onClick={() => console.log("object")}
             />
             <MainBtn
               icon={CompareIcon}
+              className="compare-btn"
               text={"Compare Tools"}
               onClick={() => navigate("/compare-tools")}
             />{" "}

@@ -41,7 +41,7 @@ const Header = () => {
               color="white"
               className="block lg:hidden"
               style={{
-                fontSize: "24px",
+                fontSize: "40px",
               }}
               onClick={() => setMenu(true)}
             />

@@ -25,7 +25,7 @@ import { useNavigate } from "react-router-dom";
 
 const Home = () => {
   return (
-    <div>
+    <div className="bg-white">
       <HeroSection />
       <DiscoverSection />
       <CtaSection />
@@ -45,34 +45,34 @@ const HeroSection = () => {
       }}
     >
       <div>
-        <section className="w-full relative lg:h-[120vh] py-20 lg:py-0 hero-section">
+        <section className="w-full relative lg:h-[120vh] h-screen py-20 lg:py-0 hero-section">
           <div className="absolute z-50 left-0 right-0 top-0">
             <Header />
           </div>
           <div className="section-container mt-10 lg:mt-0 relative h-full flex items-center">
             <div data-aos="zoom-in" data-aos-duration="1500">
               <div className="flex gap-4 items-center">
-                <h1 className="lg:text-5lg text-2xl text-white lg:leading-[80px] font-extrabold">
-                  Visiting with
+                <h1 className="lg:text-5lg text-4xl text-center lg:text-left text-white lg:leading-[80px] leading-[52px] font-extrabold">
+                  Visiting with <br /> Water & Sanitation <br /> Tools Mapping
+                  Platform
                 </h1>
                 {/* <img src={Wave1} alt="" className="" /> */}
               </div>
-              <h1 className="lg:text-5lg text-2xl lg:leading-[80px] text-white font-extrabold">
-                Water & Sanitation <br /> Tools Mapping Platform
-              </h1>
-              <p className="lg:text-xl text-sm mt-4 max-w-xl lg:font-normal font-light text-white inter">
+              <p className="lg:text-xl text-xl text-center lg:text-left lg:mt-4 mt-8 lg:max-w-xl w-5/6 mx-auto lg:font-normal font-light text-white inter">
                 Water and sanitation tools dashboard for water, sanitation and
                 hygiene (WSH) stakeholders
               </p>
-              <button
-                style={{
-                  border: "1px solid #FFFFFF",
-                }}
-                onClick={() => navigate("/dashboard")}
-                className="mt-10 h-12 w-80 bg-da-blue-100 rounded-xl text-base font-bold text-blue-200"
-              >
-                Get Started
-              </button>
+              <div className="flex lg:block mt-8 lg:mt-3 justify-center items-center">
+                <button
+                  style={{
+                    border: "1px solid #FFFFFF",
+                  }}
+                  onClick={() => navigate("/dashboard")}
+                  className="mt-10 h-12 w-80 bg-da-blue-100 rounded-xl text-base font-bold text-blue-200"
+                >
+                  Get Started
+                </button>
+              </div>
             </div>
           </div>
           <img
@@ -83,9 +83,9 @@ const HeroSection = () => {
             className="absolute hidden lg:block bottom-28 right-10 h-96 object-contain"
           />
         </section>
-        <div className="w-full about-section lg:pt-10 bg-white">
+        <div className="w-full lg:about-section lg:pt-10 bg-white">
           <div className="section-container grid lg:grid-cols-2 items-center gap-16">
-            <div className="h-full w-full">
+            <div className="h-full hidden lg:block w-full">
               <img
                 src={System}
                 data-aos="zoom-out-down"
@@ -97,12 +97,12 @@ const HeroSection = () => {
             <div
               data-aos="fade-up"
               data-aos-duration="1500"
-              className="lg:ml-16 p-6"
+              className="lg:ml-16 p-6 pt-6"
             >
-              <h3 className="lg:text-4xl text-2xl text-black font-bold">
+              <h3 className="lg:text-4xl text-center lg:text-left text-3xl text-black font-bold">
                 What Does It Do?
               </h3>
-              <p className="lg:text-xl text-base font-normal text-black max-w-xl mt-6">
+              <p className="lg:text-xl text-base text-center lg:text-left font-normal text-black max-w-xl mt-6">
                 The water and sanitation tools mapping dashboard provides an
                 overview of water and sanitation data system tools used for
                 decision-making, service delivery, and performance management
@@ -127,17 +127,17 @@ const DiscoverSection = () => {
           style={{
             border: "0.4px solid #000000",
           }}
-          className="h-96 lg:w-[55%] rounded-xl bg-white flex items-center px-8 gap-8"
+          className="lg:h-96 lg:w-[55%] rounded-xl bg-white flex flex-col lg:flex-row items-center px-8 gap-8"
         >
-          <div>
-            <h2 className="lg:text-2xl text-xl capitalize font-medium text-black">
+          <div className="p-6 lg:p-0">
+            <h2 className="text-2xl text-center lg:text-left capitalize font-medium text-black">
               <span className="font-bold text-da-blue-200">Discover</span>
               <br />
               <span className="whitespace-nowrap">
                 Water sanitation & tools
               </span>
             </h2>
-            <p className="mt-4 text-lg font-normal inter max-w-xs text-black">
+            <p className="mt-4 lg:text-lg text-base text-center lg:text-left font-normal inter max-w-xs text-black">
               Explore regulatory and utility / municipality data system tools
               and learn how they can improve your work.
             </p>
@@ -150,7 +150,7 @@ const DiscoverSection = () => {
               }}
               src={Chart1}
               alt=""
-              className="h-64 lg:block hidden mt-5"
+              className="h-64 mt-5"
             />
           </div>
         </div>
@@ -209,14 +209,14 @@ const CtaSection = () => {
         <h3
           data-aos="fade-up"
           data-aos-duration="1500"
-          className="lg:text-4xl text-xl text-black font-bold"
+          className="lg:text-4xl text-3xl text-center lg:text-left text-black font-bold"
         >
           What can you map?
         </h3>
         <p
           data-aos="fade-down"
           data-aos-duration="1500"
-          className="lg:text-xl text-sm font-normal text-black mt-5"
+          className="lg:text-xl text-base text-center lg:text-left font-normal text-black mt-5"
         >
           Based on four critical success factors, visualize various utilities
           and municipalities tools across sub-Saharan Africa and Southeast Asia.
@@ -355,29 +355,31 @@ const WshSection = () => {
           data-aos-duration="1500"
           className="lg:w-[40%]"
         >
-          <h2 className="lg:text-4xl text-2xl font-bold text-black">
+          <h2 className="lg:text-4xl text-center lg:text-left text-2xl font-bold text-black">
             WSH Webinar Series
           </h2>
-          <p className="mt-5 lg:text-xl text-sm font-normal text-black">
+          <p className="mt-5 lg:text-xl text-base text-center lg:text-left font-normal text-black">
             The WSH webinar series is part of the Bill & Melinda Gates
             Foundation-funded project “Public Service Data Systems: Landscaping,
             Learning, and Technical Assistance.”{" "}
           </p>
-          <p className="mt-5 lg:text-xl text-base font-normal text-black">
+          <p className="mt-5 lg:text-xl text-center lg:text-left text-base font-normal text-black">
             Dev-Afrique Development Advisors is hosting this series to spotlight
             sanitation data system tools in the WSH sector across Sub-Saharan
             Africa and South Asia. The webinars aim to facilitate learning and
             share best practices for improving service delivery and performance
             management within utilities and municipalities.
           </p>
-          <button
-            style={{
-              border: "1px solid #FFFFFF",
-            }}
-            className="mt-10 h-12 w-80 bg-da-blue-100 rounded-xl text-base font-bold text-blue-200"
-          >
-            Join the Webinar Series
-          </button>
+          <div className="flex lg:block justify-center items-center">
+            <button
+              style={{
+                border: "1px solid #FFFFFF",
+              }}
+              className="mt-10 h-12 w-80 bg-da-blue-100 rounded-xl text-base font-bold text-blue-200"
+            >
+              Join the Webinar Series
+            </button>
+          </div>
         </div>
         <div data-aos="fade-up" data-aos-duration="1500" className="lg:w-[60%]">
           <img src={Webinar} alt="" className="" />

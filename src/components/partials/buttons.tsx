@@ -14,7 +14,7 @@ const PrimaryBtn = ({ icon, text, onClick, className = "" }) => {
   );
 };
 
-export const MainBtn = ({ icon, onClick, text }) => {
+export const MainBtn = ({ icon, onClick, text, className = "" }) => {
   return (
     <div>
       <button
@@ -23,7 +23,7 @@ export const MainBtn = ({ icon, onClick, text }) => {
           boxShadow: "0px 15px 50px 0px #AFB0B926",
         }}
         onClick={onClick}
-        className="flex items-center gap-1 justify-center px-5 h-10 rounded-lg bg-transparent"
+        className={`flex items-center gap-1 justify-center px-5 h-10 rounded-lg bg-transparent ${className}`}
       >
         <img src={icon} alt="" className="" />
         <span className="text-sm font-normal text-[#475569] inter">{text}</span>
