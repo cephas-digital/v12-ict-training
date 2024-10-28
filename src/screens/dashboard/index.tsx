@@ -270,7 +270,8 @@ const Dashboard = () => {
 							findCountry?.cca3 ||
 							findCountry?.cca2;
 					}
-					newCount?.push(newEle);
+          if (!["all", "global"]?.includes(newEle?.country?.toLowerCase()))
+						newCount?.push(newEle);
 				}
 				setMapCountries(newCount);
 			}
