@@ -363,13 +363,14 @@ export const ToolsTable = () => {
 																borderColor: "#000000",
 															}}
 															className="col-span-1 flex justify-center items-center">
-															{row?.tool1 === "pending" ? (
+															{/* {row?.tool1 === "pending" ? (
 																<PendingComp />
 															) : row?.tool1 === true ? (
 																<GoodComp />
 															) : (
 																<BadComp />
-															)}
+															)} */}
+															<PendingComp />
 														</div>
 														<div
 															style={{
@@ -378,13 +379,14 @@ export const ToolsTable = () => {
 																borderColor: "#000000",
 															}}
 															className="col-span-1 flex justify-center items-center">
-															{row?.tool2 === "pending" ? (
+															{/* {row?.tool2 === "pending" ? (
 																<PendingComp />
 															) : row?.tool2 === true ? (
 																<GoodComp />
 															) : (
 																<BadComp />
-															)}
+															)} */}
+															<PendingComp />
 														</div>
 													</div>
 												))}
