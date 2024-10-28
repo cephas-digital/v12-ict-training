@@ -53,12 +53,12 @@ const HeroSection = () => {
             <div data-aos="zoom-in" data-aos-duration="1500">
               <div className="flex gap-4 items-center">
                 <h1 className="lg:text-5lg text-4xl text-center lg:text-left text-white lg:leading-[80px] leading-[52px] font-extrabold">
-                  Visiting with <br /> Water & Sanitation <br /> Tools Mapping
+                  Visualize with <br /> Water & Sanitation <br /> Tools Mapping
                   Platform
                 </h1>
                 {/* <img src={Wave1} alt="" className="" /> */}
               </div>
-              <p className="lg:text-xl text-xl text-center lg:text-left lg:mt-4 mt-8 lg:max-w-xl w-5/6 mx-auto lg:font-normal font-light text-white inter">
+              <p className="lg:text-xl text-xl text-center lg:text-left lg:mt-4 mt-8 lg:max-w-xl lg:w-full w-5/6 lg:mx-0 mx-auto lg:font-normal font-light text-white inter">
                 Water and sanitation tools dashboard for water, sanitation and
                 hygiene (WSH) stakeholders
               </p>
@@ -80,7 +80,7 @@ const HeroSection = () => {
             data-aos="zoom-in-down"
             data-aos-duration="1500"
             alt=""
-            className="absolute hidden lg:block bottom-28 right-10 h-96 object-contain"
+            className="absolute hidden lg:block bottom-36 w-96 right-10 h-96 object-contain"
           />
         </section>
         <div className="w-full lg:about-section lg:pt-10 bg-white">

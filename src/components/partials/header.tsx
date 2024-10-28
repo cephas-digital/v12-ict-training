@@ -104,7 +104,7 @@ export const PageHeader = () => {
         <Logo />
       </div>
       <div className="flex gap-5 items-center pr-6">
-        <img src={Notification} alt="" className="" />
+        {/* <img src={Notification} alt="" className="" /> */}
         <img src={Messaging} alt="" className="" />
       </div>
     </div>

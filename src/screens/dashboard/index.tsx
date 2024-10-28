@@ -9,8 +9,8 @@ import CompareIcon from "../../assets/icons/compareicon.svg";
 import SelectIcon from "../../assets/icons/calendar 01.svg";
 // import Map from "../../assets/images/map.png";
 import WhiteBox, {
-  ToolsKPIsData,
-  WhiteBox2,
+	ToolsKPIsData,
+	WhiteBox2,
 } from "../../components/partials/box";
 import Info from "../../assets/icons/information.svg";
 import ProductTable from "../../components/partials/tables";
@@ -36,13 +36,13 @@ import { toast } from "react-toastify";
 //   // More tools as needed
 // };
 
-export const createMarkup = (html) => {
-  return {
-    __html: DOMPurify.sanitize(html),
-  };
+export const createMarkup = html => {
+	return {
+		__html: DOMPurify.sanitize(html),
+	};
 };
 
-export let getCountries = async ({setCountries}) => {
+export let getCountries = async ({ setCountries }) => {
 	try {
 		let res = await axios.get(
 			`https://restcountries.com/v3.1/all?fields=name,flags,region,capital,timezones,altSpellings,cioc,cca3,cca2,latlng,fifa`,
@@ -63,58 +63,58 @@ export let getCountries = async ({setCountries}) => {
 };
 
 const Dashboard = () => {
-  const [start, setStart] = useState(false),
-    [info, setInfo] = useState(""),
-    [modal, setModal] = useState(""),
-    [tab, setTab] = useState("overview"),
-    navigate = useNavigate(),
-    [hoveredTool, setHoveredTool] = useState(null);
-  const tabs = ["overview", "about data tool"];
-  const products = [
-      { name: "Asset inventory", status: "good" },
-      { name: "Asset (system) renewal/replacement", status: "good" },
-      { name: "Sewerage system integrity", status: "bad" },
-      { name: "Planned maintenance", status: "bad" },
-      { name: "Sanitation Facilities Database", status: "bad" },
-    ],
-    optimization = [
-      { name: "Resource Optimization", status: "good" },
-      { name: "Performance Monitoring", status: "good" },
-      { name: "Seewerage management efficiency", status: "bad" },
-      { name: "Non Sewered Sanitation Service Management", status: "bad" },
-    ],
-    resiliency = [
-      { name: "Recordable incidents of injury or illness", status: "good" },
-      { name: "Risk assessment and response preparedness", status: "bad" },
-      { name: "Ongoing operational resilliency", status: "good" },
-    ];
+	const [start, setStart] = useState(false),
+		[info, setInfo] = useState(""),
+		[modal, setModal] = useState(""),
+		[tab, setTab] = useState("overview"),
+		navigate = useNavigate(),
+		[hoveredTool, setHoveredTool] = useState(null);
+	const tabs = ["overview", "about data tool"];
+	const products = [
+			{ name: "Asset inventory", status: "good" },
+			{ name: "Asset (system) renewal/replacement", status: "good" },
+			{ name: "Sewerage system integrity", status: "bad" },
+			{ name: "Planned maintenance", status: "bad" },
+			{ name: "Sanitation Facilities Database", status: "bad" },
+		],
+		optimization = [
+			{ name: "Resource Optimization", status: "good" },
+			{ name: "Performance Monitoring", status: "good" },
+			{ name: "Seewerage management efficiency", status: "bad" },
+			{ name: "Non Sewered Sanitation Service Management", status: "bad" },
+		],
+		resiliency = [
+			{ name: "Recordable incidents of injury or illness", status: "good" },
+			{ name: "Risk assessment and response preparedness", status: "bad" },
+			{ name: "Ongoing operational resilliency", status: "good" },
+		];
 
-  // const sanitationTools = [
-  //   { name: "APAM", details: "APAM is a management tool..." },
-  //   { name: "EDAMS IMS", details: "EDAMS IMS information..." },
-  //   { name: "Equiserve", details: "Equiserve details..." },
-  //   { name: "ERP System - Nakuru", details: "ERP System for Nakuru..." },
-  //   {
-  //     name: "Indah Water Malaysia Planning tool",
-  //     details: "NWASCO NIS details...",
-  //   },
-  //   {
-  //     name: "Integrated Management Information System (IMIS)",
-  //     details: "Real-time monitoring system...",
-  //   },
-  //   {
-  //     name: "IMIS Dhaka",
-  //     details:
-  //       "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s",
-  //   },
-  //   {
-  //     name: "Lusaka  Sanitation System",
-  //     details:
-  //       "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s",
-  //   },
-  // ];
+	// const sanitationTools = [
+	//   { name: "APAM", details: "APAM is a management tool..." },
+	//   { name: "EDAMS IMS", details: "EDAMS IMS information..." },
+	//   { name: "Equiserve", details: "Equiserve details..." },
+	//   { name: "ERP System - Nakuru", details: "ERP System for Nakuru..." },
+	//   {
+	//     name: "Indah Water Malaysia Planning tool",
+	//     details: "NWASCO NIS details...",
+	//   },
+	//   {
+	//     name: "Integrated Management Information System (IMIS)",
+	//     details: "Real-time monitoring system...",
+	//   },
+	//   {
+	//     name: "IMIS Dhaka",
+	//     details:
+	//       "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s",
+	//   },
+	//   {
+	//     name: "Lusaka  Sanitation System",
+	//     details:
+	//       "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s",
+	//   },
+	// ];
 
-  let { getDynamicLogger, getLogger, data } = useRawdataStore(),
+	let { getDynamicLogger, getLogger, data } = useRawdataStore(),
 		{ mapTools, kpidata, regionCountry }: any = useRawdataStore(),
 		tools = data?.docs?.sort(
 			(
@@ -133,171 +133,177 @@ const Dashboard = () => {
 		[countries, setCountries] = useState<any>(null),
 		[mapCountries, setMapCountries] = useState<any>(null);
 
-  useEffect(() => {
-    getDynamicLogger({}, "mapTools");
-    // apiCall({
-    // 	type: "get",
-    // 	url: `/api/v1/rawdata/manage-kpis?pagination=not`,
-    // 	getter: (d: any) => getDynamicLogger(d, "kpidata"),
-    // });
-    apiCall({
-      type: "get",
-      url: `/api/v1/rawdata?pagination=not`,
-      getter: (d: any) => getLogger(d),
-    });
-    apiCall({
-      type: "get",
-      url: `/api/v1/tools/manage-region-country?pagination=not`,
-      getter: (d: any) => getDynamicLogger(d, "regionCountry"),
-    });
-    getCountries({setCountries})
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+	useEffect(() => {
+		getDynamicLogger({}, "mapTools");
+		// apiCall({
+		// 	type: "get",
+		// 	url: `/api/v1/rawdata/manage-kpis?pagination=not`,
+		// 	getter: (d: any) => getDynamicLogger(d, "kpidata"),
+		// });
+		apiCall({
+			type: "get",
+			url: `/api/v1/rawdata?pagination=not`,
+			getter: (d: any) => getLogger(d),
+		});
+		apiCall({
+			type: "get",
+			url: `/api/v1/tools/manage-region-country?pagination=not`,
+			getter: (d: any) => getDynamicLogger(d, "regionCountry"),
+		});
+		getCountries({ setCountries });
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
 
-  useEffect(() => {
-    if (!selection) {
-      const intro = introJs();
-      intro.setOptions({
-        steps: [
-          {
-            intro: "Welcome to the Water and Sanitation Tools Map!",
-          },
-          {
-            element: ".start-mapping-btn",
-            intro:
-              'Click "Start Mapping" to select different criteria and parameters to visualize information about tools.',
-          },
-          {
-            element: ".tool-list",
-            intro: "Select a tool to view its information on the dashboard.",
-          },
-          {
-            element: ".compare-btn",
-            intro: "Click “Compare Tools” to compare two tools.",
-          },
-          {
-            intro:
-              "All done, let’s start mapping!. You can start exploring the system.",
-          },
-        ],
-        showProgress: true, // Adds "1 of X steps"
-        showStepNumbers: true, // Shows the step number
-        exitOnOverlayClick: false, // Prevents closing when clicking on overlay
-        overlayOpacity: 0.7, // Make background semi-transparent
-        tooltipClass: "customTooltip", // Add custom CSS class for tooltip styling
-      });
+	useEffect(() => {
+		if (!selection) {
+			const intro = introJs();
+			intro.setOptions({
+				steps: [
+					{
+						intro: "Welcome to the Water and Sanitation Tools Map!",
+					},
+					{
+						element: ".start-mapping-btn",
+						intro:
+							'Click "Start Mapping" to select different criteria and parameters to visualize information about tools.',
+					},
+					{
+						element: ".tool-list",
+						intro: "Select a tool to view its information on the dashboard.",
+					},
+					{
+						element: ".compare-btn",
+						intro: "Click “Compare Tools” to compare two tools.",
+					},
+					{
+						intro:
+							"All done, let’s start mapping!. You can start exploring the system.",
+					},
+				],
+				showProgress: true, // Adds "1 of X steps"
+				showStepNumbers: true, // Shows the step number
+				exitOnOverlayClick: false, // Prevents closing when clicking on overlay
+				overlayOpacity: 0.7, // Make background semi-transparent
+				tooltipClass: "customTooltip", // Add custom CSS class for tooltip styling
+			});
 
-      // Start the intro
-      intro.start();
-    }
-  }, [selection]);
+			// Start the intro
+			intro.start();
+		}
+	}, [selection]);
 
-  useEffect(() => {
-    if (selection) {
-      setCurrentTool(null);
-      apiCall({
-        type: "post",
-        url: `/api/v1/tools/manage-tools?pagination=not`,
-        getter: (d: any) => getDynamicLogger(d, "mapTools"),
-        data: {
-          toolSelection: Object.entries(selection)
-            .map(([key, value]) => ({
-              category: key,
-              data: Array.isArray(value) ? value : [value], // Ensure data is always an array
-            }))
-            ?.filter((it) => it?.data?.length > 0),
-        },
-      });
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selection]);
+	useEffect(() => {
+		if (selection) {
+			setCurrentTool(null);
+			apiCall({
+				type: "post",
+				url: `/api/v1/tools/manage-tools?pagination=not`,
+				getter: (d: any) => getDynamicLogger(d, "mapTools"),
+				data: {
+					toolSelection: Object.entries(selection)
+						.map(([key, value]) => ({
+							category: key,
+							data: Array.isArray(value) ? value : [value], // Ensure data is always an array
+						}))
+						?.filter(it => it?.data?.length > 0),
+				},
+			});
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [selection]);
 
-  useEffect(() => {
-    if (mapTools && mapTools?.totalDocs > 0 && selection) {
-      setCurrentTool(mapTools?.docs?.[0]);
-    }
+	useEffect(() => {
+		if (mapTools && mapTools?.totalDocs > 0 && selection) {
+			setCurrentTool(mapTools?.docs?.[0]);
+		}
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [mapTools]);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [mapTools]);
 
-  const contact = [currentTool?.website, currentTool?.contactEmailAddress],
-    webinar = [currentTool?.webinar];
-  // resources = [
-  // 	{ name: "EDAMS Technology", link: "mails@nwasco.org.zm" },
-  // 	{ name: "EDAMS Technology", link: "mails@nwasco.org.zm" },
-  // ];
-  console.log({ regionCountry });
+	const contact = [currentTool?.website, currentTool?.contactEmailAddress],
+		webinar = [currentTool?.webinar];
+	// resources = [
+	// 	{ name: "EDAMS Technology", link: "mails@nwasco.org.zm" },
+	// 	{ name: "EDAMS Technology", link: "mails@nwasco.org.zm" },
+	// ];
+	console.log({ regionCountry });
 
-  useEffect(() => {
-    let appLevel = currentTool?.toolSelection?.find(
-      (it: any) => it?.category === "APPLICATION LEVEL"
-    );
-    if (appLevel && kpidata) {
-      setFormInfo([...kpidata?.docs]);
-    }
-  }, [kpidata, currentTool]);
+	useEffect(() => {
+		let appLevel = currentTool?.toolSelection?.find(
+			(it: any) => it?.category === "APPLICATION LEVEL"
+		);
+		if (appLevel && kpidata) {
+			setFormInfo([...kpidata?.docs]);
+		}
+	}, [kpidata, currentTool]);
 
-  useEffect(() => {
-    if (currentTool) {
-      let appLevel = currentTool?.toolSelection?.find(
-        (it: any) => it?.category === "APPLICATION LEVEL"
-      );
-      if (appLevel) {
-        apiCall({
-          type: "get",
-          url: `/api/v1/rawdata/manage-kpis?category=APPLICATION LEVEL&data=${appLevel?.data?.[0]}&pagination=not`,
-          getter: (d: any) => getDynamicLogger(d, "kpidata"),
-        });
-      }
-      let countriesLevel = currentTool?.toolSelection?.find(
+	useEffect(() => {
+		if (currentTool) {
+			let appLevel = currentTool?.toolSelection?.find(
+				(it: any) => it?.category === "APPLICATION LEVEL"
+			);
+			if (appLevel) {
+				apiCall({
+					type: "get",
+					url: `/api/v1/rawdata/manage-kpis?category=APPLICATION LEVEL&data=${appLevel?.data?.[0]}&pagination=not`,
+					getter: (d: any) => getDynamicLogger(d, "kpidata"),
+				});
+			}
+			let countriesLevel = currentTool?.toolSelection?.find(
 				(it: any) => it?.category === "COUNTRY"
 			);
-      if (countriesLevel){
-        let newCount:any[] = []
-        for (let c = 0; c < countriesLevel?.data?.length; c++) {
-          const element = countriesLevel?.data[c];
+			if (countriesLevel) {
+				let newCount: any[] = [];
+				for (let c = 0; c < countriesLevel?.data?.length; c++) {
+					const element = countriesLevel?.data[c];
 
-          let findCountry = countries?.find(it=> it?.name?.common?.toLowerCase() === element?.toLowerCase())
-          if (findCountry){
-            newCount?.push({
-							country: element,
-							short: findCountry?.fifa || findCountry?.cioc || findCountry?.cca3 || findCountry?.cca2,
-						});
-          }
-          
-        }
-        setMapCountries(newCount)
-      }
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentTool]);
-  // const [selectedTool] = useState("toolA");
-  const [topoData, setTopoData] = useState(null);
-  const countryColors = {
-    available: "#3787FF",
-    notAvailable: "#EAEAEA",
-  };
+					let findCountry = countries?.find(
+						it => it?.name?.common?.toLowerCase() === element?.toLowerCase()
+					);
+					let newEle: any = {
+						country: element,
+					};
+					if (findCountry) {
+						newEle.short =
+							findCountry?.fifa ||
+							findCountry?.cioc ||
+							findCountry?.cca3 ||
+							findCountry?.cca2;
+					}
+					newCount?.push(newEle);
+				}
+				setMapCountries(newCount);
+			}
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [currentTool]);
+	// const [selectedTool] = useState("toolA");
+	const [topoData, setTopoData] = useState(null);
+	const countryColors = {
+		available: "#3787FF",
+		notAvailable: "#EAEAEA",
+	};
 
-  // Updated to include both ISO_A3 and ISO_A2 formats for testing
-  const toolAvailability = {
-    toolA: ["USA", "CAN", "MEX", "US", "CA", "MX", "KIR", "NGA"], // Ensure KIR is included if needed
-    toolB: ["FRA", "DEU", "ITA", "FR", "DE", "IT"],
-  };
-  useEffect(() => {
-    const fetchData = async () => {
-      const response = await fetch("/features.json"); // Path to your TopoJSON
-      const data = await response.json();
-      setTopoData(data); // Store TopoJSON data
-    };
+	// Updated to include both ISO_A3 and ISO_A2 formats for testing
+	const toolAvailability = {
+		toolA: ["USA", "CAN", "MEX", "US", "CA", "MX", "KIR", "NGA"], // Ensure KIR is included if needed
+		toolB: ["FRA", "DEU", "ITA", "FR", "DE", "IT"],
+	};
+	useEffect(() => {
+		const fetchData = async () => {
+			const response = await fetch("/features.json"); // Path to your TopoJSON
+			const data = await response.json();
+			setTopoData(data); // Store TopoJSON data
+		};
 
-    fetchData();
-  }, []);
-  if (!topoData || !topoData.objects || !topoData.objects.world) return null;
-  const geoData = feature(topoData, topoData.objects.world);
+		fetchData();
+	}, []);
+	if (!topoData || !topoData.objects || !topoData.objects.world) return null;
+	const geoData = feature(topoData, topoData.objects.world);
 
-  console.log({mapCountries});
+	console.log({ mapCountries });
 
-  return (
+	return (
 		<div>
 			<PageHeader />
 			<div className="w-full flex">
