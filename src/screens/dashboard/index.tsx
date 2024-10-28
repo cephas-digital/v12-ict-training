@@ -404,7 +404,7 @@ const Dashboard = () => {
                     style={{
                       boxShadow: "4px 4px 100px 0px #00000014",
                     }}
-                    className="col-span-2 h-72 flex gap-10 items-center bg-white rounded-lg p-5"
+                    className="col-span-2 h-72 flex gap-10 bg-white rounded-lg p-5"
                   >
                     <div>
                       <h4 className="text-base font-medium text-[#000929]">

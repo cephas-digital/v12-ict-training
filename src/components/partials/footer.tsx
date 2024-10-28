@@ -9,7 +9,7 @@ import Esawas from "../../assets/icons/ESAWAS LOGO PNG-11 2.svg";
 
 const Footer = () => {
   const support = ["FAQs", "Get Involved"];
-  const resources = ["WSH Webinar Series", "Learning Materials"];
+  const resources = ["WSH Webinar Series", "Resources"];
   const legal = ["Terms of Services", "Privacy Policy / GDPR"];
   return (
     <div id="help" className="lg:pt-20 pt-10 hero-section pb-10">
