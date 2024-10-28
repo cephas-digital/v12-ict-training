@@ -129,6 +129,7 @@ export const ToolsKPIsData = ({
 	selection,
 	shadow = false,
 	prevData,
+	setInfo
 }: any) => {
 	return (
 		<WhiteBox className="h-full" shadow={shadow}>
@@ -136,7 +137,7 @@ export const ToolsKPIsData = ({
 				<h5 className="text-base text-da-blue-600 font-medium capitalize">
 					{title ? title?.toLowerCase() : ""}
 				</h5>
-				<img src={Info} alt="" className="" />
+				<img src={Info} alt="" onClick={()=> {if (setInfo){setInfo()}}} className="" />
 			</div>
 			<div className="mt-2">
 				<ProductTable

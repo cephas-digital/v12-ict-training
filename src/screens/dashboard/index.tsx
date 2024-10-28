@@ -64,7 +64,7 @@ export let getCountries = async ({ setCountries }) => {
 
 const Dashboard = () => {
 	const [start, setStart] = useState(false),
-		[info, setInfo] = useState(""),
+		[info, setInfo] = useState<any>(""),
 		[modal, setModal] = useState(""),
 		[tab, setTab] = useState("overview"),
 		navigate = useNavigate(),
@@ -597,7 +597,11 @@ const Dashboard = () => {
 												</h5>
 												<img
 													src={Info}
-													onClick={() => setInfo("infra")}
+													onClick={() =>
+														setInfo({
+															category: "Infrastructure and Stability",
+														})
+													}
 													alt=""
 													className="cursor-pointer"
 												/>
@@ -611,7 +615,16 @@ const Dashboard = () => {
 												<h5 className="text-base text-da-blue-600 font-medium">
 													Operational Optimization
 												</h5>
-												<img src={Info} alt="" className="cursor-pointer" />
+												<img
+													src={Info}
+													alt=""
+													onClick={() =>
+														setInfo({
+															category: "Operational Optimization",
+														})
+													}
+													className="cursor-pointer"
+												/>
 											</div>
 											<div className="mt-2">
 												<ProductTable start={false} products={optimization} />
@@ -622,7 +635,16 @@ const Dashboard = () => {
 												<h5 className="text-base text-da-blue-600 font-medium">
 													Operational Resilency
 												</h5>
-												<img src={Info} alt="" className="" />
+												<img
+													src={Info}
+													alt=""
+													onClick={() =>
+														setInfo({
+															category: "Operational Resilency",
+														})
+													}
+													className=""
+												/>
 											</div>
 											<div className="mt-2">
 												<ProductTable start={false} products={resiliency} />
@@ -639,6 +661,7 @@ const Dashboard = () => {
 												title={tool?.category}
 												key={i}
 												prevData={currentTool?.kpiSelection}
+												setInfo={() => setInfo(tool)}
 											/>
 										))}
 									</div>
@@ -787,10 +810,10 @@ const Dashboard = () => {
 					}}
 				/>
 			)}
-			{info === "infra" && (
+			{info && (
 				<InfoModal
 					handleClose={() => setInfo("")}
-					title={"Infrastructure and Stability"}
+					title={info?.category || "Infrastructure and Stability"}
 				/>
 			)}
 		</div>
