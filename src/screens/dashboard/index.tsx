@@ -459,7 +459,7 @@ const Dashboard = () => {
 											<h4 className="text-base font-medium text-[#000929]">
 												Countries using sanitation data tools
 											</h4>
-											<div className="mt-3 h-60 w-80">
+											<div className="mt-3 h-60 w-80 bg-[#F8FAFC] rounded-md">
 												<ComposableMap projection="geoMercator">
 													<Geographies geography={geoData}>
 														{({ geographies }) =>

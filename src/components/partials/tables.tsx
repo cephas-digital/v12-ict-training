@@ -694,7 +694,7 @@ export const ToolsTable = () => {
 					className="w-full mb-20 py-24">
 					<div className="section-container h-full items-start gap-14 justify-center flex">
 						{/* <img src={BigMap} alt="" className="" /> */}
-						<div className=" w-[70%]">
+						<div className=" w-[70%] bg-[#F8FAFC] rounded-md">
 							<ComposableMap projection="geoMercator">
 								<Geographies geography={geoData}>
 									{({ geographies }) =>
@@ -709,20 +709,23 @@ export const ToolsTable = () => {
 											const isAvailable =
 												selectedTools?.one || selectedTools?.two
 													? isAvailable1 || isAvailable2
-												:
-												toolAvailability["toolA"].includes(countryCode);
+													: toolAvailability["toolA"].includes(countryCode);
 											// console.log({geographies});
 
-											let newFind:any = null
+											let newFind: any = null;
 
-											if (isAvailable2){
-												newFind = mapCountries?.find(it=> it?.short === countryCode)
+											if (isAvailable2) {
+												newFind = mapCountries?.find(
+													it => it?.short === countryCode
+												);
 											}
-											if (isAvailable1){
-												newFind = mapCountries?.find(it=> it?.country === geo?.properties?.name)
+											if (isAvailable1) {
+												newFind = mapCountries?.find(
+													it => it?.country === geo?.properties?.name
+												);
 											}
 											// if (newFind) newFind = newFind?.selection
-// console.log({newFind, isAvailable1, isAvailable2});
+											// console.log({newFind, isAvailable1, isAvailable2});
 
 											let color =
 													isAvailable && newFind
@@ -753,10 +756,7 @@ export const ToolsTable = () => {
 												<Geography
 													key={geo.rsmKey}
 													geography={geo}
-													fill={
-														color
-															
-													}
+													fill={color}
 													stroke="#FFFFFF"
 													strokeWidth={0.5}
 													style={{
