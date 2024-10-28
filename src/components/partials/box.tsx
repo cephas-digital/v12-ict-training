@@ -137,7 +137,16 @@ export const ToolsKPIsData = ({
 				<h5 className="text-base text-da-blue-600 font-medium capitalize">
 					{title ? title?.toLowerCase() : ""}
 				</h5>
-				<img src={Info} alt="" onClick={()=> {if (setInfo){setInfo()}}} className="" />
+				<img
+					src={Info}
+					alt=""
+					onClick={() => {
+						if (setInfo) {
+							setInfo();
+						}
+					}}
+					className=" cursor-pointer"
+				/>
 			</div>
 			<div className="mt-2">
 				<ProductTable
