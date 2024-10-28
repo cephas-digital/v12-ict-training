@@ -815,6 +815,7 @@ const Dashboard = () => {
 				<InfoModal
 					handleClose={() => setInfo("")}
 					title={info?.category || "Infrastructure and Stability"}
+					description={info?.description}
 				/>
 			)}
 		</div>
