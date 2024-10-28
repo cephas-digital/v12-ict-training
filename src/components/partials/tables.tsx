@@ -10,10 +10,13 @@ import ListActive from "../../assets/icons/list-active.svg";
 import Map from "../../assets/icons/map.svg";
 import MapActive from "../../assets/icons/map-active.svg";
 import Infra from "../../assets/icons/infra.svg";
-import BigMap from "../../assets/icons/bigmap.svg";
+// import BigMap from "../../assets/icons/bigmap.svg";
 import SelectToolModal from "../modals/selecttool";
 import { apiCall } from "../../data/useFetcher";
 import { useRawdataStore } from "../../data/stores/loggerStore";
+import { ComposableMap, Geographies, Geography } from "react-simple-maps";
+import { feature } from "topojson-client";
+import { getCountries } from "../../screens/dashboard";
 
 const ProductTable = ({ products, start }) => {
 	return (
@@ -143,25 +146,27 @@ export const ToolsTable = () => {
 	const navigate = useNavigate();
 	const [tab, setTab] = useState("list");
 	const [modal, setModal] = useState<"one" | "two" | "">("");
-	const keys = [
+	const [selectedTools, setSelectedTools] = useState<any>(null),
+		[selectedAppLevel, setSelectedAppLevel] = useState<any>(null),
+		[countries, setCountries] = useState<any>(null),
+		[mapCountries, setMapCountries] = useState<any>(null),
+		{ getDynamicLogger } = useRawdataStore(),
+		{ kpidata }: any = useRawdataStore(),
+		[newKpiMapper, setNewKpiMapper] = useState<any>(null),
+		keys = [
 			{
 				color: "#3787FF",
 				name: "both tools available",
 			},
 			{
 				color: "#16A34A",
-				name: "both tools available",
+				name: selectedTools?.one?.toolName || "Tool One selected",
 			},
 			{
 				color: "#E7A00C",
-				name: "None selected",
+				name: selectedTools?.two?.toolName || "Tool Two selected",
 			},
-		],
-		[selectedTools, setSelectedTools] = useState<any>(null),
-		[selectedAppLevel, setSelectedAppLevel] = useState<any>(null),
-		{ getDynamicLogger } = useRawdataStore(),
-		{ kpidata }: any = useRawdataStore(),
-		[newKpiMapper, setNewKpiMapper] = useState<any>(null);
+		];
 
 	useEffect(() => {
 		if (selectedAppLevel) {
@@ -173,6 +178,10 @@ export const ToolsTable = () => {
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [selectedAppLevel]);
+
+	useEffect(() => {
+		getCountries({ setCountries });
+	}, []);
 
 	useEffect(() => {
 		if (kpidata) {
@@ -204,7 +213,94 @@ export const ToolsTable = () => {
 		}
 	}, [kpidata]);
 
-	console.log({ newKpiMapper });
+	const [topoData, setTopoData] = useState(null);
+	const countryColors = {
+		available: "#3787FF",
+		notAvailable: "#EAEAEA",
+	};
+
+	// Updated to include both ISO_A3 and ISO_A2 formats for testing
+	const toolAvailability = {
+		toolA: ["USA", "CAN", "MEX", "US", "CA", "MX", "KIR", "NGA"], // Ensure KIR is included if needed
+		toolB: ["FRA", "DEU", "ITA", "FR", "DE", "IT"],
+	};
+	useEffect(() => {
+		const fetchData = async () => {
+			const response = await fetch("/features.json"); // Path to your TopoJSON
+			const data = await response.json();
+			setTopoData(data); // Store TopoJSON data
+		};
+
+		fetchData();
+	}, []);
+	
+	useEffect(()=> {
+		if (selectedTools?.one || selectedTools?.two){
+			let newCount: any[] = [];
+			let countriesLevel = selectedTools?.one?.toolSelection?.find(
+				(it: any) => it?.category === "COUNTRY"
+			);
+			if (countriesLevel) {
+				for (let c = 0; c < countriesLevel?.data?.length; c++) {
+					const element = countriesLevel?.data[c];
+
+					let findCountry = countries?.find(
+						it => it?.name?.common?.toLowerCase() === element?.toLowerCase()
+					);
+					let newEle: any = {
+						country: element,
+						selection:"one"
+					};
+					if (findCountry) {
+						newEle.short =
+							findCountry?.fifa ||
+							findCountry?.cioc ||
+							findCountry?.cca3 ||
+							findCountry?.cca2;
+					}
+					newCount?.push(newEle);
+				}
+			}
+			let countriesLevel2 = selectedTools?.two?.toolSelection?.find(
+				(it: any) => it?.category === "COUNTRY"
+			);
+			if (countriesLevel2) {
+				for (let c = 0; c < countriesLevel2?.data?.length; c++) {
+					const element = countriesLevel2?.data[c];
+
+					let findCountry = countries?.find(
+						it => it?.name?.common?.toLowerCase() === element?.toLowerCase()
+					);
+					let newEle: any = {
+						country: element,
+						selection:"two"
+					};
+					if (findCountry) {
+						newEle.short =
+							findCountry?.fifa ||
+							findCountry?.cioc ||
+							findCountry?.cca3 ||
+							findCountry?.cca2;
+					}
+					let findInNewCount = newCount?.find(it=> it?.country === newEle?.country)
+					if (!findInNewCount)
+					newCount?.push(newEle);
+				else {
+					newCount = newCount?.map(it=> it?.country === newEle?.country ? {...it, selection: "both"}: it)
+				}
+				}
+			}
+			setMapCountries(newCount);
+		}
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	},[selectedTools])
+
+	if (!topoData || !topoData.objects || !topoData.objects.world) return null;
+	const geoData = feature(topoData, topoData.objects.world);
+
+	// console.log({ mapCountries });
+
+	// console.log({ newKpiMapper });
 
 	return (
 		<div>
@@ -597,7 +693,92 @@ export const ToolsTable = () => {
 					}}
 					className="w-full mb-20 py-24">
 					<div className="section-container h-full items-start gap-14 justify-center flex">
-						<img src={BigMap} alt="" className="" />
+						{/* <img src={BigMap} alt="" className="" /> */}
+						<div className=" w-[70%]">
+							<ComposableMap projection="geoMercator">
+								<Geographies geography={geoData}>
+									{({ geographies }) =>
+										geographies.map(geo => {
+											const countryCode = geo.id;
+											const isAvailable2 = mapCountries
+												?.map(it => it?.short)
+												.includes(countryCode);
+											const isAvailable1 = mapCountries
+												?.map(it => it?.country)
+												.includes(geo?.properties?.name);
+											const isAvailable =
+												selectedTools?.one || selectedTools?.two
+													? isAvailable1 || isAvailable2
+												:
+												toolAvailability["toolA"].includes(countryCode);
+											// console.log({geographies});
+
+											let newFind:any = null
+
+											if (isAvailable2){
+												newFind = mapCountries?.find(it=> it?.short === countryCode)
+											}
+											if (isAvailable1){
+												newFind = mapCountries?.find(it=> it?.country === geo?.properties?.name)
+											}
+											// if (newFind) newFind = newFind?.selection
+// console.log({newFind, isAvailable1, isAvailable2});
+
+											let color =
+													isAvailable && newFind
+														? newFind?.selection === "one"
+															? keys?.[1]?.color
+															: newFind?.selection === "two"
+															? keys?.[2]?.color
+															: newFind?.selection === "both"
+															? keys?.[0]?.color
+															: isAvailable
+															? countryColors.available
+															: countryColors.notAvailable
+														: countryColors.notAvailable,
+												color2 =
+													isAvailable && newFind
+														? newFind?.selection === "one"
+															? keys?.[1]?.color
+															: newFind?.selection === "two"
+															? keys?.[2]?.color
+															: newFind?.selection === "both"
+															? keys?.[0]?.color
+															: isAvailable
+															? countryColors.available
+															: "#D3D3D3"
+														: "#D3D3D3";
+
+											return (
+												<Geography
+													key={geo.rsmKey}
+													geography={geo}
+													fill={
+														color
+															
+													}
+													stroke="#FFFFFF"
+													strokeWidth={0.5}
+													style={{
+														default: {
+															fill: color,
+															outline: "none",
+														},
+														hover: {
+															fill: color2,
+															outline: "none",
+														},
+														pressed: {
+															outline: "none",
+														},
+													}}
+												/>
+											);
+										})
+									}
+								</Geographies>
+							</ComposableMap>
+						</div>
 						<div className="mt-10">
 							<h4 className="text-base font-medium text-[#000929]">Key</h4>
 							<div className="space-y-4 mt-4">

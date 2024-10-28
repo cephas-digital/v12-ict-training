@@ -301,7 +301,7 @@ const Dashboard = () => {
 	if (!topoData || !topoData.objects || !topoData.objects.world) return null;
 	const geoData = feature(topoData, topoData.objects.world);
 
-	console.log({ mapCountries });
+	// console.log({ mapCountries });
 
 	return (
 		<div>
