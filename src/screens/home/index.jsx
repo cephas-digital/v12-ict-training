@@ -83,7 +83,7 @@ const HeroSection = () => {
             className="absolute hidden lg:block bottom-36 w-96 right-10 h-96 object-contain"
           />
         </section>
-        <div className="w-full lg:about-section lg:pt-10 bg-white">
+        <div className="w-full about-section lg:pt-10 bg-white">
           <div className="section-container grid lg:grid-cols-2 items-center gap-16">
             <div className="h-full hidden lg:block w-full">
               <img
