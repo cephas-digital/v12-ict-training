@@ -16,8 +16,6 @@ import { apiCall } from "../../data/useFetcher";
 import { useRawdataStore } from "../../data/stores/loggerStore";
 import { ComposableMap, Geographies, Geography } from "react-simple-maps";
 import { feature } from "topojson-client";
-import { ComposableMap, Geographies, Geography } from "react-simple-maps";
-import { feature } from "topojson-client";
 import { getCountries } from "../../screens/dashboard";
 
 const ProductTable = ({ products, start }) => {
@@ -147,39 +145,39 @@ const tableData = [
 ];
 
 export const ToolsTable = () => {
-	const navigate = useNavigate();
-	const [tab, setTab] = useState("list");
-	const [modal, setModal] = useState<"one" | "two" | "">("");
-	const keys = [
-			{
-				color: "#3787FF",
-				name: "both tools available",
-			},
-			{
-				color: "#16A34A",
-				name: "both tools available",
-			},
-			{
-				color: "#E7A00C",
-				name: "None selected",
-			},
-		],
-		[selectedTools, setSelectedTools] = useState<any>(null),
-		[selectedAppLevel, setSelectedAppLevel] = useState<any>(null),
-		{ getDynamicLogger } = useRawdataStore(),
-		{ kpidata }: any = useRawdataStore(),
-		[newKpiMapper, setNewKpiMapper] = useState<any>(null);
+  const navigate = useNavigate();
+  const [tab, setTab] = useState("list");
+  const [modal, setModal] = useState<"one" | "two" | "">("");
+  const keys = [
+      {
+        color: "#3787FF",
+        name: "both tools available",
+      },
+      {
+        color: "#16A34A",
+        name: "both tools available",
+      },
+      {
+        color: "#E7A00C",
+        name: "None selected",
+      },
+    ],
+    [selectedTools, setSelectedTools] = useState<any>(null),
+    [selectedAppLevel, setSelectedAppLevel] = useState<any>(null),
+    { getDynamicLogger } = useRawdataStore(),
+    { kpidata }: any = useRawdataStore(),
+    [newKpiMapper, setNewKpiMapper] = useState<any>(null);
 
-	useEffect(() => {
-		if (selectedAppLevel) {
-			apiCall({
-				type: "get",
-				url: `/api/v1/rawdata/manage-kpis?category=APPLICATION LEVEL&data=${selectedAppLevel?.title}&pagination=not`,
-				getter: (d: any) => getDynamicLogger(d, "kpidata"),
-			});
-		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [selectedAppLevel]);
+  useEffect(() => {
+    if (selectedAppLevel) {
+      apiCall({
+        type: "get",
+        url: `/api/v1/rawdata/manage-kpis?category=APPLICATION LEVEL&data=${selectedAppLevel?.title}&pagination=not`,
+        getter: (d: any) => getDynamicLogger(d, "kpidata"),
+      });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedAppLevel]);
 
   useEffect(() => {
     if (kpidata) {
@@ -187,31 +185,31 @@ export const ToolsTable = () => {
       if (someChecker) {
         let thisData = kpidata?.docs;
 
-				let groups = thisData?.reduce((groups, game) => {
-					let date = game?.upperCategory;
-					if (!groups[date]) {
-						groups[date] = [];
-					}
-					groups[date].push(game);
-					return groups;
-				}, {});
-				const groupArrays = Object.keys(groups).map(date => {
-					return {
-						category: date,
-						data: groups[date],
-					};
-				});
-				setNewKpiMapper({
-					level: "3 Step",
-					data: { ...kpidata, docs: groupArrays?.reverse() },
-				});
-			} else {
-				setNewKpiMapper({ level: "2 Step", data: kpidata });
-			}
-		}
-	}, [kpidata]);
+        let groups = thisData?.reduce((groups, game) => {
+          let date = game?.upperCategory;
+          if (!groups[date]) {
+            groups[date] = [];
+          }
+          groups[date].push(game);
+          return groups;
+        }, {});
+        const groupArrays = Object.keys(groups).map((date) => {
+          return {
+            category: date,
+            data: groups[date],
+          };
+        });
+        setNewKpiMapper({
+          level: "3 Step",
+          data: { ...kpidata, docs: groupArrays?.reverse() },
+        });
+      } else {
+        setNewKpiMapper({ level: "2 Step", data: kpidata });
+      }
+    }
+  }, [kpidata]);
 
-	console.log({ newKpiMapper });
+  console.log({ newKpiMapper });
 
   return (
     <div>
@@ -324,112 +322,120 @@ export const ToolsTable = () => {
                   </p>
                 </div>
 
-								<div
-									style={{
-										borderWidth: "0px 0.4px 0 0.4px",
-										borderStyle: "solid",
-										borderColor: "#000000",
-									}}
-									className="col-span-5">
-									{t?.subcategories?.map((sub, index, array) => (
-										<div className="grid grid-cols-5 w-full">
-											<div
-												key={index}
-												style={{
-													borderWidth:
-														index !== 0 && index === array.length - 1
-															? "0px"
-															: "0px 0 0.4px 0",
-													borderStyle: "solid",
-													borderColor: "#000000",
-												}}
-												className="flex px-3 col-span-1 min-h-14 items-center gap-3">
-												<img src={Infra} alt="" className="" />
-												<small className="text-base font-medium text-[#334155]">
-													{sub.name}
-												</small>
-											</div>
-											<div
-												style={{
-													borderWidth: "0px 0 0 0.4px",
-													borderStyle: "solid",
-													borderColor: "#000000",
-												}}
-												className="col-span-4">
-												{sub?.rows?.map((row, idx, arr) => (
-													<div key={idx} className="grid grid-cols-4 w-full">
-														<div
-															style={{
-																borderWidth: "0px 0 0.4px 0",
-																borderStyle: "solid",
-																borderColor: "#000000",
-															}}
-															className="min-h-14 col-span-2 w-full px-2 flex items-center">
-															<span className="text-base font-normal text-[#334155] inter">
-																{row?.label}
-															</span>
-														</div>
-														<div
-															style={{
-																borderWidth: "0px 0 0.4px 0.4px",
-																borderStyle: "solid",
-																borderColor: "#000000",
-															}}
-															className="col-span-1 flex justify-center items-center">
-															{row?.tool1 === "pending" ? (
-																<PendingComp />
-															) : row?.tool1 === true ? (
-																<GoodComp />
-															) : (
-																<BadComp />
-															)}
-														</div>
-														<div
-															style={{
-																borderWidth: "0px 0 0.4px 0.4px",
-																borderStyle: "solid",
-																borderColor: "#000000",
-															}}
-															className="col-span-1 flex justify-center items-center">
-															{row?.tool2 === "pending" ? (
-																<PendingComp />
-															) : row?.tool2 === true ? (
-																<GoodComp />
-															) : (
-																<BadComp />
-															)}
-														</div>
-													</div>
-												))}
-											</div>
-										</div>
-									))}
-								</div>
-							</div>
-						))}
-					</div>
-					<div className={!selectedTools?.one ? "hidden" : "pb-10"}>
-						{newKpiMapper?.level === "3 Step"
-							? newKpiMapper?.data?.docs?.map((t: any, i: number) => (
-									<div
-										key={i}
-										style={{
-											borderWidth: "0.4px 0 0 0.4px",
-											borderStyle: "solid",
-											borderColor: "#000000",
-										}}
-										className="w-full grid grid-cols-6">
-										<div
-											style={{
-												borderWidth: "0px 0 0.4px 0px",
-												borderStyle: "solid",
-												borderColor: "#000000",
-											}}
-											className="col-span-1 pt-8 px-3">
-											<p className="text-base font-bold text-[#334155] capitalize">
-												{t?.category?.toLowerCase()}
-											</p>
-										</div>
+                <div
+                  style={{
+                    borderWidth: "0px 0.4px 0 0.4px",
+                    borderStyle: "solid",
+                    borderColor: "#000000",
+                  }}
+                  className="col-span-5"
+                >
+                  {t?.subcategories?.map((sub, index, array) => (
+                    <div className="grid grid-cols-5 w-full">
+                      <div
+                        key={index}
+                        style={{
+                          borderWidth:
+                            index !== 0 && index === array.length - 1
+                              ? "0px"
+                              : "0px 0 0.4px 0",
+                          borderStyle: "solid",
+                          borderColor: "#000000",
+                        }}
+                        className="flex px-3 col-span-1 min-h-14 items-center gap-3"
+                      >
+                        <img src={Infra} alt="" className="" />
+                        <small className="text-base font-medium text-[#334155]">
+                          {sub.name}
+                        </small>
+                      </div>
+                      <div
+                        style={{
+                          borderWidth: "0px 0 0 0.4px",
+                          borderStyle: "solid",
+                          borderColor: "#000000",
+                        }}
+                        className="col-span-4"
+                      >
+                        {sub?.rows?.map((row, idx, arr) => (
+                          <div key={idx} className="grid grid-cols-4 w-full">
+                            <div
+                              style={{
+                                borderWidth: "0px 0 0.4px 0",
+                                borderStyle: "solid",
+                                borderColor: "#000000",
+                              }}
+                              className="min-h-14 col-span-2 w-full px-2 flex items-center"
+                            >
+                              <span className="text-base font-normal text-[#334155] inter">
+                                {row?.label}
+                              </span>
+                            </div>
+                            <div
+                              style={{
+                                borderWidth: "0px 0 0.4px 0.4px",
+                                borderStyle: "solid",
+                                borderColor: "#000000",
+                              }}
+                              className="col-span-1 flex justify-center items-center"
+                            >
+                              {row?.tool1 === "pending" ? (
+                                <PendingComp />
+                              ) : row?.tool1 === true ? (
+                                <GoodComp />
+                              ) : (
+                                <BadComp />
+                              )}
+                            </div>
+                            <div
+                              style={{
+                                borderWidth: "0px 0 0.4px 0.4px",
+                                borderStyle: "solid",
+                                borderColor: "#000000",
+                              }}
+                              className="col-span-1 flex justify-center items-center"
+                            >
+                              {row?.tool2 === "pending" ? (
+                                <PendingComp />
+                              ) : row?.tool2 === true ? (
+                                <GoodComp />
+                              ) : (
+                                <BadComp />
+                              )}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+          <div className={!selectedTools?.one ? "hidden" : "pb-10"}>
+            {newKpiMapper?.level === "3 Step"
+              ? newKpiMapper?.data?.docs?.map((t: any, i: number) => (
+                  <div
+                    key={i}
+                    style={{
+                      borderWidth: "0.4px 0 0 0.4px",
+                      borderStyle: "solid",
+                      borderColor: "#000000",
+                    }}
+                    className="w-full grid grid-cols-6"
+                  >
+                    <div
+                      style={{
+                        borderWidth: "0px 0 0.4px 0px",
+                        borderStyle: "solid",
+                        borderColor: "#000000",
+                      }}
+                      className="col-span-1 pt-8 px-3"
+                    >
+                      <p className="text-base font-bold text-[#334155] capitalize">
+                        {t?.category?.toLowerCase()}
+                      </p>
+                    </div>
 
                     <div
                       style={{
@@ -600,67 +606,69 @@ export const ToolsTable = () => {
 												) : (
 													<BadComp />
 												)} */}
-														<ProductTableShow
-															prevData={selectedTools?.two?.kpiSelection}
-															product={row}
-															title={sub?.category}
-														/>
-													</div>
-												</div>
-											))}
-										</div>
-									</div>
-							  ))}
-					</div>
-				</>
-			)}
-			{tab === "map" && (
-				<div
-					style={{
-						border: "0.4px solid #000000",
-					}}
-					className="w-full mb-20 py-24">
-					<div className="section-container h-full items-start gap-14 justify-center flex">
-						<img src={BigMap} alt="" className="" />
-						<div className="mt-10">
-							<h4 className="text-base font-medium text-[#000929]">Key</h4>
-							<div className="space-y-4 mt-4">
-								{keys?.map(key => (
-									<div className="flex items-center gap-2">
-										<div
-											style={{
-												backgroundColor: key?.color,
-											}}
-											className={`h-3 rounded-tr-3xl w-12`}></div>
-										<h6 className="text-sm font-normal capitalize text-da-blue-600">
-											{key?.name}
-										</h6>
-									</div>
-								))}
-							</div>
-						</div>
-					</div>
-				</div>
-			)}
-			{["one", "two"]?.includes(modal) && (
-				<SelectToolModal
-					handleClose={() => setModal("")}
-					selectLevel={modal ? modal : null}
-					preActive={selectedAppLevel}
-					preSelection={selectedTools}
-					handleSelect={(da: any) => {
-						if (da?.selection) {
-							setSelectedTools(da?.selection);
-						}
-						if (da?.active) {
-							setSelectedAppLevel(da?.active);
-						}
-						setModal("");
-					}}
-				/>
-			)}
-		</div>
-	);
+                            <ProductTableShow
+                              prevData={selectedTools?.two?.kpiSelection}
+                              product={row}
+                              title={sub?.category}
+                            />
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                ))}
+          </div>
+        </>
+      )}
+      {tab === "map" && (
+        <div
+          style={{
+            border: "0.4px solid #000000",
+          }}
+          className="w-full mb-20 py-24"
+        >
+          <div className="section-container h-full items-start gap-14 justify-center flex">
+            {/* <img src={BigMap} alt="" className="" /> */}
+            <div className="mt-10">
+              <h4 className="text-base font-medium text-[#000929]">Key</h4>
+              <div className="space-y-4 mt-4">
+                {keys?.map((key) => (
+                  <div className="flex items-center gap-2">
+                    <div
+                      style={{
+                        backgroundColor: key?.color,
+                      }}
+                      className={`h-3 rounded-tr-3xl w-12`}
+                    ></div>
+                    <h6 className="text-sm font-normal capitalize text-da-blue-600">
+                      {key?.name}
+                    </h6>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+      {["one", "two"]?.includes(modal) && (
+        <SelectToolModal
+          handleClose={() => setModal("")}
+          selectLevel={modal ? modal : null}
+          preActive={selectedAppLevel}
+          preSelection={selectedTools}
+          handleSelect={(da: any) => {
+            if (da?.selection) {
+              setSelectedTools(da?.selection);
+            }
+            if (da?.active) {
+              setSelectedAppLevel(da?.active);
+            }
+            setModal("");
+          }}
+        />
+      )}
+    </div>
+  );
 };
 
 export const CheckerDecider = () => {};
