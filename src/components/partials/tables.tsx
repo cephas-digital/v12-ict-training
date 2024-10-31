@@ -213,27 +213,6 @@ export const ToolsTable = () => {
 		}
 	}, [kpidata]);
 
-	const [topoData, setTopoData] = useState(null);
-	const countryColors = {
-		available: "#3787FF",
-		notAvailable: "#EAEAEA",
-	};
-
-	// Updated to include both ISO_A3 and ISO_A2 formats for testing
-	const toolAvailability = {
-		toolA: ["USA", "CAN", "MEX", "US", "CA", "MX", "KIR", "NGA"], // Ensure KIR is included if needed
-		toolB: ["FRA", "DEU", "ITA", "FR", "DE", "IT"],
-	};
-	useEffect(() => {
-		const fetchData = async () => {
-			const response = await fetch("/features.json"); // Path to your TopoJSON
-			const data = await response.json();
-			setTopoData(data); // Store TopoJSON data
-		};
-
-		fetchData();
-	}, []);
-
 	useEffect(() => {
 		if (selectedTools?.one || selectedTools?.two) {
 			let newCount: any[] = [];
@@ -299,11 +278,6 @@ export const ToolsTable = () => {
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [selectedTools]);
-
-	if (!topoData || !topoData.objects || !topoData.objects.world) return null;
-	const geoData = feature(topoData, topoData.objects.world);
-
-	// console.log({ mapCountries });
 
 	// console.log({ newKpiMapper });
 
@@ -699,91 +673,11 @@ export const ToolsTable = () => {
 					className="w-full mb-20 py-24">
 					<div className="section-container h-full items-start gap-14 justify-center flex">
 						{/* <img src={BigMap} alt="" className="" /> */}
-						<div className=" w-[70%] bg-[#F8FAFC] rounded-md">
-							<ComposableMap projection="geoMercator">
-								<Geographies geography={geoData}>
-									{({ geographies }) =>
-										geographies.map(geo => {
-											const countryCode = geo.id;
-											const isAvailable2 = mapCountries
-												?.map(it => it?.short)
-												.includes(countryCode);
-											const isAvailable1 = mapCountries
-												?.map(it => it?.country)
-												.includes(geo?.properties?.name);
-											const isAvailable =
-												selectedTools?.one || selectedTools?.two
-													? isAvailable1 || isAvailable2
-													: toolAvailability["toolA"].includes(countryCode);
-											// console.log({geographies});
-
-											let newFind: any = null;
-
-											if (isAvailable2) {
-												newFind = mapCountries?.find(
-													it => it?.short === countryCode
-												);
-											}
-											if (isAvailable1) {
-												newFind = mapCountries?.find(
-													it => it?.country === geo?.properties?.name
-												);
-											}
-											// if (newFind) newFind = newFind?.selection
-											// console.log({newFind, isAvailable1, isAvailable2});
-
-											let color =
-													isAvailable && newFind
-														? newFind?.selection === "one"
-															? keys?.[1]?.color
-															: newFind?.selection === "two"
-															? keys?.[2]?.color
-															: newFind?.selection === "both"
-															? keys?.[0]?.color
-															: isAvailable
-															? countryColors.available
-															: countryColors.notAvailable
-														: countryColors.notAvailable,
-												color2 =
-													isAvailable && newFind
-														? newFind?.selection === "one"
-															? keys?.[1]?.color
-															: newFind?.selection === "two"
-															? keys?.[2]?.color
-															: newFind?.selection === "both"
-															? keys?.[0]?.color
-															: isAvailable
-															? countryColors.available
-															: "#D3D3D3"
-														: "#D3D3D3";
-
-											return (
-												<Geography
-													key={geo.rsmKey}
-													geography={geo}
-													fill={color}
-													stroke="#FFFFFF"
-													strokeWidth={0.5}
-													style={{
-														default: {
-															fill: color,
-															outline: "none",
-														},
-														hover: {
-															fill: color2,
-															outline: "none",
-														},
-														pressed: {
-															outline: "none",
-														},
-													}}
-												/>
-											);
-										})
-									}
-								</Geographies>
-							</ComposableMap>
-						</div>
+						<MapCompareComponent
+							mapCountries={mapCountries}
+							selectedTools={selectedTools}
+							keys={keys}
+						/>
 						<div className="mt-10">
 							<h4 className="text-base font-medium text-[#000929]">Key</h4>
 							<div className="space-y-4 mt-4">
@@ -946,5 +840,116 @@ export const ProductTableShow = ({ product, prevData, title }) => {
 				<PendingComp />
 			)}
 		</>
+	);
+};
+
+export const MapCompareComponent = ({ mapCountries, selectedTools, keys }) => {
+	const [topoData, setTopoData] = useState(null);
+	const countryColors = {
+		available: "#3787FF",
+		notAvailable: "#EAEAEA",
+	};
+
+	// Updated to include both ISO_A3 and ISO_A2 formats for testing
+	const toolAvailability = {
+		toolA: ["USA", "CAN", "MEX", "US", "CA", "MX", "KIR", "NGA"], // Ensure KIR is included if needed
+		toolB: ["FRA", "DEU", "ITA", "FR", "DE", "IT"],
+	};
+	useEffect(() => {
+		const fetchData = async () => {
+			const response = await fetch("/features.json"); // Path to your TopoJSON
+			const data = await response.json();
+			setTopoData(data); // Store TopoJSON data
+		};
+
+		fetchData();
+	}, []);
+
+	if (!topoData || !topoData.objects || !topoData.objects.world) return null;
+	const geoData = feature(topoData, topoData.objects.world);
+	return (
+		<div className=" w-[70%] bg-[#F8FAFC] rounded-md">
+			<ComposableMap projection="geoMercator">
+				<Geographies geography={geoData}>
+					{({ geographies }) =>
+						geographies.map(geo => {
+							const countryCode = geo.id;
+							const isAvailable2 = mapCountries
+								?.map(it => it?.short)
+								.includes(countryCode);
+							const isAvailable1 = mapCountries
+								?.map(it => it?.country)
+								.includes(geo?.properties?.name);
+							const isAvailable =
+								selectedTools?.one || selectedTools?.two
+									? isAvailable1 || isAvailable2
+									: toolAvailability["toolA"].includes(countryCode);
+							// console.log({geographies});
+
+							let newFind: any = null;
+
+							if (isAvailable2) {
+								newFind = mapCountries?.find(it => it?.short === countryCode);
+							}
+							if (isAvailable1) {
+								newFind = mapCountries?.find(
+									it => it?.country === geo?.properties?.name
+								);
+							}
+							// if (newFind) newFind = newFind?.selection
+							// console.log({newFind, isAvailable1, isAvailable2});
+
+							let color =
+									isAvailable && newFind
+										? newFind?.selection === "one"
+											? keys?.[1]?.color
+											: newFind?.selection === "two"
+											? keys?.[2]?.color
+											: newFind?.selection === "both"
+											? keys?.[0]?.color
+											: isAvailable
+											? countryColors.available
+											: countryColors.notAvailable
+										: countryColors.notAvailable,
+								color2 =
+									isAvailable && newFind
+										? newFind?.selection === "one"
+											? keys?.[1]?.color
+											: newFind?.selection === "two"
+											? keys?.[2]?.color
+											: newFind?.selection === "both"
+											? keys?.[0]?.color
+											: isAvailable
+											? countryColors.available
+											: "#D3D3D3"
+										: "#D3D3D3";
+
+							return (
+								<Geography
+									key={geo.rsmKey}
+									geography={geo}
+									fill={color}
+									stroke="#FFFFFF"
+									strokeWidth={0.5}
+									style={{
+										default: {
+											fill: color,
+											outline: "none",
+										},
+										hover: {
+											fill: color2,
+											outline: "none",
+										},
+										pressed: {
+											outline: "none",
+										},
+									}}
+								/>
+							);
+						})
+					}
+				</Geographies>
+			</ComposableMap>
+		</div>
 	);
 };
