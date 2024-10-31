@@ -93,7 +93,7 @@ export const ProductTable = ({
 						key={index}
 						className={`${
 							index % 2 === 0 ? "bg-white" : "bg-[#F8FAFC]"
-						} flex justify-between px-1 h-10 py-3 items-center w-full`}>
+						} flex justify-between px-1 h-10 py-3 items-center w-full page-break`}>
 						<span className=" text-da-blue-600 text-xs truncate w-5/6">
 							{product?.title || product?.name}
 						</span>
@@ -129,10 +129,10 @@ export const ToolsKPIsData = ({
 	selection,
 	shadow = false,
 	prevData,
-	setInfo
+	setInfo,
 }: any) => {
 	return (
-		<WhiteBox className="h-full" shadow={shadow}>
+		<WhiteBox className="h-full page-break" shadow={shadow}>
 			<div className="flex justify-between items-center">
 				<h5 className="text-base text-da-blue-600 font-medium capitalize">
 					{title ? title?.toLowerCase() : ""}

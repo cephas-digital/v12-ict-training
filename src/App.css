@@ -77,3 +77,35 @@
 .noscroll {
   -ms-overflow-style: none; /* Hides the scrollbar */
 }
+
+
+.printPage * {
+  font-family: "Microsoft San Serif" !important;
+}
+@media print {
+  .borderNonePrint {
+    border: none !important;
+  }
+  .hidden.printOnly {
+    display: block !important;
+  }
+  .flex.printOnlyNone {
+    display: none !important;
+  }
+  .text2Print {
+    font-size: 20px !important;
+  }
+  body {
+    font-size: 12px;
+  }
+  .page-break {
+    /* margin-top: 1rem; */
+    /* display: block; */
+    page-break-before: auto;
+    page-break-inside: avoid;
+  }
+}
+@page {
+  size: auto;
+  margin: 5mm 0;
+}

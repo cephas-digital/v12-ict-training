@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { PageHeader } from "../../components/partials/header";
 import { FiSearch } from "react-icons/fi";
 import Caution from "../../assets/icons/caution.svg";
@@ -9,8 +9,8 @@ import CompareIcon from "../../assets/icons/compareicon.svg";
 import SelectIcon from "../../assets/icons/calendar 01.svg";
 // import Map from "../../assets/images/map.png";
 import WhiteBox, {
-  ToolsKPIsData,
-  WhiteBox2,
+	ToolsKPIsData,
+	WhiteBox2,
 } from "../../components/partials/box";
 import Info from "../../assets/icons/information.svg";
 import ProductTable from "../../components/partials/tables";
@@ -18,7 +18,7 @@ import StartMapping from "../../components/modals/startmaping";
 import Seemore from "../../assets/icons/seemore.svg";
 // import Nwasco from "../../assets/icons/nwasco.svg";
 import SelectRegion from "../../components/modals/selectregion";
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
 import "intro.js/introjs.css";
 import introJs from "intro.js";
 import { useRawdataStore } from "../../data/stores/loggerStore";
@@ -29,6 +29,8 @@ import { feature } from "topojson-client";
 import InfoModal from "../../components/modals/infomodal";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { useReactToPrint } from "react-to-print";
+import moment from "moment";
 
 // const toolAvailability = {
 //   toolA: ["USA", "CAN", "MEX"],
@@ -36,30 +38,30 @@ import { toast } from "react-toastify";
 //   // More tools as needed
 // };
 
-export const createMarkup = (html) => {
-  return {
-    __html: DOMPurify.sanitize(html),
-  };
+export const createMarkup = html => {
+	return {
+		__html: DOMPurify.sanitize(html),
+	};
 };
 
 export let getCountries = async ({ setCountries }) => {
-  try {
-    let res = await axios.get(
-      `https://restcountries.com/v3.1/all?fields=name,flags,region,capital,timezones,altSpellings,cioc,cca3,cca2,latlng,fifa`,
-      {
-        headers: {
-          Authorization: null,
-        },
-        baseURL: null,
-      }
-    );
-    console.log({ rd: res }, "countries");
-    setCountries(res?.data?.data || res?.data);
-  } catch (err) {
-    if (err?.response?.status === 429 || err?.response?.status === 405)
-      toast.error(err?.response?.data ? err?.response?.data : err?.message);
-    console.log({ err });
-  }
+	try {
+		let res = await axios.get(
+			`https://restcountries.com/v3.1/all?fields=name,flags,region,capital,timezones,altSpellings,cioc,cca3,cca2,latlng,fifa`,
+			{
+				headers: {
+					Authorization: null,
+				},
+				baseURL: null,
+			}
+		);
+		console.log({ rd: res }, "countries");
+		setCountries(res?.data?.data || res?.data);
+	} catch (err) {
+		if (err?.response?.status === 429 || err?.response?.status === 405)
+			toast.error(err?.response?.data ? err?.response?.data : err?.message);
+		console.log({ err });
+	}
 };
 
 const Dashboard = () => {
@@ -278,10 +280,20 @@ const Dashboard = () => {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [currentTool]);
 
+	let componentRef = useRef(null);
+	const handlePrint = useReactToPrint({
+		contentRef: componentRef,
+		// content: () => componentRef?.current,
+		documentTitle: `${currentTool?.toolName || ""}-${moment().format(
+			"DD/MM/YYYY"
+		)}`,
+		bodyClass: "px-4 py-10",
+	});
+
 	return (
 		<div>
 			<PageHeader />
-			<div className="w-full flex">
+			<div className="w-full flex" ref={componentRef}>
 				<div
 					style={{
 						border: "1px solid #C4C4C4",
@@ -379,7 +391,12 @@ const Dashboard = () => {
 							icon={Export}
 							className="export-btn"
 							text={"Export"}
-							onClick={() => console.log("object")}
+							onClick={() => {
+								console.log("object");
+								if (currentTool) {
+									handlePrint();
+								}
+							}}
 						/>
 						<MainBtn
 							icon={CompareIcon}
@@ -423,12 +440,12 @@ const Dashboard = () => {
 						)}
 						{tab === "overview" && (
 							<div>
-								<div className="w-full mt-8 grid grid-cols-3 gap-5">
+								<div className="w-full mt-8 grid grid-cols-3 gap-5 page-break">
 									<div
 										style={{
 											boxShadow: "4px 4px 100px 0px #00000014",
 										}}
-										className="col-span-2 h-72 flex gap-10 items-center bg-white rounded-lg p-5">
+										className="col-span-2 h-72 flex gap-10 items-center bg-white rounded-lg p-5 page-break">
 										<div>
 											<h4 className="text-base font-medium text-[#000929]">
 												Countries using sanitation data tools
@@ -447,7 +464,9 @@ const Dashboard = () => {
 											</h5>
 											<ul className="list-disc h-60 overflow-y-scroll noscroll list-inside space-y-2 mt-3 text-xs font-normal text-da-blue-600">
 												{mapCountries?.map((it: any, i: number) => (
-													<li key={i}>{it?.country}</li>
+													<li key={i} className="page-break">
+														{it?.country}
+													</li>
 												))}
 											</ul>
 										</div>
@@ -497,7 +516,9 @@ const Dashboard = () => {
 												)}
 												{currentTool &&
 													formInfo?.map((tool, i) => (
-														<div key={i} className="flex items-center gap-2">
+														<div
+															key={i}
+															className="flex items-center gap-2 page-break">
 															<div
 																className={`h-3 rounded-tr-3xl w-12 ${
 																	start ? "bg-[#3787FF]" : "bg-[#D2D7D4]"
