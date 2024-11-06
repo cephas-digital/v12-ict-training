@@ -32,6 +32,7 @@ import { toast } from "react-toastify";
 import { useReactToPrint } from "react-to-print";
 import moment from "moment";
 import ReactPlayer from "react-player";
+import { Tooltip as ReactTooltip } from "react-tooltip";
 
 // const toolAvailability = {
 //   toolA: ["USA", "CAN", "MEX"],
@@ -799,29 +800,33 @@ const Dashboard = () => {
 export default Dashboard;
 
 export const MapDashboardComponent = ({ mapCountries, start, currentTool }) => {
-  const [topoData, setTopoData] = useState(null),
-    [selectedTool] = useState<any>("toolA");
+  const [tooltip, setTooltip] = useState("");
+  const [topoData, setTopoData] = useState(null);
+  const [selectedTool] = useState<any>("toolA");
+
   const countryColors = {
     available: "#3787FF",
     notAvailable: "#EAEAEA",
   };
 
-  // Updated to include both ISO_A3 and ISO_A2 formats for testing
   const toolAvailability = {
-    toolA: ["USA", "CAN", "MEX", "US", "CA", "MX", "KIR", "NGA"], // Ensure KIR is included if needed
+    toolA: ["USA", "CAN", "MEX", "US", "CA", "MX", "KIR", "NGA"],
     toolB: ["FRA", "DEU", "ITA", "FR", "DE", "IT"],
   };
+
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch("/features.json"); // Path to your TopoJSON
+      const response = await fetch("/features.json");
       const data = await response.json();
-      setTopoData(data); // Store TopoJSON data
+      setTopoData(data);
     };
-
     fetchData();
   }, []);
+
   if (!topoData || !topoData.objects || !topoData.objects.world) return null;
+
   const geoData = feature(topoData, topoData.objects.world);
+
   return (
     <div className="mt-3 h-60 w-80 bg-[#F8FAFC] rounded-md">
       <ComposableMap projection="geoMercator">
@@ -829,6 +834,7 @@ export const MapDashboardComponent = ({ mapCountries, start, currentTool }) => {
           {({ geographies }) =>
             geographies.map((geo) => {
               const countryCode = geo.id;
+              const countryName = geo?.properties?.name;
               const isAvailable2 = mapCountries
                 ?.map((it) => it?.short)
                 .includes(countryCode);
@@ -839,12 +845,19 @@ export const MapDashboardComponent = ({ mapCountries, start, currentTool }) => {
                 start && currentTool
                   ? isAvailable1 || isAvailable2
                   : toolAvailability[selectedTool].includes(countryCode);
-              // console.log({geographies});
 
               return (
                 <Geography
+                  data-tip={isAvailable ? countryName : ""} // Update this line
+                  data-for="country-tooltip"
+                  onMouseEnter={() => {
+                    if (isAvailable) setTooltip(countryName);
+                  }}
                   key={geo.rsmKey}
                   geography={geo}
+                  onMouseLeave={() => {
+                    setTooltip("");
+                  }}
                   fill={
                     isAvailable
                       ? countryColors.available
@@ -873,6 +886,9 @@ export const MapDashboardComponent = ({ mapCountries, start, currentTool }) => {
           }
         </Geographies>
       </ComposableMap>
+      <ReactTooltip id="country-tooltip" place="top">
+        {tooltip}
+      </ReactTooltip>
     </div>
   );
 };
