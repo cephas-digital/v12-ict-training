@@ -17,6 +17,7 @@ import { useRawdataStore } from "../../data/stores/loggerStore";
 import { ComposableMap, Geographies, Geography } from "react-simple-maps";
 import { feature } from "topojson-client";
 import { getCountries } from "../../screens/dashboard";
+import { Tooltip as ReactTooltip } from "react-tooltip";
 
 const ProductTable = ({ products, start }) => {
 	return (
@@ -849,6 +850,7 @@ export const MapCompareComponent = ({ mapCountries, selectedTools, keys }) => {
 		available: "#3787FF",
 		notAvailable: "#EAEAEA",
 	};
+	const [tooltip, setTooltip] = useState("");
 
 	// Updated to include both ISO_A3 and ISO_A2 formats for testing
 	const toolAvailability = {
@@ -873,13 +875,14 @@ export const MapCompareComponent = ({ mapCountries, selectedTools, keys }) => {
 				<Geographies geography={geoData}>
 					{({ geographies }) =>
 						geographies.map(geo => {
-							const countryCode = geo.id;
+							const countryCode = geo.id,
+								countryName = geo?.properties?.name;
 							const isAvailable2 = mapCountries
 								?.map(it => it?.short)
 								.includes(countryCode);
 							const isAvailable1 = mapCountries
 								?.map(it => it?.country)
-								.includes(geo?.properties?.name);
+								.includes(countryName);
 							const isAvailable =
 								selectedTools?.one || selectedTools?.two
 									? isAvailable1 || isAvailable2
@@ -892,9 +895,7 @@ export const MapCompareComponent = ({ mapCountries, selectedTools, keys }) => {
 								newFind = mapCountries?.find(it => it?.short === countryCode);
 							}
 							if (isAvailable1) {
-								newFind = mapCountries?.find(
-									it => it?.country === geo?.properties?.name
-								);
+								newFind = mapCountries?.find(it => it?.country === countryName);
 							}
 							// if (newFind) newFind = newFind?.selection
 							// console.log({newFind, isAvailable1, isAvailable2});
@@ -926,6 +927,17 @@ export const MapCompareComponent = ({ mapCountries, selectedTools, keys }) => {
 
 							return (
 								<Geography
+									data-tip={isAvailable ? countryName : ""} // Update this line
+									data-tooltip-content={isAvailable ? countryName : ""} // Update this line
+									data-for="country-tooltip"
+									data-tooltip-id="country-tooltip"
+									onMouseEnter={() => {
+										// console.log({ geo });
+										if (isAvailable) setTooltip(countryName);
+									}}
+									onMouseLeave={() => {
+										setTooltip("");
+									}}
 									key={geo.rsmKey}
 									geography={geo}
 									fill={color}
@@ -950,6 +962,9 @@ export const MapCompareComponent = ({ mapCountries, selectedTools, keys }) => {
 					}
 				</Geographies>
 			</ComposableMap>
+			<ReactTooltip id="country-tooltip" place="top">
+				{tooltip}
+			</ReactTooltip>
 		</div>
 	);
 };
