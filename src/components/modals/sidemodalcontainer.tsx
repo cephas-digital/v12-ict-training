@@ -14,7 +14,7 @@ const SideModalcontainer = ({ children }) => {
         <ModalBackground>
           <div className={`flex min-h-screen justify-end`}>
             <div
-              className={`bg-white w-96 h-screen transform transition-transform duration-500 ease-in-out overflow-y-auto noscroll ${
+              className={`bg-white w-96 h-screen transform transition-transform duration-500 ease-in-out overflow-y-scroll noscroll ${
                 isOpen ? "translate-x-0" : "translate-x-full"
               }`}
             >
