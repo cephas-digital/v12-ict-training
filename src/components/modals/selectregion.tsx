@@ -2,9 +2,8 @@ import React, { useEffect, useState } from "react";
 import SideModalcontainer from "./sidemodalcontainer";
 import Close from "../../assets/icons/close.svg";
 import Reset from "../../assets/icons/reset.svg";
-import SearchInput from "../partials/inputs";
 import { NormalBtn } from "../partials/buttons";
-import { InputReloader } from "./startmaping";
+import { SearchDataInput } from "./startmaping";
 import { apiCall } from "../../data/useFetcher";
 import { useRawdataStore } from "../../data/stores/loggerStore";
 
@@ -161,29 +160,12 @@ const SelectRegion = ({
 									className="cursor-pointer"
 								/>
 							</div>
-							<div className="mt-3">
-								<SearchInput
-									placeholder={`Search ${
-										filter?.category
-											? filter?.category?.toLowerCase()
-											: filter?.label
-									}`}
-								/>
-							</div>
-							<div className="mt-4">
-								{filter?.[data ? "data" : "options"]?.map(
-									(option: any, idx: number) => (
-										<InputReloader
-											option={option}
-											data={data}
-											filter={filter}
-											handleOptionChange={handleOptionChange}
-											selectedOptions={selectedOptions}
-											key={idx}
-										/>
-									)
-								)}
-							</div>
+							<SearchDataInput
+								filter={filter}
+								data={data}
+								handleOptionChange={handleOptionChange}
+								selectedOptions={selectedOptions}
+							/>
 						</div>
 					))}
 				</div>

@@ -74,6 +74,62 @@ const SelectToolModal = ({
 		if (preSelection) setSelection(preSelection);
 	}, [preSelection]);
 
+	const [newData, setNewData] = useState(null),
+		[search, setSearch] = useState("");
+
+	useEffect(() => {
+		if (search) {
+			let thisData = compareTools?.docs?.filter((it: any) => {
+				let d = it;
+				if (selection?.one && selectLevel === "two")
+					d = selection?.one?._id !== it?._id;
+				if (selection?.two && selectLevel === "one")
+					d = selection?.two?._id !== it?._id;
+				return d;
+			});
+			document
+				.getElementById(`SearchNew-Tool`)
+				.addEventListener("search", () => {
+					console.log({ thisData, search });
+					setNewData(thisData);
+				});
+			let handleSubmit = async () => {
+				if (!search) return;
+
+				let ned = thisData
+					?.filter((it: any) => {
+						let d = it;
+						if (selection?.one && selectLevel === "two")
+							d = selection?.one?._id !== it?._id;
+						if (selection?.two && selectLevel === "one")
+							d = selection?.two?._id !== it?._id;
+						return d;
+					})
+					?.filter(it => {
+						let text = it?.toolName || it;
+						return text?.toLowerCase()?.includes(search?.toLowerCase());
+					});
+				setNewData(ned);
+			};
+			handleSubmit();
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [search]);
+
+	useEffect(() => {
+		if (compareTools)
+			setNewData(
+				compareTools?.docs?.filter((it: any) => {
+					let d = it;
+					if (selection?.one && selectLevel === "two")
+						d = selection?.one?._id !== it?._id;
+					if (selection?.two && selectLevel === "one")
+						d = selection?.two?._id !== it?._id;
+					return d;
+				})
+			);
+	}, [compareTools, selectLevel, selection]);
+
 	return (
 		<div>
 			<SideModalcontainer>
@@ -117,7 +173,11 @@ const SelectToolModal = ({
 					<div className="mt-6">
 						{active === "utility" && (
 							<div className="">
-								<SearchInput placeholder={"Search Tool"} />
+								<SearchInput
+									placeholder={"Search Tool"}
+									search={search}
+									setSearch={setSearch}
+								/>
 								<div className="mt-5 space-y-4">
 									{utilities?.map(opt => (
 										<label
@@ -139,36 +199,32 @@ const SelectToolModal = ({
 						)}
 						{active && (
 							<div className="">
-								<SearchInput placeholder={"Search Tool"} />
+								<SearchInput
+									placeholder={"Search Tool"}
+									search={search}
+									setSearch={setSearch}
+									searchId="SearchNew-Tool"
+								/>
 								<div className="mt-5 space-y-4">
-									{compareTools?.docs
-										?.filter((it: any) => {
-											let d = it;
-											if (selection?.one && selectLevel === "two")
-												d = selection?.one?._id !== it?._id;
-											if (selection?.two && selectLevel === "one")
-												d = selection?.two?._id !== it?._id;
-											return d;
-										})
-										?.map((opt: any, i: number) => (
-											<label
-												key={i}
-												className="flex items-center gap-2 capitalize mb-2 text-sm font-normal text-black">
-												<input
-													type="radio"
-													value={opt}
-													name="optionTools"
-													checked={selection?.[selectLevel]?._id === opt?._id}
-													onChange={e =>
-														setSelection(prev => {
-															return { ...prev, [selectLevel]: opt };
-														})
-													}
-													className="form-radio size-5 border border-[#AAB7C6]"
-												/>
-												{opt?.toolName}
-											</label>
-										))}
+									{newData?.map((opt: any, i: number) => (
+										<label
+											key={i}
+											className="flex items-center gap-2 capitalize mb-2 text-sm font-normal text-black">
+											<input
+												type="radio"
+												value={opt}
+												name="optionTools"
+												checked={selection?.[selectLevel]?._id === opt?._id}
+												onChange={e =>
+													setSelection(prev => {
+														return { ...prev, [selectLevel]: opt };
+													})
+												}
+												className="form-radio size-5 border border-[#AAB7C6]"
+											/>
+											{opt?.toolName}
+										</label>
+									))}
 								</div>
 							</div>
 						)}

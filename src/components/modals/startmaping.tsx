@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState, useEffect } from "react";
 import SideModalcontainer from "./sidemodalcontainer";
 import Close from "../../assets/icons/close.svg";
 import Reset from "../../assets/icons/reset.svg";
@@ -43,7 +43,7 @@ const StartMapping = ({
 	data,
 	handleComplete,
 	defaultSelection,
-	setStart
+	setStart,
 }: {
 	handleClose?: () => void;
 	setStart?: () => void;
@@ -135,29 +135,12 @@ const StartMapping = ({
 									className="cursor-pointer"
 								/>
 							</div>
-							<div className="mt-3">
-								<SearchInput
-									placeholder={`Search ${
-										filter?.category
-											? filter?.category?.toLowerCase()
-											: filter?.label
-									}`}
-								/>
-							</div>
-							<div className="mt-4">
-								{filter?.[data ? "data" : "options"]?.map(
-									(option: any, idx: number) => (
-										<InputReloader
-											option={option}
-											data={data}
-											filter={filter}
-											handleOptionChange={handleOptionChange}
-											selectedOptions={selectedOptions}
-											key={idx}
-										/>
-									)
-								)}
-							</div>
+							<SearchDataInput
+								filter={filter}
+								data={data}
+								handleOptionChange={handleOptionChange}
+								selectedOptions={selectedOptions}
+							/>
 						</div>
 					))}
 				</div>
@@ -182,6 +165,75 @@ const StartMapping = ({
 				</div>
 			</SideModalcontainer>
 		</div>
+	);
+};
+
+export const SearchDataInput = ({
+	filter,
+	data,
+	selectedOptions,
+	handleOptionChange,
+}) => {
+	const [newData, setNewData] = useState(null),
+		[search, setSearch] = useState(""),
+		mainLabel = filter?.category
+			? filter?.category?.toLowerCase()
+			: filter?.label;
+
+	useEffect(() => {
+		if (search) {
+			let thisData = filter?.[data ? "data" : "options"];
+			document
+				.getElementById(`SearchNew-${mainLabel}`)
+				.addEventListener("search", () => {
+					console.log({ thisData, search });
+					setNewData(thisData);
+				});
+			let handleSubmit = async () => {
+				if (!search) return;
+
+				let ned = thisData?.filter(it => {
+					let text = it?.title || it;
+					return text?.toLowerCase()?.includes(search?.toLowerCase());
+				});
+				setNewData(ned);
+			};
+			handleSubmit();
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [search]);
+
+	useEffect(() => {
+		if (filter?.[data ? "data" : "options"])
+			setNewData(filter?.[data ? "data" : "options"]);
+	}, [filter, data]);
+	// console.log({ filter });
+
+	if (!newData) return;
+
+	return (
+		<>
+			<div className="mt-3">
+				<SearchInput
+					placeholder={`Search ${mainLabel}`}
+					search={search}
+					setSearch={setSearch}
+					searchId={`SearchNew-${mainLabel}`}
+				/>
+			</div>
+			<div className="mt-4">
+				{newData?.map((option: any, idx: number) => (
+					<InputReloader
+						option={option}
+						data={data}
+						filter={filter}
+						handleOptionChange={handleOptionChange}
+						selectedOptions={selectedOptions}
+						key={idx}
+					/>
+				))}
+			</div>
+		</>
 	);
 };
 
@@ -217,7 +269,6 @@ export const InputReloader = ({
 		</label>
 	);
 };
-
 
 // const StartMapping = ({ handleClose, setStart }) => {
 // 	const [selectedOptions, setSelectedOptions] = useState(
