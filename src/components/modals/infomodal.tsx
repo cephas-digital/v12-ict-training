@@ -23,13 +23,7 @@ const InfoModal = ({ handleClose, title, description }: any) => {
 							}}
 						/>
 					</div>
-					<p className="mt-5 text-sm font-normal">
-						{description ||
-							`Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-						eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-						ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-						aliquip ex ea commodo consequat.`}
-					</p>
+					<p className="mt-5 text-sm font-normal">{description}</p>
 				</div>
 			</div>
 		</div>
