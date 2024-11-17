@@ -535,7 +535,7 @@ const Dashboard = () => {
                               {start ? (
                                 <img src={ChartIcon} alt="" className="" />
                               ) : (
-                                <div className="h-3 rounded-tr-3xl w-12 bg-[#D2D7D4"></div>
+                                <div className="h-3 rounded-tr-3xl w-12 bg-[#D2D7D4]"></div>
                               )}
                               {start && (
                                 <h6 className="text-sm font-normal text-da-blue-600">
@@ -547,7 +547,7 @@ const Dashboard = () => {
                               {start ? (
                                 <img src={ChartIcon} alt="" className="" />
                               ) : (
-                                <div className="h-3 rounded-tr-3xl w-12 bg-[#D2D7D4"></div>
+                                <div className="h-3 rounded-tr-3xl w-12 bg-[#D2D7D4]"></div>
                               )}
                               {start && (
                                 <h6 className="text-sm font-normal text-da-blue-600">
@@ -563,11 +563,11 @@ const Dashboard = () => {
                               key={i}
                               className="flex items-center gap-2 page-break"
                             >
-                              <div
-                                className={`h-3 rounded-tr-3xl w-12 ${
-                                  start ? "bg-[#3787FF]" : "bg-[#D2D7D4]"
-                                }`}
-                              ></div>
+                               {start ? (
+                                <img src={ChartIcon} alt="" className="" />
+                              ) : (
+                                <div className="h-3 rounded-tr-3xl w-12 bg-[#D2D7D4]"></div>
+                              )}
                               {start && (
                                 <h6 className="text-sm font-normal text-da-blue-600 capitalize">
                                   {tool?.category?.toLowerCase()}
