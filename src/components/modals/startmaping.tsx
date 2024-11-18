@@ -222,16 +222,28 @@ export const SearchDataInput = ({
 				/>
 			</div>
 			<div className="mt-4">
-				{newData?.map((option: any, idx: number) => (
-					<InputReloader
-						option={option}
-						data={data}
-						filter={filter}
-						handleOptionChange={handleOptionChange}
-						selectedOptions={selectedOptions}
-						key={idx}
-					/>
-				))}
+				{newData
+					?.sort(
+						(
+							a: { title: { toString: () => string } },
+							b: { title: { toString: () => any } }
+						) => {
+							// Compare the values of the specified key in a case-insensitive manner
+							let aVal = a?.title || a,
+								bVal = b?.title || b;
+							return aVal?.toString()?.localeCompare(bVal?.toString());
+						}
+					)
+					?.map((option: any, idx: number) => (
+						<InputReloader
+							option={option}
+							data={data}
+							filter={filter}
+							handleOptionChange={handleOptionChange}
+							selectedOptions={selectedOptions}
+							key={idx}
+						/>
+					))}
 			</div>
 		</>
 	);
