@@ -1,12 +1,16 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Logo from "../layouts/logo";
 import { useNavigate } from "react-router";
-import Notification from "../../assets/icons/notification.svg";
+// import Notification from "../../assets/icons/notification.svg";
 import Messaging from "../../assets/icons/messaging.svg";
 import { Icon } from "@iconify/react";
+import UserGuide from "../../assets/icons/users-alt.svg";
+import FaqIcon from "../../assets/icons/comment-info.svg";
+import SupportIcon from "../../assets/icons/chat 01.svg";
 
 const Header = () => {
   const navigate = useNavigate();
+  const [active, setActive] = useState(null);
   const [menu, setMenu] = useState(false);
   const scrollToSection = (sectionId) => {
     const section = document.getElementById(sectionId);
@@ -14,24 +18,79 @@ const Header = () => {
       section.scrollIntoView({ behavior: "smooth" });
     }
   };
+  const containerRef = useRef<HTMLDivElement>(null);
+  const dropdownRefs = useRef<Array<HTMLDivElement | null>>([]);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      // Check if click target is inside the container
+      if (!containerRef.current?.contains(event.target as Node)) {
+        setActive(null);
+      }
+    };
+
+    // Only add listener if a dropdown is open
+    if (active !== null) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [active]);
   const links = [
     {
       name: "about",
       url: "/about",
+      action: () => scrollToSection("about"),
     },
     {
       name: "resources",
       url: "/resources",
+      children: [
+        {
+          action: () => {},
+          icon: UserGuide,
+          text: "User Guide",
+        },
+      ],
     },
     {
       name: "help",
       url: "/help",
+      children: [
+        {
+          action: () => {
+            setActive(null);
+            scrollToSection("faq");
+          },
+          icon: FaqIcon,
+          text: "Faq",
+        },
+        {
+          action: () => {
+            setActive(null);
+            scrollToSection("help");
+          },
+          icon: SupportIcon,
+          text: "Support",
+        },
+      ],
     },
   ];
   return (
     <div>
       <div className="w-full relative lg:h-28 h-20 bg-transparent">
-        <div className="section-container flex h-full items-center justify-between">
+        {active !== null && (
+          <div
+            className="fixed top-0 left-0 w-full h-full bg-black opacity-30 z-[999]"
+            onClick={() => setActive(null)}
+          />
+        )}
+        <div
+          ref={containerRef}
+          className="section-container flex h-full items-center justify-between"
+        >
           <div>
             <Logo />
           </div>
@@ -48,13 +107,46 @@ const Header = () => {
           </div>
           <div className="lg:flex hidden gap-10 items-center capitalize text-base h-full text-white inter font-medium">
             {links?.map((l, i) => (
-              <h6
-                onClick={() => scrollToSection(l?.name)}
-                key={i}
-                className="cursor-pointer"
+              <div
+                ref={(el) => (dropdownRefs.current[i] = el)}
+                className="relative"
               >
-                {l?.name}
-              </h6>
+                <h6
+                  onClick={() => {
+                    if (l?.action) {
+                      l.action();
+                    } else {
+                      setActive(i);
+                    }
+                  }}
+                  key={i}
+                  className="cursor-pointer"
+                >
+                  {l?.name}
+                </h6>
+                {active === i && (
+                  <div
+                    style={{
+                      boxShadow: "0px 10px 10px -5px #0000000A",
+                    }}
+                    className="absolute z-[1000] top-8 p-4 right-0 w-48 bg-white rounded-lg"
+                  >
+                    <div className="divide-y">
+                      {l?.children?.map((chi) => (
+                        <div
+                          onClick={chi?.action}
+                          className="flex gap-3 items-center h-12"
+                        >
+                          <img src={chi?.icon} alt="" className="" />
+                          <h5 className="text-sm font-medium text-da-blue-500 capitalize">
+                            {chi?.text}
+                          </h5>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
             ))}
             <button
               onClick={() => navigate("/dashboard")}
@@ -105,7 +197,10 @@ export const PageHeader = () => {
       </div>
       <div className="flex gap-5 items-center pr-6">
         {/* <img src={Notification} alt="" className="" /> */}
-        <img src={Messaging} alt="" className="" />
+        <a href="mailto:wash@gmail.com">
+          {" "}
+          <img src={Messaging} alt="" className="" />
+        </a>
       </div>
     </div>
   );

@@ -422,7 +422,7 @@ const FaqSection = () => {
     }
   };
   return (
-    <section className="py-20">
+    <section id="faq" className="py-20">
       <div className="section-container">
         <h2
           data-aos="zoom-in"
