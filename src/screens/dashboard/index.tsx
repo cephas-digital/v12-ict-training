@@ -486,7 +486,7 @@ const Dashboard = () => {
                     style={{
                       boxShadow: "4px 4px 100px 0px #00000014",
                     }}
-                    className="col-span-2 h-72 bg-white rounded-lg p-5 page-break"
+                    className="col-span-2 overflow-y-scroll noscroll h-72 bg-white rounded-lg p-5 page-break"
                   >
                     <h4 className="text-base font-medium text-[#000929]">
                       Countries using sanitation data tools
@@ -873,7 +873,7 @@ export const MapDashboardComponent = ({ mapCountries, start, currentTool }) => {
   // console.log({ tooltip });
 
   return (
-    <div className=" w-full rounded-md">
+    <div className=" w-full h-72 rounded-md">
       <ComposableMap projection="geoMercator">
         <Geographies geography={geoData}>
           {({ geographies }) =>
