@@ -27,7 +27,12 @@ import introJs from "intro.js";
 import { useRawdataStore } from "../../data/stores/loggerStore";
 import { apiCall } from "../../data/useFetcher";
 import DOMPurify from "dompurify";
-import { ComposableMap, Geographies, Geography } from "react-simple-maps";
+import {
+  ComposableMap,
+  Geographies,
+  Geography,
+  ZoomableGroup,
+} from "react-simple-maps";
 import { feature } from "topojson-client";
 import InfoModal from "../../components/modals/infomodal";
 import axios from "axios";
@@ -875,63 +880,65 @@ export const MapDashboardComponent = ({ mapCountries, start, currentTool }) => {
   return (
     <div className=" w-full h-72 rounded-md">
       <ComposableMap projection="geoMercator">
-        <Geographies geography={geoData}>
-          {({ geographies }) =>
-            geographies.map((geo) => {
-              const countryCode = geo.id;
-              const countryName = geo?.properties?.name;
-              const isAvailable2 = mapCountries
-                ?.map((it) => it?.short)
-                .includes(countryCode);
-              const isAvailable1 = mapCountries
-                ?.map((it) => it?.country)
-                .includes(countryName);
-              const isAvailable =
-                start && currentTool
-                  ? isAvailable1 || isAvailable2
-                  : toolAvailability[selectedTool].includes(countryCode);
+        <ZoomableGroup>
+          <Geographies geography={geoData}>
+            {({ geographies }) =>
+              geographies.map((geo) => {
+                const countryCode = geo.id;
+                const countryName = geo?.properties?.name;
+                const isAvailable2 = mapCountries
+                  ?.map((it) => it?.short)
+                  .includes(countryCode);
+                const isAvailable1 = mapCountries
+                  ?.map((it) => it?.country)
+                  .includes(countryName);
+                const isAvailable =
+                  start && currentTool
+                    ? isAvailable1 || isAvailable2
+                    : toolAvailability[selectedTool].includes(countryCode);
 
-              return (
-                <Geography
-                  data-tip={isAvailable ? countryName : ""} // Update this line
-                  data-tooltip-content={isAvailable ? countryName : ""} // Update this line
-                  data-for="country-tooltip"
-                  data-tooltip-id="country-tooltip"
-                  onMouseEnter={() => {
-                    if (isAvailable) setTooltip(countryName);
-                  }}
-                  key={geo.rsmKey}
-                  geography={geo}
-                  onMouseLeave={() => {
-                    setTooltip("");
-                  }}
-                  fill={
-                    isAvailable
-                      ? countryColors.available
-                      : countryColors.notAvailable
-                  }
-                  stroke="#FFFFFF"
-                  strokeWidth={0.5}
-                  style={{
-                    default: {
-                      fill: isAvailable
+                return (
+                  <Geography
+                    data-tip={isAvailable ? countryName : ""} // Update this line
+                    data-tooltip-content={isAvailable ? countryName : ""} // Update this line
+                    data-for="country-tooltip"
+                    data-tooltip-id="country-tooltip"
+                    onMouseEnter={() => {
+                      if (isAvailable) setTooltip(countryName);
+                    }}
+                    key={geo.rsmKey}
+                    geography={geo}
+                    onMouseLeave={() => {
+                      setTooltip("");
+                    }}
+                    fill={
+                      isAvailable
                         ? countryColors.available
-                        : countryColors.notAvailable,
-                      outline: "none",
-                    },
-                    hover: {
-                      fill: isAvailable ? "#3787FF" : "#D3D3D3",
-                      outline: "none",
-                    },
-                    pressed: {
-                      outline: "none",
-                    },
-                  }}
-                />
-              );
-            })
-          }
-        </Geographies>
+                        : countryColors.notAvailable
+                    }
+                    stroke="#FFFFFF"
+                    strokeWidth={0.5}
+                    style={{
+                      default: {
+                        fill: isAvailable
+                          ? countryColors.available
+                          : countryColors.notAvailable,
+                        outline: "none",
+                      },
+                      hover: {
+                        fill: isAvailable ? "#3787FF" : "#D3D3D3",
+                        outline: "none",
+                      },
+                      pressed: {
+                        outline: "none",
+                      },
+                    }}
+                  />
+                );
+              })
+            }
+          </Geographies>
+        </ZoomableGroup>
       </ComposableMap>
       <ReactTooltip id="country-tooltip" place="top">
         {tooltip}
