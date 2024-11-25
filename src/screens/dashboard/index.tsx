@@ -27,12 +27,7 @@ import introJs from "intro.js";
 import { useRawdataStore } from "../../data/stores/loggerStore";
 import { apiCall } from "../../data/useFetcher";
 import DOMPurify from "dompurify";
-import {
-  ComposableMap,
-  Geographies,
-  Geography,
-  ZoomableGroup,
-} from "react-simple-maps";
+import { ComposableMap, Geographies, Geography } from "react-simple-maps";
 import { feature } from "topojson-client";
 import InfoModal from "../../components/modals/infomodal";
 import axios from "axios";
@@ -41,12 +36,7 @@ import { useReactToPrint } from "react-to-print";
 import moment from "moment";
 import ReactPlayer from "react-player";
 import { Tooltip as ReactTooltip } from "react-tooltip";
-
-// const toolAvailability = {
-//   toolA: ["USA", "CAN", "MEX"],
-//   toolB: ["FRA", "DEU", "ITA"],
-//   // More tools as needed
-// };
+import PdfPrint from "../pdf";
 
 export const createMarkup = (html) => {
   return {
@@ -315,20 +305,30 @@ const Dashboard = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentTool]);
 
-  let componentRef = useRef(null);
+  const componentRef = useRef<HTMLDivElement>(null);
+
   const handlePrint = useReactToPrint({
     contentRef: componentRef,
-    // content: () => componentRef?.current,
-    documentTitle: `${currentTool?.toolName || ""}-${moment().format(
-      "DD/MM/YYYY"
-    )}`,
-    bodyClass: "px-4 py-10",
+    documentTitle: `${
+      currentTool?.toolName || "Tool-Details"
+    }-${moment().format("DD/MM/YYYY")}`,
+    bodyClass: "px-5",
   });
+
+  // let componentRef = useRef(null);
+  // const handlePrint = useReactToPrint({
+  //   contentRef: componentRef,
+  //   // content: () => componentRef?.current,
+  //   documentTitle: `${currentTool?.toolName || ""}-${moment().format(
+  //     "DD/MM/YYYY"
+  //   )}`,
+  //   bodyClass: "px-4 py-10",
+  // });
 
   return (
     <div>
       <PageHeader />
-      <div className="w-full flex" ref={componentRef}>
+      <div className="w-full flex">
         <div
           style={{
             border: "1px solid #C4C4C4",
@@ -434,10 +434,7 @@ const Dashboard = () => {
               className="export-btn"
               text={"Export"}
               onClick={() => {
-                console.log("object");
-                if (currentTool) {
-                  handlePrint();
-                }
+                handlePrint();
               }}
             />
             <MainBtn
@@ -494,8 +491,8 @@ const Dashboard = () => {
                     <h4 className="text-base font-medium text-[#000929]">
                       Countries using sanitation data tools
                     </h4>
-                    <div className="flex gap-5 items-center">
-                      <div className="w-[70%] mt-4">
+                    <div className="flex gap-5 pt-4">
+                      <div className="w-[70%]">
                         <MapDashboardComponent
                           mapCountries={mapCountries}
                           currentTool={currentTool}
@@ -510,7 +507,7 @@ const Dashboard = () => {
                           {mapCountries?.length === 1 ? "Country" : "Countries"}{" "}
                           Available
                         </h5>
-                        <ul className="list-disc h-56 overflow-y-scroll noscroll list-inside space-y-2 mt-3 text-xs font-normal text-da-blue-600">
+                        <ul className="list-disc h-44 overflow-y-scroll noscroll list-inside space-y-2 mt-3 text-xs font-normal text-da-blue-600">
                           {mapCountries?.map((it: any, i: number) => (
                             <li key={i} className="page-break">
                               {it?.country}
@@ -597,11 +594,16 @@ const Dashboard = () => {
                         </h5>
                         <img
                           src={Info}
-                          onClick={() =>
+                          onMouseEnter={() =>
                             setInfo({
                               category: "Infrastructure and Stability",
                             })
                           }
+                          // onClick={() =>
+                          //   setInfo({
+                          //     category: "Infrastructure and Stability",
+                          //   })
+                          // }
                           alt=""
                           className="cursor-pointer"
                         />
@@ -702,9 +704,9 @@ const Dashboard = () => {
                         }}
                         className="mt-5 h-10 w-full grid grid-cols-3"
                       >
-                        <div className="cols-span-1 border-r border-r-[#E2E8F0] flex justify-center items-center h-full w-full">
-                          <h4 className="text-sm font-medium text-da-blue-600">
-                            Learning Materials
+                        <div className="cols-span-1 border-r border-r-[#E2E8F0] flex justify-start items-center h-full w-full">
+                          <h4 className="text-sm pl-4 font-medium text-da-blue-600">
+                            Resource Title
                           </h4>
                         </div>
                         <div className="cols-span-2 h-full flex items-center pl-6">
@@ -832,6 +834,9 @@ const Dashboard = () => {
           description={info?.description}
         />
       )}
+      <div style={{ display: "none" }}>
+        <PdfPrint ref={componentRef} />
+      </div>
     </div>
   );
 };
@@ -870,74 +875,63 @@ export const MapDashboardComponent = ({ mapCountries, start, currentTool }) => {
   return (
     <div className=" w-full rounded-md">
       <ComposableMap projection="geoMercator">
-        <ZoomableGroup
-        // center={[0, 0]}
-        // zoom={1}
-        // minZoom={1}
-        // maxZoom={8}
-        // translateExtent={[
-        //   [-180, -90],
-        //   [180, 90],
-        // ]}
-        >
-          <Geographies geography={geoData}>
-            {({ geographies }) =>
-              geographies.map((geo) => {
-                const countryCode = geo.id;
-                const countryName = geo?.properties?.name;
-                const isAvailable2 = mapCountries
-                  ?.map((it) => it?.short)
-                  .includes(countryCode);
-                const isAvailable1 = mapCountries
-                  ?.map((it) => it?.country)
-                  .includes(countryName);
-                const isAvailable =
-                  start && currentTool
-                    ? isAvailable1 || isAvailable2
-                    : toolAvailability[selectedTool].includes(countryCode);
+        <Geographies geography={geoData}>
+          {({ geographies }) =>
+            geographies.map((geo) => {
+              const countryCode = geo.id;
+              const countryName = geo?.properties?.name;
+              const isAvailable2 = mapCountries
+                ?.map((it) => it?.short)
+                .includes(countryCode);
+              const isAvailable1 = mapCountries
+                ?.map((it) => it?.country)
+                .includes(countryName);
+              const isAvailable =
+                start && currentTool
+                  ? isAvailable1 || isAvailable2
+                  : toolAvailability[selectedTool].includes(countryCode);
 
-                return (
-                  <Geography
-                    data-tip={isAvailable ? countryName : ""} // Update this line
-                    data-tooltip-content={isAvailable ? countryName : ""} // Update this line
-                    data-for="country-tooltip"
-                    data-tooltip-id="country-tooltip"
-                    onMouseEnter={() => {
-                      if (isAvailable) setTooltip(countryName);
-                    }}
-                    key={geo.rsmKey}
-                    geography={geo}
-                    onMouseLeave={() => {
-                      setTooltip("");
-                    }}
-                    fill={
-                      isAvailable
+              return (
+                <Geography
+                  data-tip={isAvailable ? countryName : ""} // Update this line
+                  data-tooltip-content={isAvailable ? countryName : ""} // Update this line
+                  data-for="country-tooltip"
+                  data-tooltip-id="country-tooltip"
+                  onMouseEnter={() => {
+                    if (isAvailable) setTooltip(countryName);
+                  }}
+                  key={geo.rsmKey}
+                  geography={geo}
+                  onMouseLeave={() => {
+                    setTooltip("");
+                  }}
+                  fill={
+                    isAvailable
+                      ? countryColors.available
+                      : countryColors.notAvailable
+                  }
+                  stroke="#FFFFFF"
+                  strokeWidth={0.5}
+                  style={{
+                    default: {
+                      fill: isAvailable
                         ? countryColors.available
-                        : countryColors.notAvailable
-                    }
-                    stroke="#FFFFFF"
-                    strokeWidth={0.5}
-                    style={{
-                      default: {
-                        fill: isAvailable
-                          ? countryColors.available
-                          : countryColors.notAvailable,
-                        outline: "none",
-                      },
-                      hover: {
-                        fill: isAvailable ? "#3787FF" : "#D3D3D3",
-                        outline: "none",
-                      },
-                      pressed: {
-                        outline: "none",
-                      },
-                    }}
-                  />
-                );
-              })
-            }
-          </Geographies>
-        </ZoomableGroup>
+                        : countryColors.notAvailable,
+                      outline: "none",
+                    },
+                    hover: {
+                      fill: isAvailable ? "#3787FF" : "#D3D3D3",
+                      outline: "none",
+                    },
+                    pressed: {
+                      outline: "none",
+                    },
+                  }}
+                />
+              );
+            })
+          }
+        </Geographies>
       </ComposableMap>
       <ReactTooltip id="country-tooltip" place="top">
         {tooltip}
