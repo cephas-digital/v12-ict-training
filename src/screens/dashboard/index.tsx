@@ -199,6 +199,50 @@ const Dashboard = () => {
 			intro.start();
 		}
 	}, [selection]);
+  useEffect(() => {
+    if (!selection) {
+      const intro = introJs();
+      intro.setOptions({
+        steps: [
+          {
+            intro: "Welcome to the Water and Sanitation Tools Map!",
+          },
+          {
+            element: ".start-mapping-btn",
+            intro:
+              'Click "Start Mapping" to select different criteria and parameters to visualize information about tools.',
+          },
+          {
+            element: ".tool-list",
+            intro: "Select a tool to view its information on the dashboard.",
+          },
+          {
+            element: ".compare-btn",
+            intro: 'Click "Compare Tools" to compare two tools.',
+          },
+          {
+            intro:
+              "All done, let's start mapping! You can start exploring the system.",
+          },
+        ],
+        showProgress: true,
+        showStepNumbers: true,
+        exitOnOverlayClick: false,
+        overlayOpacity: 0.2, // Required for basic opacity
+        tooltipClass: "customTooltip ",
+      });
+
+      // Add a class to customize overlay color
+      intro.onbeforechange(() => {
+        const overlay = document.querySelector(".introjs-overlay");
+        if (overlay) {
+          overlay.classList.add("custom-overlay");
+        }
+        return true;
+      });
+      intro.start();
+    }
+  }, [selection]);
 
 	useEffect(() => {
 		if (selection) {

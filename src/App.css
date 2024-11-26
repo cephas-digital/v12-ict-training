@@ -67,7 +67,9 @@
 .noscroll::-webkit-scrollbar {
   display: none; /* Hides the scrollbar */
 }
-
+.custom-overlay {
+  @apply bg-da-blue-600 bg-opacity-40;
+}
 /* For Firefox */
 .noscroll {
   scrollbar-width: none; /* Hides the scrollbar */
@@ -77,7 +79,6 @@
 .noscroll {
   -ms-overflow-style: none; /* Hides the scrollbar */
 }
-
 
 .printPage * {
   font-family: "Microsoft San Serif" !important;
