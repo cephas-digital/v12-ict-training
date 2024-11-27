@@ -573,7 +573,7 @@ const Dashboard = () => {
 							className="export-btn"
 							text={"Export"}
 							onClick={() => {
-								handlePrint();
+								if (currentTool) handlePrint();
 							}}
 						/>
 						<MainBtn
@@ -970,7 +970,13 @@ const Dashboard = () => {
 				/>
 			)}
 			<div style={{ display: "none" }}>
-				<PdfPrint ref={componentRef} />
+				<PdfPrint
+					ref={componentRef}
+					currentTool={currentTool}
+					mapCountries={mapCountries}
+					newKpiMapper={newKpiMapper}
+          formInfo={formInfo}
+				/>
 			</div>
 		</div>
 	);
