@@ -163,11 +163,9 @@ const Dashboard = () => {
   }, []);
   const introRef = useRef(null);
   useEffect(() => {
-    // Check if tutorial has been completed
     const hasTutorialBeenShown = localStorage.getItem("tutorialCompleted");
 
     if (hasTutorialBeenShown) {
-      // Create intro instance
       const intro = introJs();
       introRef.current = intro;
 
@@ -231,10 +229,6 @@ const Dashboard = () => {
 
       // Completion and exit handlers
       intro.oncomplete(() => {
-        localStorage.setItem("tutorialCompleted", "true");
-      });
-
-      intro.onexit(() => {
         localStorage.setItem("tutorialCompleted", "true");
       });
     }
