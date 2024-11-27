@@ -5,11 +5,13 @@ const SearchInput = ({
 	search,
 	setSearch,
 	searchId,
+	miniReset,
 }: Partial<{
 	placeholder: string;
 	search: string;
 	searchId: string;
 	setSearch: any;
+	miniReset?: () => any;
 }>) => {
 	return (
 		<div>
@@ -25,7 +27,12 @@ const SearchInput = ({
 					placeholder={placeholder}
 					className="w-full text-sm pl-14 text-[#777E90] h-full bg-transparent rounded-lg placeholder:capitalize"
 					value={search}
-					onChange={e => setSearch(e?.target?.value)}
+					onChange={e => {
+						setSearch(e?.target?.value);
+						if (miniReset && e?.target?.value === "") {
+							miniReset();
+						}
+					}}
 				/>
 			</div>
 		</div>

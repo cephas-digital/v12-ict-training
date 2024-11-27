@@ -179,74 +179,75 @@ export const SearchDataInput = ({
 		mainLabel = filter?.category
 			? filter?.category?.toLowerCase()
 			: filter?.label;
-
-	useEffect(() => {
-		if (search) {
 			let thisData = filter?.[data ? "data" : "options"];
-			document
-				.getElementById(`SearchNew-${mainLabel}`)
-				.addEventListener("search", () => {
-					console.log({ thisData, search });
-					setNewData(thisData);
-				});
-			let handleSubmit = async () => {
-				if (!search) return;
 
-				let ned = thisData?.filter(it => {
-					let text = it?.title || it;
-					return text?.toLowerCase()?.includes(search?.toLowerCase());
-				});
-				setNewData(ned);
-			};
-			handleSubmit();
-		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [search]);
+			useEffect(() => {
+				if (search) {
+					document
+						.getElementById(`SearchNew-${mainLabel}`)
+						.addEventListener("search", () => {
+							// console.log({ thisData, search });
+							setNewData(thisData);
+						});
+					let handleSubmit = async () => {
+						if (!search) return;
 
-	useEffect(() => {
-		if (filter?.[data ? "data" : "options"])
-			setNewData(filter?.[data ? "data" : "options"]);
-	}, [filter, data]);
-	// console.log({ filter });
+						let ned = thisData?.filter(it => {
+							let text = it?.title || it;
+							return text?.toLowerCase()?.includes(search?.toLowerCase());
+						});
+						setNewData(ned);
+					};
+					handleSubmit();
+				}
+				// eslint-disable-next-line react-hooks/exhaustive-deps
+			}, [search]);
 
-	if (!newData) return;
+			useEffect(() => {
+				if (thisData) setNewData(thisData);
+				// eslint-disable-next-line react-hooks/exhaustive-deps
+			}, [filter, data]);
+			// console.log({ filter });
 
-	return (
-		<>
-			<div className="mt-3">
-				<SearchInput
-					placeholder={`Search ${mainLabel}`}
-					search={search}
-					setSearch={setSearch}
-					searchId={`SearchNew-${mainLabel}`}
-				/>
-			</div>
-			<div className="mt-4">
-				{newData
-					?.sort(
-						(
-							a: { title: { toString: () => string } },
-							b: { title: { toString: () => any } }
-						) => {
-							// Compare the values of the specified key in a case-insensitive manner
-							let aVal = a?.title || a,
-								bVal = b?.title || b;
-							return aVal?.toString()?.localeCompare(bVal?.toString());
-						}
-					)
-					?.map((option: any, idx: number) => (
-						<InputReloader
-							option={option}
-							data={data}
-							filter={filter}
-							handleOptionChange={handleOptionChange}
-							selectedOptions={selectedOptions}
-							key={idx}
+			if (!newData) return;
+
+			return (
+				<>
+					<div className="mt-3">
+						<SearchInput
+							placeholder={`Search ${mainLabel}`}
+							search={search}
+							setSearch={setSearch}
+							searchId={`SearchNew-${mainLabel}`}
+							miniReset={() => setNewData(thisData)}
 						/>
-					))}
-			</div>
-		</>
-	);
+					</div>
+					<div className="mt-4">
+						{newData
+							?.sort(
+								(
+									a: { title: { toString: () => string } },
+									b: { title: { toString: () => any } }
+								) => {
+									// Compare the values of the specified key in a case-insensitive manner
+									let aVal = a?.title || a,
+										bVal = b?.title || b;
+									return aVal?.toString()?.localeCompare(bVal?.toString());
+								}
+							)
+							?.map((option: any, idx: number) => (
+								<InputReloader
+									option={option}
+									data={data}
+									filter={filter}
+									handleOptionChange={handleOptionChange}
+									selectedOptions={selectedOptions}
+									key={idx}
+								/>
+							))}
+					</div>
+				</>
+			);
 };
 
 export const InputReloader = ({
