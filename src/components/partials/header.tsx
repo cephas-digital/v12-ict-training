@@ -49,7 +49,11 @@ const Header = () => {
       url: "/resources",
       children: [
         {
-          action: () => {},
+          action: () =>
+            window.open(
+              "https://stakeholder-map.nyc3.digitaloceanspaces.com/WSH%20Tools%20Mapping%20Dashboard%20User%20Guide%20(2).pdf",
+              "_blank"
+            ),
           icon: UserGuide,
           text: "User Guide",
         },
