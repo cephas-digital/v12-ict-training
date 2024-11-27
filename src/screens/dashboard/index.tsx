@@ -166,7 +166,7 @@ const Dashboard = () => {
     // Check if tutorial has been completed
     const hasTutorialBeenShown = localStorage.getItem("tutorialCompleted");
 
-    if (!hasTutorialBeenShown) {
+    if (hasTutorialBeenShown) {
       // Create intro instance
       const intro = introJs();
       introRef.current = intro;
