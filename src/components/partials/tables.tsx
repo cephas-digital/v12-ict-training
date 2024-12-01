@@ -288,7 +288,20 @@ export const ToolsTable = () => {
   }, [selectedTools]);
 
   // console.log({ newKpiMapper });
-
+  const newTools = [
+    {
+      name: "ERP System - Nakuru",
+      desc: "The ERP system- Nakuru is used by the Zambia National Water Supply and Sanitation Council, ESAWAS, the African Development Bank, and the Bill and Melinda Gates Foundation.",
+      bg: "#16A34A29",
+      border: "#16A34A",
+    },
+    {
+      name: "Lusaka Sanitation System",
+      desc: "Lusaka Sanitation system- is used by the Zambia National Water Supply and Sanitation Council, ESAWAS, the African Development Bank, and the Bill and Melinda Gates Foundation.",
+      bg: "#E7A00C29",
+      border: "#E7A00C",
+    },
+  ];
   return (
     <div>
       <div className="w-full mt-12 grid grid-cols-6">
@@ -708,28 +721,49 @@ export const ToolsTable = () => {
           className="w-full mb-20 py-24"
         >
           <div className="section-container items-start gap-14 justify-center flex">
-            {/* <img src={BigMap} alt="" className="" /> */}
-            <div className="h-[432px] w-[70%] noscroll">
-              <MapCompareComponent
-                mapCountries={mapCountries}
-                selectedTools={selectedTools}
-                keys={keys}
-              />
+            <div className="w-[70%]">
+              <div className="">
+                <div className="space-x-4 flex">
+                  <h4 className="text-base font-medium text-[#000929]">Key:</h4>
+                  {keys?.map((key) => (
+                    <div className="flex items-center gap-2">
+                      <div
+                        style={{
+                          backgroundColor: key?.color,
+                        }}
+                        className={`h-3 rounded-tr-3xl w-12`}
+                      ></div>
+                      <h6 className="text-sm font-normal capitalize text-da-blue-600">
+                        {key?.name}
+                      </h6>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <div className="h-[432px] w-full noscroll mt-3">
+                <MapCompareComponent
+                  mapCountries={mapCountries}
+                  selectedTools={selectedTools}
+                  keys={keys}
+                />
+              </div>
             </div>
-            <div className="mt-10">
-              <h4 className="text-base font-medium text-[#000929]">Key</h4>
-              <div className="space-y-4 mt-4">
-                {keys?.map((key) => (
-                  <div className="flex items-center gap-2">
-                    <div
-                      style={{
-                        backgroundColor: key?.color,
-                      }}
-                      className={`h-3 rounded-tr-3xl w-12`}
-                    ></div>
-                    <h6 className="text-sm font-normal capitalize text-da-blue-600">
-                      {key?.name}
-                    </h6>
+            <div className="w-[30%] mt-10">
+              <div className="space-y-4">
+                {newTools?.map((t) => (
+                  <div
+                    style={{
+                      background: t?.bg,
+                      border: `1px solid ${t?.border}`,
+                    }}
+                    className="h-48 p-5 w-full rounded-xl"
+                  >
+                    <h4 className="text-base font-bold text-[#334155]">
+                      {t?.name}
+                    </h4>
+                    <p className="mt-3 text-sm font-normal text-[#000929]">
+                      {t?.desc}
+                    </p>
                   </div>
                 ))}
               </div>
@@ -762,23 +796,47 @@ export const CheckerDecider = () => {};
 
 export const PendingComp = () => {
   return (
-    <button className="w-[25px] h-[25px] flex justify-center items-center text-xl font-bold bg-[#D2D7D4]">
-      <img src={Pending} alt="" className="" />
-    </button>
+    <div className="relative group">
+      {/* Button */}
+      <button className="w-[25px] h-[25px] flex justify-center items-center text-xl font-bold bg-[#BAFED2]">
+        <img src={Pending} alt="" className="" />
+      </button>
+
+      {/* Tooltip */}
+      <div className="absolute bottom-full whitespace-nowrap mb-2 left-1/2 transform -translate-x-1/2 bg-black text-white text-sm font-medium py-1 px-2 rounded opacity-0 group-hover:opacity-100 transition-opacity">
+        N/A
+      </div>
+    </div>
   );
 };
 export const BadComp = () => {
   return (
-    <button className="w-[25px] h-[25px] flex justify-center items-center text-xl font-bold bg-[#EF444433]">
-      <img src={Bad} alt="" className="" />
-    </button>
+    <div className="relative group">
+      {/* Button */}
+      <button className="w-[25px] h-[25px] flex justify-center items-center text-xl font-bold bg-[#BAFED2]">
+        <img src={Bad} alt="" className="" />
+      </button>
+
+      {/* Tooltip */}
+      <div className="absolute bottom-full whitespace-nowrap mb-2 left-1/2 transform -translate-x-1/2 bg-black text-white text-sm font-medium py-1 px-2 rounded opacity-0 group-hover:opacity-100 transition-opacity">
+        Not Covered By System
+      </div>
+    </div>
   );
 };
 export const GoodComp = () => {
   return (
-    <button className="w-[25px] h-[25px] flex justify-center items-center text-xl font-bold bg-[#BAFED2]">
-      <img src={Good} alt="" className="" />
-    </button>
+    <div className="relative group">
+      {/* Button */}
+      <button className="w-[25px] h-[25px] flex justify-center items-center text-xl font-bold bg-[#BAFED2]">
+        <img src={Good} alt="" className="" />
+      </button>
+
+      {/* Tooltip */}
+      <div className="absolute bottom-full whitespace-nowrap mb-2 left-1/2 transform -translate-x-1/2 bg-black text-white text-sm font-medium py-1 px-2 rounded opacity-0 group-hover:opacity-100 transition-opacity">
+        Covered By System
+      </div>
+    </div>
   );
 };
 

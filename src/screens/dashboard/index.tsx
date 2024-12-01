@@ -836,30 +836,6 @@ const Dashboard = () => {
                           </div>
                         </div>
                       ))}
-                    </WhiteBox>
-                  </div>
-                  <div className="col-span-1">
-                    <WhiteBox>
-                      <h4 className="text-base font-medium text-[#000929]">
-                        Contact Details
-                      </h4>
-                      <div className="mt-5 space-y-3">
-                        {contact?.map((c) => (
-                          <div className="flex items-center gap-2">
-                            <img src={c?.icon} alt="" className="" />
-                            {start && (
-                              <a
-                                href={c?.value}
-                                target="_blank"
-                                rel={"noreferrer"}
-                                className="text-sm font-normal text-da-blue-100"
-                              >
-                                {c?.value}
-                              </a>
-                            )}
-                          </div>
-                        ))}
-                      </div>
                       <div className="mt-5">
                         <h4 className="text-base font-medium text-[#000929]">
                           Webinar
@@ -889,6 +865,30 @@ const Dashboard = () => {
                         </div>
                       </div>
                     </WhiteBox>
+                  </div>
+                  <div className="col-span-1">
+                    <WhiteBox2>
+                      <h4 className="text-base font-medium text-[#000929]">
+                        Contact Details
+                      </h4>
+                      <div className="mt-5 space-y-3">
+                        {contact?.map((c) => (
+                          <div className="flex items-center gap-2">
+                            <img src={c?.icon} alt="" className="" />
+                            {start && (
+                              <a
+                                href={c?.value}
+                                target="_blank"
+                                rel={"noreferrer"}
+                                className="text-sm font-normal text-da-blue-100"
+                              >
+                                {c?.value}
+                              </a>
+                            )}
+                          </div>
+                        ))}
+                      </div>
+                    </WhiteBox2>
                   </div>
                 </div>
               </div>
