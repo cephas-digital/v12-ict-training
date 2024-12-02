@@ -288,13 +288,13 @@ export const ToolsTable = () => {
 	// console.log({ newKpiMapper });
 	const newTools = [
 		{
-			name: selectedTools?.one?.toolName || "",
+			name: selectedTools?.one?.toolName || "Tool One selected",
 			desc: selectedTools?.one?.description || "",
 			bg: "#16A34A29",
 			border: "#16A34A",
 		},
 		{
-			name: selectedTools?.two?.toolName || "",
+			name: selectedTools?.two?.toolName || "Tool Two selected",
 			desc: selectedTools?.two?.description || "",
 			bg: "#E7A00C29",
 			border: "#E7A00C",
