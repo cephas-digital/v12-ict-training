@@ -98,7 +98,7 @@ const PdfPrint = forwardRef<HTMLDivElement, Props>((props, ref) => {
 							dangerouslySetInnerHTML={createMarkup(currentTool?.description)}
 						/>
 					</WhiteBox2>
-					<div className="mt-2 grid grid-cols-3 gap-8">
+					<div className="mt-2 grid-cols-3 gap-8 hidden">
 						<div className="col-span-2 flex flex-col">
 							<WhiteBox className="h-full">
 								<h4 className="text-base font-medium text-[#000929]">
