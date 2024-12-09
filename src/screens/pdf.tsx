@@ -5,7 +5,7 @@ import Mail from "../assets/icons/mail.svg";
 import { createMarkup, MapDashboardComponent } from "./dashboard";
 import { forwardRef, HTMLAttributes } from "react";
 import ChartIcon from "../assets/icons/chart.svg";
-import Logo from "../assets/icons/Nawassco Logo (1) 1.svg";
+// import Logo from "../assets/icons/Nawassco Logo (1) 1.svg";
 import LogoIcon from "../assets/icons/logpdaek.svg";
 
 // Define the extra props type
@@ -85,7 +85,9 @@ const PdfPrint = forwardRef<HTMLDivElement, Props>((props, ref) => {
       <div className="w-full relative">
         <div className="">
           <div className="flex gap-4 my-6 items-center">
-            <img src={Logo} alt="" className="" />
+            {currentTool?.image?.url && (
+              <img src={currentTool?.image?.url || ""} alt="" className="" />
+            )}
             <h6 className="text-3xl font-bold text-da-blue-600">
               {currentTool?.toolName}
             </h6>
