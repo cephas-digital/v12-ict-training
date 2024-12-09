@@ -363,6 +363,7 @@ const Dashboard = () => {
       currentTool?.toolName || "Tool-Details"
     }-${moment().format("DD/MM/YYYY")}`,
     bodyClass: "px-5",
+    
   });
 
   useEffect(() => {
