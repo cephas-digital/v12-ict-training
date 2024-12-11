@@ -726,7 +726,7 @@ export const ToolsTable = () => {
 											background: t?.bg,
 											border: `1px solid ${t?.border}`,
 										}}
-										className="h-48 p-5 w-full rounded-xl">
+										className="min-h-48 p-5 w-full rounded-xl">
 										<h4 className="text-base font-bold text-[#334155]">
 											{t?.name}
 										</h4>

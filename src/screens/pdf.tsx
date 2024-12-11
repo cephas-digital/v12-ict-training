@@ -86,7 +86,11 @@ const PdfPrint = forwardRef<HTMLDivElement, Props>((props, ref) => {
         <div className="">
           <div className="flex gap-4 my-6 items-center">
             {currentTool?.image?.url && (
-              <img src={currentTool?.image?.url || ""} alt="" className="" />
+              <img
+                src={currentTool?.image?.url || ""}
+                alt=""
+                className="h-14"
+              />
             )}
             <h6 className="text-3xl font-bold text-da-blue-600">
               {currentTool?.toolName}
