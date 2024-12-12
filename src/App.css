@@ -25,6 +25,7 @@
     max-width: 540px;
   }
 }
+
 @media (min-width: 768px) {
   .section-container {
     max-width: 720px;
