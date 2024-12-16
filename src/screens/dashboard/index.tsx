@@ -844,7 +844,7 @@ const Dashboard = () => {
                           {webinar?.map((c) => (
                             <div className="flex items-center gap-2">
                               {start && (
-                                <div className="w-full h-80">
+                                <div className="w-full h-96">
                                   <ReactPlayer
                                     url={c}
                                     width="100%"
