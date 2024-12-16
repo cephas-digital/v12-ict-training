@@ -69,6 +69,7 @@
 .noscroll::-webkit-scrollbar {
   display: none; /* Hides the scrollbar */
 }
+
 .custom-overlay {
   @apply bg-da-blue-600 bg-opacity-40;
 }
