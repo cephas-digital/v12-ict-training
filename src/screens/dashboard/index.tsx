@@ -363,7 +363,6 @@ const Dashboard = () => {
       currentTool?.toolName || "Tool-Details"
     }-${moment().format("DD/MM/YYYY")}`,
     bodyClass: "px-5",
-    
   });
 
   useEffect(() => {
@@ -845,7 +844,7 @@ const Dashboard = () => {
                           {webinar?.map((c) => (
                             <div className="flex items-center gap-2">
                               {start && (
-                                <div className="w-full h-56">
+                                <div className="w-full h-80">
                                   <ReactPlayer
                                     url={c}
                                     width="100%"
