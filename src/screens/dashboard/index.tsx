@@ -447,7 +447,7 @@ const Dashboard = () => {
 					<div className="mt-10 tool-list">
 						{start ? (
 							<div>
-								{mapTools?.docs?.length === 0 ? (
+								{mapTools?.docs?.length > 0 ? (
 									<div className="space-y-1">
 										{mapTools?.docs?.map((san: any, idx: number) => (
 											<div
