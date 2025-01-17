@@ -529,7 +529,7 @@ export const ToolsTable = () => {
 														style={{
 															borderWidth:
 																index !== 0 && index === array.length - 1
-																	? "0px"
+																	? "0px 0 0.4px 0"
 																	: "0px 0 0.4px 0",
 															borderStyle: "solid",
 															borderColor: "#000000",
@@ -768,34 +768,34 @@ export const ToolsTable = () => {
 export const CheckerDecider = () => {};
 
 export const PendingComp = () => {
-  return (
-    <div className="relative group">
-      {/* Button */}
-      <button className="w-[25px] h-[25px] flex justify-center items-center text-xl font-bold bg-[#BAFED2]">
-        <img src={Pending} alt="" className="" />
-      </button>
+	return (
+		<div className="relative group">
+			{/* Button */}
+			<button className="w-[25px] h-[25px] flex justify-center items-center text-xl font-bold bg-[#e1e2e2]">
+				<img src={Pending} alt="" className="" />
+			</button>
 
-      {/* Tooltip */}
-      <div className="absolute bottom-full whitespace-nowrap mb-2 left-1/2 transform -translate-x-1/2 bg-black text-white text-sm font-medium py-1 px-2 rounded opacity-0 group-hover:opacity-100 transition-opacity">
-        N/A
-      </div>
-    </div>
-  );
+			{/* Tooltip */}
+			<div className="absolute bottom-full whitespace-nowrap mb-2 left-1/2 transform -translate-x-1/2 bg-black text-white text-sm font-medium py-1 px-2 rounded opacity-0 group-hover:opacity-100 transition-opacity">
+				N/A
+			</div>
+		</div>
+	);
 };
 export const BadComp = () => {
-  return (
-    <div className="relative group">
-      {/* Button */}
-      <button className="w-[25px] h-[25px] flex justify-center items-center text-xl font-bold bg-[#BAFED2]">
-        <img src={Bad} alt="" className="" />
-      </button>
+	return (
+		<div className="relative group">
+			{/* Button */}
+			<button className="w-[25px] h-[25px] flex justify-center items-center text-xl font-bold bg-[#EF444433]">
+				<img src={Bad} alt="" className="" />
+			</button>
 
-      {/* Tooltip */}
-      <div className="absolute bottom-full whitespace-nowrap mb-2 left-1/2 transform -translate-x-1/2 bg-black text-white text-sm font-medium py-1 px-2 rounded opacity-0 group-hover:opacity-100 transition-opacity">
-        Not Covered By System
-      </div>
-    </div>
-  );
+			{/* Tooltip */}
+			<div className="absolute bottom-full whitespace-nowrap mb-2 left-1/2 transform -translate-x-1/2 bg-black text-white text-sm font-medium py-1 px-2 rounded opacity-0 group-hover:opacity-100 transition-opacity">
+				Not Covered By System
+			</div>
+		</div>
+	);
 };
 export const GoodComp = () => {
   return (
