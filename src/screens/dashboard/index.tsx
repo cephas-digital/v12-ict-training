@@ -6,7 +6,7 @@ import Menu from "../../assets/icons/menu.svg";
 import PrimaryBtn, { MainBtn } from "../../components/partials/buttons";
 import Export from "../../assets/icons/exporticon.svg";
 import CompareIcon from "../../assets/icons/compareicon.svg";
-import SelectIcon from "../../assets/icons/calendar 01.svg";
+// import SelectIcon from "../../assets/icons/calendar 01.svg";
 import ChartIcon from "../../assets/icons/chart.svg";
 import WebsiteIcon from "../../assets/icons/website.svg";
 import Mail from "../../assets/icons/mail.svg";
@@ -139,7 +139,22 @@ const Dashboard = () => {
 		[countries, setCountries] = useState<any>(null),
 		[mapCountries, setMapCountries] = useState<any>(null),
 		[newKpiMapper, setNewKpiMapper] = useState<any>(null),
-		[search, setSearch] = useState<string>("");
+		[search, setSearch] = useState<string>(""),
+		[newTool, setNewTool] = useState<any>(null);
+
+	useEffect(() => {
+		if (regionTools && tools) {
+			let filteredArray = tools.filter(
+				(item1: any) =>
+					!regionTools.some((item2: any) => item1?.category === item2?.category)
+			);
+
+			filteredArray?.splice(1, 0, ...regionTools);
+			setNewTool(filteredArray);
+
+			// console.log({ filteredArray, regionTools, tools });
+		}
+	}, [regionTools, tools]);
 
 	useEffect(() => {
 		getDynamicLogger({}, "mapTools");
@@ -553,11 +568,11 @@ const Dashboard = () => {
 							text={"Compare Tools"}
 							onClick={() => navigate("/compare-tools")}
 						/>{" "}
-						<MainBtn
+						{/* <MainBtn
 							icon={SelectIcon}
 							text={"Select Region"}
 							onClick={() => setModal("region")}
-						/>
+						/> */}
 						<PrimaryBtn
 							icon={Menu}
 							text="Start Mapping"
@@ -912,7 +927,7 @@ const Dashboard = () => {
 				<StartMapping
 					// setStart={() => setStart(true)}
 					handleClose={() => setModal("")}
-					data={tools}
+					data={newTool}
 					defaultSelection={selection}
 					handleComplete={da => {
 						setSelection(da);
