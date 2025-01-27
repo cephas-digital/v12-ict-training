@@ -691,6 +691,14 @@ export const ToolsTable = () => {
 						border: "0.4px solid #000000",
 					}}
 					className="w-full mb-20 py-24">
+					{selectedTools?.one?.toolName && selectedTools?.two?.toolName && (
+						<div className="section-container">
+							<h4 className="text-base font-medium text-[#000929] mb-3">
+								“Coverage of {selectedTools?.one?.toolName} against Tool{" "}
+								{selectedTools?.two?.toolName} across the region.”
+							</h4>
+						</div>
+					)}
 					<div className="section-container items-start gap-14 justify-center flex">
 						<div className="w-[70%]">
 							<div className="">

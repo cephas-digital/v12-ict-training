@@ -140,40 +140,43 @@ const StartMapping = ({
 					<img onClick={handleClose} src={Close} alt="" className="" />
 				</div>
 				<div className="p-4 space-y-6">
-					{(data || filters).map((filter, i: number) => (
-						<div key={filter?._id || filter?.id || i} className="">
-							<div className="flex justify-between items-center">
-								<h5 className="text-base text-da-blue-600 font-medium capitalize">
-									{filter?.category
-										? filter?.category?.toLowerCase()
-										: filter?.label}
-								</h5>
-								<img
-									onClick={() =>
-										handleReset(
-											filter?.category || filter?.id,
-											data
-												? // filter?.category?.toLowerCase() ===
-												  //   "application level"
-												  // 	? "radio"
-												  // 	:
-												  "checkbox"
-												: filter?.type
-										)
-									}
-									src={Reset}
-									alt=""
-									className="cursor-pointer"
+					{(data || filters).map((filter, i: number) => {
+						return filter?.category?.toLowerCase() === "country" &&
+							selectedOptions["REGION"]?.length === 0 ? null : (
+							<div key={filter?._id || filter?.id || i} className="">
+								<div className="flex justify-between items-center">
+									<h5 className="text-base text-da-blue-600 font-medium capitalize">
+										{filter?.category
+											? filter?.category?.toLowerCase()
+											: filter?.label}
+									</h5>
+									<img
+										onClick={() =>
+											handleReset(
+												filter?.category || filter?.id,
+												data
+													? // filter?.category?.toLowerCase() ===
+													  //   "application level"
+													  // 	? "radio"
+													  // 	:
+													  "checkbox"
+													: filter?.type
+											)
+										}
+										src={Reset}
+										alt=""
+										className="cursor-pointer"
+									/>
+								</div>
+								<SearchDataInput
+									filter={filter}
+									data={data}
+									handleOptionChange={handleOptionChange}
+									selectedOptions={selectedOptions}
 								/>
 							</div>
-							<SearchDataInput
-								filter={filter}
-								data={data}
-								handleOptionChange={handleOptionChange}
-								selectedOptions={selectedOptions}
-							/>
-						</div>
-					))}
+						);
+					})}
 				</div>
 				<div className="my-5 flex justify-end gap-5">
 					<NormalBtn
