@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useRef, useState } from "react";
 import Pending from "../../assets/icons/pending.svg";
 import Arrows from "../../assets/icons/arrows.svg";
 import Good from "../../assets/icons/good.svg";
@@ -712,80 +712,66 @@ export const ToolsTable = () => {
 												) : (
 													<BadComp />
 												)} */}
-                            <ProductTableShow
-                              prevData={selectedTools?.two?.kpiSelection}
-                              product={row}
-                              title={sub?.category}
-                            />
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                ))}
-          </div>
-        </>
-      )}
-      {tab === "map" && (
-        <div
-          style={{
-            border: "0.4px solid #000000",
-          }}
-          className="w-full mb-10 py-24"
-        >
-<<<<<<< Updated upstream
-					{selectedTools?.one?.toolName && selectedTools?.two?.toolName && (
-						<div className="section-container">
-							<h4 className="text-base font-medium text-[#000929] mb-3">
-								“Coverage of {selectedTools?.one?.toolName} against Tool{" "}
-								{selectedTools?.two?.toolName} across the region.”
-							</h4>
+														<ProductTableShow
+															prevData={selectedTools?.two?.kpiSelection}
+															product={row}
+															title={sub?.category}
+														/>
+													</div>
+												</div>
+											))}
+										</div>
+									</div>
+							  ))}
+					</div>
+				</>
+			)}
+			{tab === "map" && (
+				<div
+					style={{
+						border: "0.4px solid #000000",
+					}}
+					className="w-full mb-20 py-24">
+					<div className="section-container items-start gap-14 justify-center flex">
+						<div className="w-[70%]">
+							<div className="">
+								<div className="space-x-4 flex">
+									<h4 className="text-base font-medium text-[#000929]">Key:</h4>
+									{keys?.map(key => (
+										<div className="flex items-center gap-2">
+											<div
+												style={{
+													backgroundColor: key?.color,
+												}}
+												className={`h-3 rounded-tr-3xl w-12`}></div>
+											<h6 className="text-sm font-normal capitalize text-da-blue-600">
+												{key?.name}
+											</h6>
+										</div>
+									))}
+								</div>
+							</div>
+							<div className="h-[432px] w-full noscroll mt-3">
+								<MapCompareComponent
+									mapCountries={mapCountries}
+									selectedTools={selectedTools}
+									keys={keys}
+								/>
+							</div>
 						</div>
-					)}
-=======
->>>>>>> Stashed changes
-          <div className="section-container items-start gap-14 justify-center flex">
-            <div className="w-[70%]">
-              <div className="">
-                <div className="space-x-4 flex">
-                  <h4 className="text-base font-medium text-[#000929]">Key:</h4>
-                  {keys?.map((key) => (
-                    <div className="flex items-center gap-2">
-                      <div
-                        style={{
-                          backgroundColor: key?.color,
-                        }}
-                        className={`h-3 rounded-tr-3xl w-12`}
-                      ></div>
-                      <h6 className="text-sm font-normal capitalize text-da-blue-600">
-                        {key?.name}
-                      </h6>
-                    </div>
-                  ))}
-                </div>
-              </div>
-              <div className="h-[432px] w-full noscroll mt-3">
-                <MapCompareComponent
-                  mapCountries={mapCountries}
-                  selectedTools={selectedTools}
-                  keys={keys}
-                />
-              </div>
-            </div>
-            <div className="w-[30%] mt-10">
-              <div className="space-y-4">
-                {newTools?.map((t) => (
-                  <div
-                    style={{
-                      background: t?.bg,
-                      border: `1px solid ${t?.border}`,
-                    }}
-                    className="min-h-48 p-5 w-full rounded-xl"
-                  >
-                    <h4 className="text-base font-bold text-[#334155]">
-                      {t?.name}
-                    </h4>
-                    {/* <p className="mt-3 text-sm font-normal text-[#000929]">
+						<div className="w-[30%] mt-10">
+							<div className="space-y-4">
+								{newTools?.map(t => (
+									<div
+										style={{
+											background: t?.bg,
+											border: `1px solid ${t?.border}`,
+										}}
+										className="min-h-48 p-5 w-full rounded-xl">
+										<h4 className="text-base font-bold text-[#334155]">
+											{t?.name}
+										</h4>
+										{/* <p className="mt-3 text-sm font-normal text-[#000929]">
 											{t?.desc}
 										</p> */}
                     <p
