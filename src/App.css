@@ -82,6 +82,23 @@
 .noscroll {
   -ms-overflow-style: none; /* Hides the scrollbar */
 }
+@media print {
+  body, html {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+  }
+
+  .print-container {
+    width: 100%;
+    height: 100vh;
+  }
+
+  .page-break {
+    page-break-before: always;
+  }
+}
 
 .printPage * {
   font-family: "Microsoft San Serif" !important;
