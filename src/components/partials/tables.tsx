@@ -733,6 +733,7 @@ export const ToolsTable = () => {
           }}
           className="w-full mb-10 py-24"
         >
+<<<<<<< Updated upstream
 					{selectedTools?.one?.toolName && selectedTools?.two?.toolName && (
 						<div className="section-container">
 							<h4 className="text-base font-medium text-[#000929] mb-3">
@@ -741,6 +742,8 @@ export const ToolsTable = () => {
 							</h4>
 						</div>
 					)}
+=======
+>>>>>>> Stashed changes
           <div className="section-container items-start gap-14 justify-center flex">
             <div className="w-[70%]">
               <div className="">
