@@ -14,7 +14,7 @@ import Infra from "../../assets/icons/infra.svg";
 import SelectToolModal from "../modals/selecttool";
 import { apiCall } from "../../data/useFetcher";
 import { useRawdataStore } from "../../data/stores/loggerStore";
-import Export from "../../assets/icons/exporticon.svg";
+// import Export from "../../assets/icons/exporticon.svg";
 import {
   ComposableMap,
   Geographies,
@@ -24,7 +24,7 @@ import {
 import { feature } from "topojson-client";
 import { createMarkup, getCountries } from "../../screens/dashboard";
 import { Tooltip as ReactTooltip } from "react-tooltip";
-import { AnotherButton, MainBtn } from "./buttons";
+// import { AnotherButton, MainBtn } from "./buttons";
 import { useReactToPrint } from "react-to-print";
 import moment from "moment";
 import PrintableComponent from "./printcomparetool";
@@ -731,8 +731,16 @@ export const ToolsTable = () => {
           style={{
             border: "0.4px solid #000000",
           }}
-          className="w-full mb-20 py-24"
+          className="w-full mb-20 pb-24 pt-10"
         >
+          {selectedTools?.one?.toolName && selectedTools?.two?.toolName && (
+						<div className="section-container pb-4">
+							<h4 className="text-base font-medium text-[#000929]">
+								Coverage of {selectedTools?.one?.toolName} against Tool{" "}
+								{selectedTools?.two?.toolName} across the region.
+							</h4>
+						</div>
+					)}
           <div className="section-container items-start gap-14 justify-center flex">
             <div className="w-[70%]">
               <div className="">
