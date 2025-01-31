@@ -316,529 +316,497 @@ export const ToolsTable = () => {
   ];
 
   return (
-    <div>
-      <div className="w-full mt-12 grid grid-cols-6">
-        <div className="col-span-4 pt-8 flex justify-between items-start">
-          <div className="flex gap-2 items-center">
-            <FaAngleLeft
-              className="cursor-pointer"
-              onClick={() => navigate(-1)}
-            />
-            <h6 className="text-xl font-medium text-da-blue-600">
-              Compare Tools
-            </h6>
-          </div>
-          <div className="pr-8 flex gap-10">
-            <div className="flex items-center gap-5">
-              <h6 className="text-base font-medium text-[#334155]">
-                Switch View:
-              </h6>
-              <div className="flex items-center gap-2">
-                <img
-                  src={tab === "list" ? ListActive : List}
-                  alt=""
-                  onClick={() => setTab("list")}
-                  className="cursor-pointer"
-                />
-                <img
-                  src={tab === "map" ? MapActive : Map}
-                  alt=""
-                  onClick={() => setTab("map")}
-                  className="cursor-pointer"
-                />
-              </div>
-            </div>
-            <h6 className="text-[#334155] font-medium text-base">
-              Make a selection here:
-            </h6>
-          </div>
-        </div>
-        <div
-          style={{
-            borderWidth: "0.4px 0.4px 0px 0.4px",
-            borderStyle: "solid",
-            borderColor: "#000000",
-          }}
-          className="col-span-1 h-24 p-2"
-        >
-          <h6 className="text-sm font-medium inter text-[#1E293B]">Compare</h6>
-          <div
-            onClick={() => setModal("one")}
-            style={{
-              border: "1px solid #E2E8F0",
-            }}
-            className="h-10 mt-2 cursor-pointer w-full rounded-lg bg-white px-2 flex items-center justify-between"
-          >
-            <span className="text-sm font-medium text-[#334155] line-clamp-1">
-              {selectedTools?.one?.toolName || `Select Sanitation tool`}
-            </span>
-            <FaAngleDown />
-          </div>
-        </div>
-        <div
-          style={{
-            borderWidth: "0.4px 0.4px 0px 0px",
-            borderStyle: "solid",
-            borderColor: "#000000",
-          }}
-          className="col-span-1 h-24 p-2"
-        >
-          <h6 className="text-sm font-medium inter text-[#1E293B]">With</h6>
-          <div
-            style={{
-              border: "1px solid #E2E8F0",
-            }}
-            onClick={() => {
-              if (selectedTools?.one) setModal("two");
-            }}
-            className="h-10 mt-2 w-full cursor-pointer rounded-lg bg-white px-2 flex items-center justify-between"
-          >
-            <span className="text-sm font-medium text-[#334155] line-clamp-1">
-              {selectedTools?.two?.toolName || `Select Sanitation tool`}
-            </span>
-            <FaAngleDown />
-          </div>
-        </div>
-      </div>
-      {tab === "list" && (
-        <>
-          <div className={selectedTools?.one ? "hidden" : ""}>
-            {tableData?.map((t, i: number) => (
-              <div
-                key={i}
-                style={{
-                  borderWidth: "0.4px 0 0 0.4px",
-                  borderStyle: "solid",
-                  borderColor: "#000000",
-                }}
-                className="w-full grid grid-cols-6"
-              >
-                <div
-                  style={{
-                    borderWidth: "0px 0 0.4px 0px",
-                    borderStyle: "solid",
-                    borderColor: "#000000",
-                  }}
-                  className="col-span-1 pt-8 px-3"
-                >
-                  <p className="text-base font-bold text-[#334155]">
-                    {t?.category}
-                  </p>
-                </div>
+		<div>
+			<div className="w-full mt-12 grid grid-cols-6">
+				<div className="col-span-4 pt-8 flex justify-between items-start">
+					<div className="flex gap-2 items-center">
+						<FaAngleLeft
+							className="cursor-pointer"
+							onClick={() => navigate(-1)}
+						/>
+						<h6 className="text-xl font-medium text-da-blue-600">
+							Compare Tools
+						</h6>
+					</div>
+					<div className="pr-8 flex gap-10">
+						<div className="flex items-center gap-5">
+							<h6 className="text-base font-medium text-[#334155]">
+								Switch View:
+							</h6>
+							<div className="flex items-center gap-2">
+								<img
+									src={tab === "list" ? ListActive : List}
+									alt=""
+									onClick={() => setTab("list")}
+									className="cursor-pointer"
+								/>
+								<img
+									src={tab === "map" ? MapActive : Map}
+									alt=""
+									onClick={() => setTab("map")}
+									className="cursor-pointer"
+								/>
+							</div>
+						</div>
+						<h6 className="text-[#334155] font-medium text-base">
+							Make a selection here:
+						</h6>
+					</div>
+				</div>
+				<div
+					style={{
+						borderWidth: "0.4px 0.4px 0px 0.4px",
+						borderStyle: "solid",
+						borderColor: "#000000",
+					}}
+					className="col-span-1 h-24 p-2">
+					<h6 className="text-sm font-medium inter text-[#1E293B]">Compare</h6>
+					<div
+						onClick={() => setModal("one")}
+						style={{
+							border: "1px solid #E2E8F0",
+						}}
+						className="h-10 mt-2 cursor-pointer w-full rounded-lg bg-white px-2 flex items-center justify-between">
+						<span className="text-sm font-medium text-[#334155] line-clamp-1">
+							{selectedTools?.one?.toolName || `Select Sanitation tool`}
+						</span>
+						<FaAngleDown />
+					</div>
+				</div>
+				<div
+					style={{
+						borderWidth: "0.4px 0.4px 0px 0px",
+						borderStyle: "solid",
+						borderColor: "#000000",
+					}}
+					className="col-span-1 h-24 p-2">
+					<h6 className="text-sm font-medium inter text-[#1E293B]">With</h6>
+					<div
+						style={{
+							border: "1px solid #E2E8F0",
+						}}
+						onClick={() => {
+							if (selectedTools?.one) setModal("two");
+						}}
+						className="h-10 mt-2 w-full cursor-pointer rounded-lg bg-white px-2 flex items-center justify-between">
+						<span className="text-sm font-medium text-[#334155] line-clamp-1">
+							{selectedTools?.two?.toolName || `Select Sanitation tool`}
+						</span>
+						<FaAngleDown />
+					</div>
+				</div>
+			</div>
+			{tab === "list" && (
+				<>
+					<div className={selectedTools?.one ? "hidden" : ""}>
+						{tableData?.map((t, i: number) => (
+							<div
+								key={i}
+								style={{
+									borderWidth: "0.4px 0 0 0.4px",
+									borderStyle: "solid",
+									borderColor: "#000000",
+								}}
+								className="w-full grid grid-cols-6">
+								<div
+									style={{
+										borderWidth: "0px 0 0.4px 0px",
+										borderStyle: "solid",
+										borderColor: "#000000",
+									}}
+									className="col-span-1 pt-8 px-3">
+									<p className="text-base font-bold text-[#334155]">
+										{t?.category}
+									</p>
+								</div>
 
-                <div
-                  style={{
-                    borderWidth: "0px 0.4px 0 0.4px",
-                    borderStyle: "solid",
-                    borderColor: "#000000",
-                  }}
-                  className="col-span-5"
-                >
-                  {t?.subcategories?.map((sub, index, array) => (
-                    <div className="grid grid-cols-5 w-full">
-                      <div
-                        key={index}
-                        style={{
-                          borderWidth:
-                            index !== 0 && index === array.length - 1
-                              ? "0px"
-                              : "0px 0 0.4px 0",
-                          borderStyle: "solid",
-                          borderColor: "#000000",
-                        }}
-                        className="flex px-3 col-span-1 min-h-14 items-center gap-3"
-                      >
-                        <img src={Infra} alt="" className="" />
-                        <small className="text-base font-medium text-[#334155]">
-                          {sub.name}
-                        </small>
-                      </div>
-                      <div
-                        style={{
-                          borderWidth: "0px 0 0 0.4px",
-                          borderStyle: "solid",
-                          borderColor: "#000000",
-                        }}
-                        className="col-span-4"
-                      >
-                        {sub?.rows?.map((row, idx, arr) => (
-                          <div key={idx} className="grid grid-cols-4 w-full">
-                            <div
-                              style={{
-                                borderWidth: "0px 0 0.4px 0",
-                                borderStyle: "solid",
-                                borderColor: "#000000",
-                              }}
-                              className="min-h-14 col-span-2 w-full px-2 flex items-center"
-                            >
-                              <span className="text-base font-normal text-[#334155] inter">
-                                {row?.label}
-                              </span>
-                            </div>
-                            <div
-                              style={{
-                                borderWidth: "0px 0 0.4px 0.4px",
-                                borderStyle: "solid",
-                                borderColor: "#000000",
-                              }}
-                              className="col-span-1 flex justify-center items-center"
-                            >
-                              {/* {row?.tool1 === "pending" ? (
+								<div
+									style={{
+										borderWidth: "0px 0.4px 0 0.4px",
+										borderStyle: "solid",
+										borderColor: "#000000",
+									}}
+									className="col-span-5">
+									{t?.subcategories?.map((sub, index, array) => (
+										<div className="grid grid-cols-5 w-full">
+											<div
+												key={index}
+												style={{
+													borderWidth:
+														index !== 0 && index === array.length - 1
+															? "0px"
+															: "0px 0 0.4px 0",
+													borderStyle: "solid",
+													borderColor: "#000000",
+												}}
+												className="flex px-3 col-span-1 min-h-14 items-center gap-3">
+												<img src={Infra} alt="" className="" />
+												<small className="text-base font-medium text-[#334155]">
+													{sub.name}
+												</small>
+											</div>
+											<div
+												style={{
+													borderWidth: "0px 0 0 0.4px",
+													borderStyle: "solid",
+													borderColor: "#000000",
+												}}
+												className="col-span-4">
+												{sub?.rows?.map((row, idx, arr) => (
+													<div key={idx} className="grid grid-cols-4 w-full">
+														<div
+															style={{
+																borderWidth: "0px 0 0.4px 0",
+																borderStyle: "solid",
+																borderColor: "#000000",
+															}}
+															className="min-h-14 col-span-2 w-full px-2 flex items-center">
+															<span className="text-base font-normal text-[#334155] inter">
+																{row?.label}
+															</span>
+														</div>
+														<div
+															style={{
+																borderWidth: "0px 0 0.4px 0.4px",
+																borderStyle: "solid",
+																borderColor: "#000000",
+															}}
+															className="col-span-1 flex justify-center items-center">
+															{/* {row?.tool1 === "pending" ? (
 																<PendingComp />
 															) : row?.tool1 === true ? (
 																<GoodComp />
 															) : (
 																<BadComp />
 															)} */}
-                              <PendingComp />
-                            </div>
-                            <div
-                              style={{
-                                borderWidth: "0px 0 0.4px 0.4px",
-                                borderStyle: "solid",
-                                borderColor: "#000000",
-                              }}
-                              className="col-span-1 flex justify-center items-center"
-                            >
-                              {/* {row?.tool2 === "pending" ? (
+															<PendingComp />
+														</div>
+														<div
+															style={{
+																borderWidth: "0px 0 0.4px 0.4px",
+																borderStyle: "solid",
+																borderColor: "#000000",
+															}}
+															className="col-span-1 flex justify-center items-center">
+															{/* {row?.tool2 === "pending" ? (
 																<PendingComp />
 															) : row?.tool2 === true ? (
 																<GoodComp />
 															) : (
 																<BadComp />
 															)} */}
-                              <PendingComp />
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            ))}
-          </div>
-          <div className={!selectedTools?.one ? "hidden" : "pb-10"}>
-            {newKpiMapper?.level === "3 Step"
-              ? newKpiMapper?.data?.docs?.map((t: any, i: number) => (
-                  <div
-                    key={i}
-                    style={{
-                      borderWidth: "0.4px 0 0 0.4px",
-                      borderStyle: "solid",
-                      borderColor: "#000000",
-                    }}
-                    className="w-full grid grid-cols-6"
-                  >
-                    <div
-                      style={{
-                        borderWidth: "0px 0 0.4px 0px",
-                        borderStyle: "solid",
-                        borderColor: "#000000",
-                      }}
-                      className="col-span-1 pt-8 px-3"
-                    >
-                      <p className="text-base font-bold text-[#334155] capitalize">
-                        {t?.category?.toLowerCase()}
-                      </p>
-                    </div>
+															<PendingComp />
+														</div>
+													</div>
+												))}
+											</div>
+										</div>
+									))}
+								</div>
+							</div>
+						))}
+					</div>
+					<div className={!selectedTools?.one ? "hidden" : "pb-10"}>
+						{newKpiMapper?.level === "3 Step"
+							? newKpiMapper?.data?.docs?.map((t: any, i: number) => (
+									<div
+										key={i}
+										style={{
+											borderWidth: "0.4px 0 0 0.4px",
+											borderStyle: "solid",
+											borderColor: "#000000",
+										}}
+										className="w-full grid grid-cols-6">
+										<div
+											style={{
+												borderWidth: "0px 0 0.4px 0px",
+												borderStyle: "solid",
+												borderColor: "#000000",
+											}}
+											className="col-span-1 pt-8 px-3">
+											<p className="text-base font-bold text-[#334155] capitalize">
+												{t?.category?.toLowerCase()}
+											</p>
+										</div>
 
-                    <div
-                      style={{
-                        borderWidth: "0px 0.4px 0 0.4px",
-                        borderStyle: "solid",
-                        borderColor: "#000000",
-                      }}
-                      className="col-span-5"
-                    >
-                      {t?.data?.map((sub: any, index: number, array: any[]) => (
-                        <div className="grid grid-cols-5 w-full">
-                          <div
-                            key={index}
-                            style={{
-                              borderWidth:
-                                index !== 0 && index === array.length - 1
-                                  ? "0px 0 0.4px 0"
-                                  : "0px 0 0.4px 0",
-                              borderStyle: "solid",
-                              borderColor: "#000000",
-                            }}
-                            className="flex px-3 col-span-1 min-h-14 items-center gap-3"
-                          >
-                            <img src={Infra} alt="" className="" />
-                            <small className="text-base font-medium text-[#334155] capitalize">
-                              {sub?.category?.toLowerCase()}
-                            </small>
-                          </div>
-                          <div
-                            style={{
-                              borderWidth: "0px 0 0 0.4px",
-                              borderStyle: "solid",
-                              borderColor: "#000000",
-                            }}
-                            className="col-span-4"
-                          >
-                            {sub?.data?.map((row: any, idx: number) => (
-                              <div
-                                key={idx}
-                                className="grid grid-cols-4 w-full"
-                              >
-                                <div
-                                  style={{
-                                    borderWidth: "0px 0 0.4px 0",
-                                    borderStyle: "solid",
-                                    borderColor: "#000000",
-                                  }}
-                                  className="min-h-14 col-span-2 w-full px-2 flex items-center"
-                                >
-                                  <span className="text-base font-normal text-[#334155] inter">
-                                    {row?.title}
-                                  </span>
-                                </div>
-                                <div
-                                  style={{
-                                    borderWidth: "0px 0 0.4px 0.4px",
-                                    borderStyle: "solid",
-                                    borderColor: "#000000",
-                                  }}
-                                  className="col-span-1 flex justify-center items-center"
-                                >
-                                  <ProductTableShow
-                                    prevData={selectedTools?.one?.kpiSelection}
-                                    product={row}
-                                    title={sub?.category}
-                                  />
-                                </div>
-                                <div
-                                  style={{
-                                    borderWidth: "0px 0 0.4px 0.4px",
-                                    borderStyle: "solid",
-                                    borderColor: "#000000",
-                                  }}
-                                  className="col-span-1 flex justify-center items-center"
-                                >
-                                  <ProductTableShow
-                                    prevData={selectedTools?.two?.kpiSelection}
-                                    product={row}
-                                    title={sub?.category}
-                                  />
-                                </div>
-                              </div>
-                            ))}
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                ))
-              : newKpiMapper?.data?.docs?.map((sub: any, index: number) => (
-                  <div
-                    style={{
-                      borderWidth: "0.4px 0 0 0.4px",
-                      borderStyle: "solid",
-                      borderColor: "#000000",
-                    }}
-                    className="grid grid-cols-6 w-full"
-                  >
-                    <div
-                      key={index}
-                      style={{
-                        borderWidth: "0px 0 0.4px 0px",
-                        borderStyle: "solid",
-                        borderColor: "#000000",
-                      }}
-                      className="flex px-3 col-span-2 min-h-14 items-center gap-3"
-                    >
-                      <img src={Infra} alt="" className="" />
-                      <small className="text-base font-medium text-[#334155]">
-                        {sub?.name || sub?.category}
-                      </small>
-                    </div>
-                    <div
-                      style={{
-                        borderWidth: "0px 0 0 0.4px",
-                        borderStyle: "solid",
-                        borderColor: "#000000",
-                      }}
-                      className="col-span-4"
-                    >
-                      {sub?.data?.map((row: any, idx: number, arr: any[]) => (
-                        <div key={idx} className="grid grid-cols-4 w-full">
-                          <div
-                            style={{
-                              borderWidth: "0px 0 0.4px 0.4px",
-                              borderStyle: "solid",
-                              borderColor: "#000000",
-                            }}
-                            className="min-h-14 col-span-2 w-full px-2 flex items-center"
-                          >
-                            <span className="text-base font-normal text-[#334155] inter">
-                              {row?.title}
-                            </span>
-                          </div>
-                          <div
-                            style={{
-                              borderWidth: "0px 0 0.4px 0.4px",
-                              borderStyle: "solid",
-                              borderColor: "#000000",
-                            }}
-                            className="col-span-1 flex justify-center items-center"
-                          >
-                            {/* {row?.tool1 === "pending" ? (
+										<div
+											style={{
+												borderWidth: "0px 0.4px 0 0.4px",
+												borderStyle: "solid",
+												borderColor: "#000000",
+											}}
+											className="col-span-5">
+											{t?.data?.map((sub: any, index: number, array: any[]) => (
+												<div className="grid grid-cols-5 w-full">
+													<div
+														key={index}
+														style={{
+															borderWidth:
+																index !== 0 && index === array.length - 1
+																	? "0px 0 0.4px 0"
+																	: "0px 0 0.4px 0",
+															borderStyle: "solid",
+															borderColor: "#000000",
+														}}
+														className="flex px-3 col-span-1 min-h-14 items-center gap-3">
+														<img src={Infra} alt="" className="" />
+														<small className="text-base font-medium text-[#334155] capitalize">
+															{sub?.category?.toLowerCase()}
+														</small>
+													</div>
+													<div
+														style={{
+															borderWidth: "0px 0 0 0.4px",
+															borderStyle: "solid",
+															borderColor: "#000000",
+														}}
+														className="col-span-4">
+														{sub?.data?.map((row: any, idx: number) => (
+															<div
+																key={idx}
+																className="grid grid-cols-4 w-full">
+																<div
+																	style={{
+																		borderWidth: "0px 0 0.4px 0",
+																		borderStyle: "solid",
+																		borderColor: "#000000",
+																	}}
+																	className="min-h-14 col-span-2 w-full px-2 flex items-center">
+																	<span className="text-base font-normal text-[#334155] inter">
+																		{row?.title}
+																	</span>
+																</div>
+																<div
+																	style={{
+																		borderWidth: "0px 0 0.4px 0.4px",
+																		borderStyle: "solid",
+																		borderColor: "#000000",
+																	}}
+																	className="col-span-1 flex justify-center items-center">
+																	<ProductTableShow
+																		prevData={selectedTools?.one?.kpiSelection}
+																		product={row}
+																		title={sub?.category}
+																	/>
+																</div>
+																<div
+																	style={{
+																		borderWidth: "0px 0 0.4px 0.4px",
+																		borderStyle: "solid",
+																		borderColor: "#000000",
+																	}}
+																	className="col-span-1 flex justify-center items-center">
+																	<ProductTableShow
+																		prevData={selectedTools?.two?.kpiSelection}
+																		product={row}
+																		title={sub?.category}
+																	/>
+																</div>
+															</div>
+														))}
+													</div>
+												</div>
+											))}
+										</div>
+									</div>
+							  ))
+							: newKpiMapper?.data?.docs?.map((sub: any, index: number) => (
+									<div
+										style={{
+											borderWidth: "0.4px 0 0 0.4px",
+											borderStyle: "solid",
+											borderColor: "#000000",
+										}}
+										className="grid grid-cols-6 w-full">
+										<div
+											key={index}
+											style={{
+												borderWidth: "0px 0 0.4px 0px",
+												borderStyle: "solid",
+												borderColor: "#000000",
+											}}
+											className="flex px-3 col-span-2 min-h-14 items-center gap-3">
+											<img src={Infra} alt="" className="" />
+											<small className="text-base font-medium text-[#334155]">
+												{sub?.name || sub?.category}
+											</small>
+										</div>
+										<div
+											style={{
+												borderWidth: "0px 0 0 0.4px",
+												borderStyle: "solid",
+												borderColor: "#000000",
+											}}
+											className="col-span-4">
+											{sub?.data?.map((row: any, idx: number, arr: any[]) => (
+												<div key={idx} className="grid grid-cols-4 w-full">
+													<div
+														style={{
+															borderWidth: "0px 0 0.4px 0.4px",
+															borderStyle: "solid",
+															borderColor: "#000000",
+														}}
+														className="min-h-14 col-span-2 w-full px-2 flex items-center">
+														<span className="text-base font-normal text-[#334155] inter">
+															{row?.title}
+														</span>
+													</div>
+													<div
+														style={{
+															borderWidth: "0px 0 0.4px 0.4px",
+															borderStyle: "solid",
+															borderColor: "#000000",
+														}}
+														className="col-span-1 flex justify-center items-center">
+														{/* {row?.tool1 === "pending" ? (
 													<PendingComp />
 												) : row?.tool1 === true ? (
 													<GoodComp />
 												) : (
 													<BadComp />
 												)} */}
-                            <ProductTableShow
-                              prevData={selectedTools?.one?.kpiSelection}
-                              product={row}
-                              title={sub?.category}
-                            />
-                          </div>
-                          <div
-                            style={{
-                              borderWidth: "0 0.4px 0.4px 0.4px",
-                              borderStyle: "solid",
-                              borderColor: "#000000",
-                            }}
-                            className="col-span-1 flex justify-center items-center"
-                          >
-                            {/* {row?.tool2 === "pending" ? (
+														<ProductTableShow
+															prevData={selectedTools?.one?.kpiSelection}
+															product={row}
+															title={sub?.category}
+														/>
+													</div>
+													<div
+														style={{
+															borderWidth: "0 0.4px 0.4px 0.4px",
+															borderStyle: "solid",
+															borderColor: "#000000",
+														}}
+														className="col-span-1 flex justify-center items-center">
+														{/* {row?.tool2 === "pending" ? (
 													<PendingComp />
 												) : row?.tool2 === true ? (
 													<GoodComp />
 												) : (
 													<BadComp />
 												)} */}
-                            <ProductTableShow
-                              prevData={selectedTools?.two?.kpiSelection}
-                              product={row}
-                              title={sub?.category}
-                            />
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                ))}
-          </div>
-        </>
-      )}
-      {tab === "map" && (
-        <div
-          style={{
-            border: "0.4px solid #000000",
-          }}
-          className="w-full mb-20 pb-24 pt-10"
-        >
-          {selectedTools?.one?.toolName && selectedTools?.two?.toolName && (
+														<ProductTableShow
+															prevData={selectedTools?.two?.kpiSelection}
+															product={row}
+															title={sub?.category}
+														/>
+													</div>
+												</div>
+											))}
+										</div>
+									</div>
+							  ))}
+					</div>
+				</>
+			)}
+			{tab === "map" && (
+				<div
+					style={{
+						border: "0.4px solid #000000",
+					}}
+					className="w-full mb-20 pb-24 pt-10">
+					{selectedTools?.one?.toolName && selectedTools?.two?.toolName && (
 						<div className="section-container pb-4">
 							<h4 className="text-base font-medium text-[#000929]">
-								Coverage of {selectedTools?.one?.toolName} against Tool{" "}
+								Coverage of {selectedTools?.one?.toolName} against{" "}
 								{selectedTools?.two?.toolName} across the region.
 							</h4>
 						</div>
 					)}
-          <div className="section-container items-start gap-14 justify-center flex">
-            <div className="w-[70%]">
-              <div className="">
-                <div className="space-x-4 flex">
-                  <h4 className="text-base font-medium text-[#000929]">Key:</h4>
-                  {keys?.map((key) => (
-                    <div className="flex items-center gap-2">
-                      <div
-                        style={{
-                          backgroundColor: key?.color,
-                        }}
-                        className={`h-3 rounded-tr-3xl w-12`}
-                      ></div>
-                      <h6 className="text-sm font-normal capitalize text-da-blue-600">
-                        {key?.name}
-                      </h6>
-                    </div>
-                  ))}
-                </div>
-              </div>
-              <div className="h-[432px] w-full noscroll mt-3">
-                <MapCompareComponent
-                  mapCountries={mapCountries}
-                  selectedTools={selectedTools}
-                  keys={keys}
-                />
-              </div>
-            </div>
-            <div className="w-[30%] mt-10">
-              <div className="space-y-4">
-                {newTools?.map((t) => (
-                  <div
-                    style={{
-                      background: t?.bg,
-                      border: `1px solid ${t?.border}`,
-                    }}
-                    className="min-h-48 p-5 w-full rounded-xl"
-                  >
-                    <h4 className="text-base font-bold text-[#334155]">
-                      {t?.name}
-                    </h4>
-                    {/* <p className="mt-3 text-sm font-normal text-[#000929]">
+					<div className="section-container items-start gap-14 justify-center flex">
+						<div className="w-[70%]">
+							<div className="">
+								<div className="space-x-4 flex">
+									<h4 className="text-base font-medium text-[#000929]">Key:</h4>
+									{keys?.map(key => (
+										<div className="flex items-center gap-2">
+											<div
+												style={{
+													backgroundColor: key?.color,
+												}}
+												className={`h-3 rounded-tr-3xl w-12`}></div>
+											<h6 className="text-sm font-normal capitalize text-da-blue-600">
+												{key?.name}
+											</h6>
+										</div>
+									))}
+								</div>
+							</div>
+							<div className="h-[432px] w-full noscroll mt-3">
+								<MapCompareComponent
+									mapCountries={mapCountries}
+									selectedTools={selectedTools}
+									keys={keys}
+								/>
+							</div>
+						</div>
+						<div className="w-[30%] mt-10">
+							<div className="space-y-4">
+								{newTools?.map(t => (
+									<div
+										style={{
+											background: t?.bg,
+											border: `1px solid ${t?.border}`,
+										}}
+										className="min-h-48 p-5 w-full rounded-xl">
+										<h4 className="text-base font-bold text-[#334155]">
+											{t?.name}
+										</h4>
+										{/* <p className="mt-3 text-sm font-normal text-[#000929]">
 											{t?.desc}
 										</p> */}
-                    <p
-                      className="mt-3 text-sm font-normal text-[#000929] line-clamp-6"
-                      dangerouslySetInnerHTML={createMarkup(t?.desc)}
-                    />
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-      {["one", "two"]?.includes(modal) && (
-        <SelectToolModal
-          handleClose={() => setModal("")}
-          selectLevel={modal ? modal : null}
-          preActive={selectedAppLevel}
-          preSelection={selectedTools}
-          handleSelect={(da: any) => {
-            if (da?.selection) {
-              setSelectedTools(da?.selection);
-            }
-            if (da?.active) {
-              setSelectedAppLevel(da?.active);
-            }
-            setModal("");
-          }}
-        />
-      )}
-      {tab === "map" && (
-        <div className="flex justify-end mb-6">
-          <button
-            onClick={() => handlePrint()}
-            className="rounded-lg h-14 px-6 text-white text-xl font-medium bg-da-blue-500"
-          >
-            Export
-          </button>
-        </div>
-      )}
-      <div
-        style={{
-          display: "none",
-        }}
-        className="w-full"
-      >
-        <PrintableComponent
-          ref={componentRef}
-          keys={keys}
-          mapCountries={mapCountries}
-          selectedTools={selectedTools}
-          newTools={newTools}
-        />
-      </div>
-    </div>
-  );
+										<p
+											className="mt-3 text-sm font-normal text-[#000929] line-clamp-6"
+											dangerouslySetInnerHTML={createMarkup(t?.desc)}
+										/>
+									</div>
+								))}
+							</div>
+						</div>
+					</div>
+				</div>
+			)}
+			{["one", "two"]?.includes(modal) && (
+				<SelectToolModal
+					handleClose={() => setModal("")}
+					selectLevel={modal ? modal : null}
+					preActive={selectedAppLevel}
+					preSelection={selectedTools}
+					handleSelect={(da: any) => {
+						if (da?.selection) {
+							setSelectedTools(da?.selection);
+						}
+						if (da?.active) {
+							setSelectedAppLevel(da?.active);
+						}
+						setModal("");
+					}}
+				/>
+			)}
+			{tab === "map" && (
+				<div className="flex justify-end mb-6">
+					<button
+						onClick={() => handlePrint()}
+						className="rounded-lg h-14 px-6 text-white text-xl font-medium bg-da-blue-500">
+						Export
+					</button>
+				</div>
+			)}
+			<div
+				style={{
+					display: "none",
+				}}
+				className="w-full">
+				<PrintableComponent
+					ref={componentRef}
+					keys={keys}
+					mapCountries={mapCountries}
+					selectedTools={selectedTools}
+					newTools={newTools}
+				/>
+			</div>
+		</div>
+	);
 };
 
 export const CheckerDecider = () => {};

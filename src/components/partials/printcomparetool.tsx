@@ -26,7 +26,7 @@ const PrintableComponent = forwardRef<HTMLDivElement, Props>((props, ref) => {
 					{selectedTools?.one?.toolName && selectedTools?.two?.toolName && (
 						<div className="pb-4">
 							<h4 className="text-base font-medium text-[#000929]">
-								Coverage of {selectedTools?.one?.toolName} against Tool{" "}
+								Coverage of {selectedTools?.one?.toolName} against{" "}
 								{selectedTools?.two?.toolName} across the region.
 							</h4>
 						</div>
