@@ -916,6 +916,29 @@ const Dashboard = () => {
 												))}
 											</div>
 										</WhiteBox2>
+										{currentTool?.utilities &&
+											currentTool?.utilities?.length > 0 && (
+												<div className="py-8">
+													<WhiteBox2>
+														<h4 className="text-base font-medium text-[#000929]">
+															Utilities
+														</h4>
+														<div className="mt-5 space-y-3">
+															{currentTool?.utilities?.map((c: any, i: any) => (
+																<div
+																	className="flex items-center gap-2"
+																	key={i}>
+																	{start && (
+																		<span className="text-sm font-normal text-da-blue-600">
+																			{c?.address}
+																		</span>
+																	)}
+																</div>
+															))}
+														</div>
+													</WhiteBox2>
+												</div>
+											)}
 									</div>
 								</div>
 							</div>
