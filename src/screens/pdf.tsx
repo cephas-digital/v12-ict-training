@@ -5,8 +5,7 @@ import Mail from "../assets/icons/mail.svg";
 import { createMarkup, MapDashboardComponent } from "./dashboard";
 import { forwardRef, HTMLAttributes } from "react";
 import ChartIcon from "../assets/icons/chart.svg";
-// import Logo from "../assets/icons/Nawassco Logo (1) 1.svg";
-import LogoIcon from "../assets/icons/logpdaek.svg";
+import LogoIcon from "../assets/icons/newlogo.svg";
 
 // Define the extra props type
 interface ExtraProps {
