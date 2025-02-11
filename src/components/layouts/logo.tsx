@@ -1,5 +1,5 @@
 import React from "react";
-// import LogoIcon from "../../assets/icons/logo.svg";
+import LogoIcon from "../../assets/icons/newlogo.svg";
 import { useNavigate } from "react-router";
 
 const Logo = () => {
@@ -18,6 +18,20 @@ const Logo = () => {
         alt=""
         className="cursor-pointer"
       /> */}
+    </div>
+  );
+};
+
+export const NewLogo = () => {
+  const navigate = useNavigate();
+  return (
+    <div>
+      <img
+        onClick={() => navigate("/")}
+        src={LogoIcon}
+        alt=""
+        className="cursor-pointer"
+      />
     </div>
   );
 };
