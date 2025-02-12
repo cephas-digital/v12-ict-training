@@ -1,6 +1,6 @@
 import React, { forwardRef, HTMLAttributes } from "react"; // Assuming this is imported from another file
 import { MapCompareComponent } from "./tables";
-import LogoIcon from "../../assets/icons/newlogo.svg";
+import LogoIcon from "../../assets/icons/Layer_1-2.svg";
 
 interface ExtraProps {
   keys?: any;

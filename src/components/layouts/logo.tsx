@@ -1,5 +1,5 @@
 import React from "react";
-import LogoIcon from "../../assets/icons/newlogo.svg";
+import LogoIcon from "../../assets/icons/Layer_1-2.svg";
 import { useNavigate } from "react-router";
 
 const Logo = () => {
@@ -12,12 +12,6 @@ const Logo = () => {
       >
         Water & Sanitation Tools Map
       </h3>
-      {/* <img
-        onClick={() => navigate("/")}
-        src={LogoIcon}
-        alt=""
-        className="cursor-pointer"
-      /> */}
     </div>
   );
 };
