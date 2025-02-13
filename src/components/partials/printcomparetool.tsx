@@ -79,7 +79,7 @@ const PrintableComponent = forwardRef<HTMLDivElement, Props>((props, ref) => {
 			<div className="fixed bottom-3 right-4 print:block hidden no-break">
 				<div className="flex gap-4 items-center">
 					<h5 className="text-xl font-medium text-da-blue-600">Powered By</h5>
-					<img src={LogoIcon} alt="Logo" className="w-24" />
+					<img src={LogoIcon} alt="Logo" className="h-16" />
 				</div>
 			</div>
 		</div>
