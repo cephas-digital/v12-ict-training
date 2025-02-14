@@ -295,7 +295,7 @@ const PdfPrint = forwardRef<HTMLDivElement, Props>((props, ref) => {
         <div className="fixed bottom-3 right-4 print:block hidden">
           <div className="flex gap-4 items-center">
             <h5 className="text-xl font-medium text-da-blue-600">Powered By</h5>
-            <img src={LogoIcon} alt="" className="h-16" />
+            <img src={LogoIcon} alt="" className="h-16 w-40" />
           </div>
         </div>
       </div>

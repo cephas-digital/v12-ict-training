@@ -16,13 +16,12 @@ const PrimaryBtn = ({ icon, text, onClick, className = "" }) => {
 
 export const MainBtn = ({ icon, onClick, text, className = "" }) => {
   return (
-    <div>
+    <div onClick={onClick}>
       <button
         style={{
           border: "1px solid #A3A3A3",
           boxShadow: "0px 15px 50px 0px #AFB0B926",
         }}
-        onClick={onClick}
         className={`flex items-center gap-1 justify-center ${className} px-5 h-10 rounded-lg bg-transparent `}
       >
         <img src={icon} alt="" className="" />
