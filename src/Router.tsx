@@ -2,7 +2,8 @@ import React, { useEffect } from "react";
 import { Route, Routes, useLocation } from "react-router-dom";
 
 import PageRender from "./PageRender";
-import Home from "./screens/home";
+import Home from "./screens/dashboard";
+// import Home from "./screens/home";
 
 const Routers = () => {
   const location = useLocation();

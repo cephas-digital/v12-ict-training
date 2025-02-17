@@ -195,19 +195,19 @@ const Header = () => {
 
 export const PageHeader = () => {
   return (
-    <div className="w-full bg-[#142239] h-20 flex justify-between items-center">
-      <div className="w-[25%] h-full flex items-center pl-6 border-r border-r-[#C4C4C4]">
-        <NewLogo />
-      </div>
-      <div className="flex gap-5 items-center pr-6">
-        {/* <img src={Notification} alt="" className="" /> */}
-        <a href="mailto:wash@gmail.com">
-          {" "}
-          <img src={Messaging} alt="" className="" />
-        </a>
-      </div>
-    </div>
-  );
+		<div className="w-full bg-[#142239] h-20 flex justify-between items-center">
+			<div className="w-[25%] h-full flex items-center pl-6 border-r border-r-[#C4C4C4]">
+				<NewLogo />
+			</div>
+			<div className="flex gap-5 items-center pr-6">
+				{/* <img src={Notification} alt="" className="" /> */}
+				<a href="mailto:team@wshdatalabs.com">
+					{" "}
+					<img src={Messaging} alt="" className="" />
+				</a>
+			</div>
+		</div>
+	);
 };
 
 export default Header;
