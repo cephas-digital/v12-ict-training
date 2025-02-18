@@ -180,6 +180,18 @@ const StartMapping = ({
 				</div>
 				<div className="my-5 flex justify-end gap-5">
 					<NormalBtn
+						text={"Reset All"}
+						onClick={() => {
+							setSelectedOptions(
+								(data || filters).reduce((acc, filter) => {
+									acc[data ? filter?.category : filter?.id] = [];
+									return acc;
+								}, {})
+							);
+						}}
+						className="border border-[#A3A3A3] text-[#475569] bg-transparent"
+					/>
+					<NormalBtn
 						text={"Cancel"}
 						onClick={handleClose}
 						className="border border-[#A3A3A3] text-[#475569] bg-transparent"
