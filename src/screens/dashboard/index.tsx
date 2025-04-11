@@ -869,7 +869,7 @@ const Dashboard = () => {
 															href={r?.link}
 															target="_blank"
 															rel={"noreferrer"}
-															className="text-sm font-normal text-da-blue-100">
+															className="text-sm font-normal text-da-blue-100 line-clamp-1">
 															{r?.link}
 														</a>
 													</div>
@@ -919,7 +919,7 @@ const Dashboard = () => {
 																href={c?.value}
 																target="_blank"
 																rel={"noreferrer"}
-																className="text-sm font-normal text-da-blue-100">
+																className="text-sm font-normal text-da-blue-100 line-clamp-1">
 																{c?.value}
 															</a>
 														)}
