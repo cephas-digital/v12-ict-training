@@ -8,11 +8,12 @@ type DoneModalType = {
 	handleClose: () => void;
 	page?: string;
 	path?: string;
+	text?: string;
 	loading?: boolean;
 	close?: () => void;
 };
 
-const DoneModal = ({ handleClose, page, path, close }: DoneModalType) => {
+const DoneModal = ({ handleClose, page, path, close, text }: DoneModalType) => {
 	const navigate = useNavigate();
 	return (
 		<div>
@@ -26,7 +27,7 @@ const DoneModal = ({ handleClose, page, path, close }: DoneModalType) => {
 					<button
 						onClick={() => (close ? close() : navigate(path || "/users"))}
 						className="mt-8 bg-[#3787FF] text-[#F2FBFF] h-12 w-full rounded-lg text-base font-medium">
-						Go back to table
+						{text || `Go back to table`}
 					</button>
 				</div>
 			</SmallModalContainer>

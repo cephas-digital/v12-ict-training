@@ -14,6 +14,7 @@ import DoneModal from "../../components/modals/donemodal";
 import { ToolsKPIsData } from "../../components/partials/box";
 import { IoIosAdd } from "react-icons/io";
 import { MdDelete } from "react-icons/md";
+import InfoModal from "../../components/modals/infomodal";
 
 const AddTools = () => {
 	const navigate = useNavigate();
@@ -96,6 +97,7 @@ const AddTools = () => {
 
 	let [loading, setLoading] = useState(null),
 		[preloading, setPreLoading] = useState(true),
+		[info, setInfo] = useState<any>(""),
 		{ returnErrors } = useErrorStore();
 	const onSubmit = async (data: any) => {
 		setLoading(true);
@@ -326,31 +328,30 @@ const AddTools = () => {
 	return (
 		<div>
 			<MainContainer>
-				<form
-					onSubmit={handleSubmit(onSubmit)}
-					className="mt-8 flex justify-between items-center">
-					<div className="flex gap-2">
-						<FaChevronLeft
-							color="#334155"
-							onClick={() => navigate("/")}
-							className="cursor-pointer mt-1"
-						/>
-						<div>
-							<h1 className="text-xl font-semibold text-da-blue-600 inter">
-								{"Add Tool"}
-							</h1>
-							<div className="hidden gap-2 items-center">
-								<span className="text-base font-normal text-[#334155]">
-									Dashboard
-								</span>
-								<FaChevronRight color="#334155" size={10} />
-								<span className="text-base font-normal text-[#334155]">
-									{"Add"} Tool
-								</span>
+				<form onSubmit={handleSubmit(onSubmit)}>
+					<div className="mt-8 flex justify-between items-center">
+						<div className="flex gap-2">
+							<FaChevronLeft
+								color="#334155"
+								onClick={() => navigate("/")}
+								className="cursor-pointer mt-1"
+							/>
+							<div>
+								<h1 className="text-xl font-semibold text-da-blue-600 inter">
+									{"Add Tool"}
+								</h1>
+								<div className="hidden gap-2 items-center">
+									<span className="text-base font-normal text-[#334155]">
+										Dashboard
+									</span>
+									<FaChevronRight color="#334155" size={10} />
+									<span className="text-base font-normal text-[#334155]">
+										{"Add"} Tool
+									</span>
+								</div>
 							</div>
 						</div>
-					</div>
-					<div className="flex gap-5">
+						{/* <div className="flex gap-5">
 						<MainBtn
 							onClick={() => navigate("/")}
 							className="border border-[#FECACA]"
@@ -368,103 +369,167 @@ const AddTools = () => {
 							color={"white"}
 							type="submit"
 						/>
+					</div> */}
+						<ActionButton
+							navigate={navigate}
+							loading={loading}
+							selection={selection}
+						/>
 					</div>
-				</form>
-				<div className="mt-12 bg-white w-full p-8">
-					<div
-						style={{
-							borderBottom: "1px solid #E2E8F0",
-						}}
-						className="h-full w-1/2 pb-3">
-						<h4 className="text-xl font-semibold inter text-da-blue-600">
-							General Information
-						</h4>
-					</div>
-					<div className="mt-6">
-						<div className="w-1/2 space-y-5">
-							<div>
-								<Controller
-									name="toolName"
-									control={control}
-									rules={{
-										required: "This field is required",
-									}}
-									render={({ field: { value, onChange, name } }) => (
-										<NewInput
-											type="text"
-											name={name}
-											value={value}
-											label={"Tool Name"}
-											onChange={onChange}
-											placeholder={"Type your product name"}
-										/>
+					<div className="mt-12 bg-white w-full p-8">
+						<div
+							style={{
+								borderBottom: "1px solid #E2E8F0",
+							}}
+							className="h-full w-1/2 pb-3">
+							<h4 className="text-xl font-semibold inter text-da-blue-600">
+								General Information
+							</h4>
+						</div>
+						<div className="mt-6">
+							<div className="w-1/2 space-y-5">
+								<div>
+									<Controller
+										name="toolName"
+										control={control}
+										rules={{
+											required: "This field is required",
+										}}
+										render={({ field: { value, onChange, name } }) => (
+											<NewInput
+												type="text"
+												name={name}
+												value={value}
+												label={"Tool Name"}
+												onChange={onChange}
+												placeholder={"Type your product name"}
+											/>
+										)}
+									/>
+									{errors.toolName && (
+										<p className="text-[#dc2626] text-xs">
+											{errors.toolName.message}
+										</p>
 									)}
-								/>
-								{errors.toolName && (
-									<p className="text-[#dc2626] text-xs">
-										{errors.toolName.message}
-									</p>
-								)}
-							</div>
-							<div>
-								<Controller
-									name="description"
-									control={control}
-									rules={{
-										required: "This field is required",
-									}}
-									render={({ field: { value, onChange, name } }) => (
-										<TextBox
-											name={name}
-											value={value}
-											onChange3={onChange}
-											label={"Description"}
-											placeholder={"Tell us about your tool and company here"}
-											setState={(e: any[]) => {
-												onChange(e);
+								</div>
+								<div>
+									<Controller
+										name="description"
+										control={control}
+										rules={{
+											required: "This field is required",
+										}}
+										render={({ field: { value, onChange, name } }) => (
+											<TextBox
+												name={name}
+												value={value}
+												onChange3={onChange}
+												label={"Description"}
+												placeholder={"Tell us about your tool and company here"}
+												setState={(e: any[]) => {
+													onChange(e);
+												}}
+												type="editor"
+											/>
+										)}
+									/>
+									{errors.description && (
+										<p className="text-[#dc2626] text-xs">
+											{errors.description.message}
+										</p>
+									)}
+								</div>
+								<div>
+									<Controller
+										name="contactEmailAddress"
+										control={control}
+										rules={{
+											required: "This field is required",
+											pattern: {
+												value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+												message: "Invalid email format",
+											},
+										}}
+										render={({ field: { value, onChange, name } }) => (
+											<NewInput
+												type="email"
+												name={name}
+												value={value}
+												label={"Contact Email Address"}
+												placeholder={"email address"}
+												onChange={onChange}
+											/>
+										)}
+									/>
+									{errors.contactEmailAddress && (
+										<p className="text-[#dc2626] text-xs">
+											{errors.contactEmailAddress.message}
+										</p>
+									)}
+								</div>
+								<div className="grid grid-cols-2 gap-5 mb-4">
+									<div>
+										<Controller
+											name="website"
+											control={control}
+											rules={{
+												required: "This field is required",
+												pattern: {
+													value:
+														/(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/gi,
+													message: "Invalid url format",
+												},
 											}}
-											type="editor"
+											render={({ field: { value, onChange, name } }) => (
+												<NewInput
+													type="url"
+													name={name}
+													value={value}
+													label={"Website"}
+													placeholder={"Type your website"}
+													onChange={onChange}
+												/>
+											)}
 										/>
-									)}
-								/>
-								{errors.description && (
-									<p className="text-[#dc2626] text-xs">
-										{errors.description.message}
-									</p>
-								)}
-							</div>
-							<div>
-								<Controller
-									name="contactEmailAddress"
-									control={control}
-									rules={{
-										required: "This field is required",
-										pattern: {
-											value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-											message: "Invalid email format",
-										},
-									}}
-									render={({ field: { value, onChange, name } }) => (
-										<NewInput
-											type="email"
-											name={name}
-											value={value}
-											label={"Contact Email Address"}
-											placeholder={"email address"}
-											onChange={onChange}
+										{errors.website && (
+											<p className="text-[#dc2626] text-xs">
+												{errors.website.message}
+											</p>
+										)}
+									</div>
+									<div>
+										<Controller
+											name="webinar"
+											control={control}
+											rules={{
+												required: "This field is required",
+												pattern: {
+													value:
+														/(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/gi,
+													message: "Invalid url format",
+												},
+											}}
+											render={({ field: { value, onChange, name } }) => (
+												<NewInput
+													type="url"
+													name={name}
+													value={value}
+													label={"Webinar"}
+													placeholder={"Type your webinar "}
+													onChange={onChange}
+												/>
+											)}
 										/>
-									)}
-								/>
-								{errors.contactEmailAddress && (
-									<p className="text-[#dc2626] text-xs">
-										{errors.contactEmailAddress.message}
-									</p>
-								)}
-							</div>
-							<div className="grid grid-cols-2 gap-5 mb-4">
-								<div>
+										{errors.webinar && (
+											<p className="text-[#dc2626] text-xs">
+												{errors.webinar.message}
+											</p>
+										)}
+									</div>
+								</div>
+								<div className="mb-4">
 									<Controller
-										name="website"
+										name="logo"
 										control={control}
 										rules={{
 											required: "This field is required",
@@ -479,232 +544,218 @@ const AddTools = () => {
 												type="url"
 												name={name}
 												value={value}
-												label={"Website"}
-												placeholder={"Type your website"}
+												label={"Logo"}
+												placeholder={"Type your logo url "}
 												onChange={onChange}
 											/>
 										)}
 									/>
-									{errors.website && (
+									{errors.logo && (
 										<p className="text-[#dc2626] text-xs">
-											{errors.website.message}
+											{errors.logo.message}
 										</p>
 									)}
 								</div>
-								<div>
-									<Controller
-										name="webinar"
-										control={control}
-										rules={{
-											required: "This field is required",
-											pattern: {
-												value:
-													/(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/gi,
-												message: "Invalid url format",
-											},
-										}}
-										render={({ field: { value, onChange, name } }) => (
-											<NewInput
-												type="url"
-												name={name}
-												value={value}
-												label={"Webinar"}
-												placeholder={"Type your webinar "}
-												onChange={onChange}
-											/>
-										)}
-									/>
-									{errors.webinar && (
-										<p className="text-[#dc2626] text-xs">
-											{errors.webinar.message}
-										</p>
-									)}
-								</div>
+								<label className="text-[#334155] font-medium text-sm inter mt-4">
+									Resources
+								</label>
+								{itemForm?.map((item, index) => (
+									<>
+										<div className="relative grid grid-cols-2 w-4/5 gap-5">
+											<div>
+												<NewInput
+													onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+														handleInputChangeForMutipleItem(
+															e,
+															index,
+															"material"
+														)
+													}
+													value={item.material}
+													label={index === 0 ? "Learning Materials" : ""}
+													placeholder={"EDAMS Technology"}
+												/>
+											</div>
+											<div className="">
+												<NewInput
+													label={index === 0 ? "Link" : ""}
+													placeholder="https://www.google.com"
+													onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+														handleInputChangeForMutipleItem(e, index, "link")
+													}
+													type="url"
+													value={item.link}
+												/>
+											</div>
+											<div
+												onClick={() => handleDeleteRowForMutipleItem(index)}
+												className="md:absolute self-center -right-20 cursor-pointer">
+												<p className="text-sm text-red-600 flex items-center md:mt-2 gap-2">
+													<span>
+														<MdDelete />
+													</span>
+													Remove
+												</p>
+											</div>
+										</div>
+									</>
+								))}
+								<p
+									onClick={addRowForMutipleItem}
+									className="flex items-center gap-2 text-bluerolodex f-medium my-3 cursor-pointer">
+									<span>
+										<IoIosAdd />
+									</span>
+									Add resource
+								</p>
+								<label className="text-[#334155] font-medium text-sm inter mt-4">
+									Utilities
+								</label>
+								{itemUtil?.map((item, index) => (
+									<>
+										<div className="relative grid w-4/5 gap-5">
+											<div>
+												<NewInput
+													onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+														handleInputChangeForMutipleItemUtil(
+															e,
+															index,
+															"address"
+														)
+													}
+													value={item.address}
+													label={index === 0 ? "Address" : ""}
+													placeholder={"EDAMS Technology"}
+												/>
+											</div>
+											<div
+												onClick={() => handleDeleteRowForMutipleItemUtil(index)}
+												className="md:absolute self-center -right-20 cursor-pointer">
+												<p className="text-sm text-red-600 flex items-center md:mt-2 gap-2">
+													<span>
+														<MdDelete />
+													</span>
+													Remove
+												</p>
+											</div>
+										</div>
+									</>
+								))}
+								<p
+									onClick={addRowForMutipleItemUtils}
+									className="flex items-center gap-2 text-bluerolodex f-medium my-3 cursor-pointer">
+									<span>
+										<IoIosAdd />
+									</span>
+									Add utility
+								</p>
 							</div>
-							<div className="mb-4">
-								<Controller
-									name="logo"
-									control={control}
-									rules={{
-										required: "This field is required",
-										pattern: {
-											value:
-												/(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/gi,
-											message: "Invalid url format",
-										},
+							<div className="mt-8">
+								<div
+									style={{
+										borderBottom: "1px solid #E2E8F0",
 									}}
-									render={({ field: { value, onChange, name } }) => (
-										<NewInput
-											type="url"
-											name={name}
-											value={value}
-											label={"Logo"}
-											placeholder={"Type your logo url "}
-											onChange={onChange}
+									className="h-full w-1/2 pb-3">
+									<h4 className="text-xl font-semibold inter text-da-blue-600">
+										Tool Category
+									</h4>
+								</div>
+								<div className="mt-6 grid w-1/2 grid-cols-2 gap-6">
+									{tools?.map((tool: any, i: number) => (
+										<ModalSelect
+											key={i}
+											label={tool?.category}
+											handleModal={() => setModal("start")}
+											selected={
+												selection?.[tool?.category]
+													? selection?.[tool?.category]
+															?.toString()
+															?.split(",")
+															?.join(", ")
+													: null
+											}
 										/>
-									)}
-								/>
-								{errors.logo && (
-									<p className="text-[#dc2626] text-xs">
-										{errors.logo.message}
-									</p>
-								)}
+									))}
+								</div>
+								<div className="mt-6 grid grid-cols-2 w-4/5 gap-6">
+									{formInfo?.map((tool: any, i: number) => (
+										<ToolsKPIsData
+											start
+											data={tool?.data}
+											title={tool?.category}
+											selection
+											handleKpi={handleKpi}
+											key={i}
+											formIndex={i}
+											shadow
+											setInfo={() => setInfo(tool)}
+										/>
+									))}
+								</div>
 							</div>
-							<label className="text-[#334155] font-medium text-sm inter mt-4">
-								Resources
-							</label>
-							{itemForm?.map((item, index) => (
-								<>
-									<div className="relative grid grid-cols-2 w-4/5 gap-5">
-										<div>
-											<NewInput
-												onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-													handleInputChangeForMutipleItem(e, index, "material")
-												}
-												value={item.material}
-												label={index === 0 ? "Learning Materials" : ""}
-												placeholder={"EDAMS Technology"}
-											/>
-										</div>
-										<div className="">
-											<NewInput
-												label={index === 0 ? "Link" : ""}
-												placeholder="https://www.google.com"
-												onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-													handleInputChangeForMutipleItem(e, index, "link")
-												}
-												type="url"
-												value={item.link}
-											/>
-										</div>
-										<div
-											onClick={() => handleDeleteRowForMutipleItem(index)}
-											className="md:absolute self-center -right-20 cursor-pointer">
-											<p className="text-sm text-red-600 flex items-center md:mt-2 gap-2">
-												<span>
-													<MdDelete />
-												</span>
-												Remove
-											</p>
-										</div>
-									</div>
-								</>
-							))}
-							<p
-								onClick={addRowForMutipleItem}
-								className="flex items-center gap-2 text-bluerolodex f-medium my-3 cursor-pointer">
-								<span>
-									<IoIosAdd />
-								</span>
-								Add resource
-							</p>
-							<label className="text-[#334155] font-medium text-sm inter mt-4">
-								Utilities
-							</label>
-							{itemUtil?.map((item, index) => (
-								<>
-									<div className="relative grid w-4/5 gap-5">
-										<div>
-											<NewInput
-												onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-													handleInputChangeForMutipleItemUtil(
-														e,
-														index,
-														"address"
-													)
-												}
-												value={item.address}
-												label={index === 0 ? "Address" : ""}
-												placeholder={"EDAMS Technology"}
-											/>
-										</div>
-										<div
-											onClick={() => handleDeleteRowForMutipleItemUtil(index)}
-											className="md:absolute self-center -right-20 cursor-pointer">
-											<p className="text-sm text-red-600 flex items-center md:mt-2 gap-2">
-												<span>
-													<MdDelete />
-												</span>
-												Remove
-											</p>
-										</div>
-									</div>
-								</>
-							))}
-							<p
-								onClick={addRowForMutipleItemUtils}
-								className="flex items-center gap-2 text-bluerolodex f-medium my-3 cursor-pointer">
-								<span>
-									<IoIosAdd />
-								</span>
-								Add utility
-							</p>
 						</div>
-						<div className="mt-8">
-							<div
-								style={{
-									borderBottom: "1px solid #E2E8F0",
-								}}
-								className="h-full w-1/2 pb-3">
-								<h4 className="text-xl font-semibold inter text-da-blue-600">
-									Tool Category
-								</h4>
-							</div>
-							<div className="mt-6 grid w-1/2 grid-cols-2 gap-6">
-								{tools?.map((tool: any, i: number) => (
-									<ModalSelect
-										key={i}
-										label={tool?.category}
-										handleModal={() => setModal("start")}
-										selected={
-											selection?.[tool?.category]
-												? selection?.[tool?.category]
-														?.toString()
-														?.split(",")
-														?.join(", ")
-												: null
-										}
-									/>
-								))}
-							</div>
-							<div className="mt-6 grid grid-cols-2 w-4/5 gap-6">
-								{formInfo?.map((tool: any, i: number) => (
-									<ToolsKPIsData
-										start
-										data={tool?.data}
-										title={tool?.category}
-										selection
-										handleKpi={handleKpi}
-										key={i}
-										formIndex={i}
-										shadow
-									/>
-								))}
-							</div>
+						<div className="py-8 flex justify-end items-center">
+							<ActionButton
+								navigate={navigate}
+								loading={loading}
+								selection={selection}
+							/>
 						</div>
 					</div>
-				</div>
-				{modal === "start" && (
-					<StartMapping
-						handleClose={() => setModal("")}
-						data={tools}
-						handleComplete={da => {
-							setSelection(da);
-							setModal("");
-						}}
-						defaultSelection={selection}
-					/>
-				)}
-				{modal === "done" && (
-					<DoneModal
-						page={"Tool"}
-						handleClose={() => setModal("")}
-						path={"/"}
-					/>
-				)}
+					{modal === "start" && (
+						<StartMapping
+							handleClose={() => setModal("")}
+							data={tools}
+							handleComplete={da => {
+								setSelection(da);
+								setModal("");
+							}}
+							defaultSelection={selection}
+						/>
+					)}
+					{modal === "done" && (
+						<DoneModal
+							page={"Tool"}
+							handleClose={() => setModal("")}
+							path={"/"}
+							text="Go to Map"
+						/>
+					)}
+					{info && (
+						<InfoModal
+							handleClose={() => setInfo("")}
+							title={info?.category || "Infrastructure and Stability"}
+							description={info?.description}
+						/>
+					)}
+				</form>
 			</MainContainer>
 		</div>
 	);
 };
 
 export default AddTools;
+
+export const ActionButton = ({ navigate, loading, selection }: any) => {
+	return (
+		<div className="flex gap-5">
+			<MainBtn
+				onClick={() => navigate("/")}
+				className="border border-[#FECACA]"
+				text={"Cancel"}
+				bg={"transparent"}
+				color={"#EF4444"}
+				type="button"
+			/>
+			<MainBtn
+				onClick={() => console.log("object")}
+				text={"Continue"}
+				disabled={loading || !selection}
+				loading={loading}
+				bg={"#3787FF"}
+				color={"white"}
+				type="submit"
+			/>
+		</div>
+	);
+};
