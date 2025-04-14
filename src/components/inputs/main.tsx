@@ -93,6 +93,7 @@ export const SearchInput: React.FC<IInputProps> = ({
 type InputProps = {
 	type?: string;
 	label?: string;
+	sublabel?: string;
 	options?: any[];
 	selectHolder?: string;
 	placeholder?: string;
@@ -114,12 +115,14 @@ export const NewInput = ({
 	name,
 	value,
 	required,
+	sublabel,
 }: InputProps) => {
 	return (
 		<div className="form-group">
 			{label && (
 				<label className="text-[#334155] font-medium text-sm inter">
-					{label}*
+					{label}
+					{required && "*"}
 				</label>
 			)}
 			<input
@@ -134,6 +137,11 @@ export const NewInput = ({
 				name={name}
 				value={value}
 			/>
+			{sublabel && (
+				<small className="text-[#334155] text-xs font-thin inter block">
+					{sublabel}
+				</small>
+			)}
 		</div>
 	);
 };
@@ -146,12 +154,17 @@ export const TextBox = ({
 	value,
 	type,
 	setState,
+	sublabel,
+	required,
 }: InputProps) => {
 	return (
 		<div>
-			<label className="text-[#334155] font-medium text-sm inter">
-				{label}
-			</label>
+			{label && (
+				<label className="text-[#334155] font-medium text-sm inter">
+					{label}
+					{required && "*"}
+				</label>
+			)}
 			{type === "editor" ? (
 				<ReactQuill
 					theme="snow"
@@ -170,6 +183,11 @@ export const TextBox = ({
 					id=""
 					style={{ height: "10rem", resize: "none" }}
 				/>
+			)}
+			{sublabel && (
+				<small className="text-[#334155] text-xs font-thin inter block">
+					{sublabel}
+				</small>
 			)}
 		</div>
 	);

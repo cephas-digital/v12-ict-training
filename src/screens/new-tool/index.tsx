@@ -46,6 +46,7 @@ const AddTools = () => {
 				website: "",
 				webinar: "",
 				logo: "",
+				additionalInformation: "",
 			},
 		}),
 		// kpisList = [
@@ -192,6 +193,14 @@ const AddTools = () => {
 					if (newD?.website) updReset.website = newD?.website;
 					if (newD?.description) updReset.description = newD?.description;
 					if (Object.keys(updReset)?.length > 0) reset(updReset);
+					if (newD?.region)
+						setSelection((prev: any) => {
+							return { ...prev, REGION: [newD?.region] };
+						});
+					if (newD?.country)
+						setSelection((prev: any) => {
+							return { ...prev, COUNTRY: [newD?.country] };
+						});
 
 					return;
 				}
@@ -398,6 +407,7 @@ const AddTools = () => {
 										render={({ field: { value, onChange, name } }) => (
 											<NewInput
 												type="text"
+												required
 												name={name}
 												value={value}
 												label={"Tool Name"}
@@ -429,7 +439,9 @@ const AddTools = () => {
 												setState={(e: any[]) => {
 													onChange(e);
 												}}
+												required
 												type="editor"
+												sublabel={`Describe the tool’s purpose, key features, and how it benefits users or organizations. Include details like functionality, integrations, and target audience if applicable.`}
 											/>
 										)}
 									/>
@@ -452,6 +464,7 @@ const AddTools = () => {
 										}}
 										render={({ field: { value, onChange, name } }) => (
 											<NewInput
+												required
 												type="email"
 												name={name}
 												value={value}
@@ -488,6 +501,8 @@ const AddTools = () => {
 													label={"Website"}
 													placeholder={"Type your website"}
 													onChange={onChange}
+													required
+													sublabel={`Enter the website of the tool or tool owner`}
 												/>
 											)}
 										/>
@@ -501,14 +516,16 @@ const AddTools = () => {
 										<Controller
 											name="webinar"
 											control={control}
-											rules={{
-												required: "This field is required",
-												pattern: {
-													value:
-														/(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/gi,
-													message: "Invalid url format",
-												},
-											}}
+											rules={
+												{
+													// required: "This field is required",
+													// pattern: {
+													// 	value:
+													// 		/(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/gi,
+													// 	message: "Invalid url format",
+													// },
+												}
+											}
 											render={({ field: { value, onChange, name } }) => (
 												<NewInput
 													type="url"
@@ -574,6 +591,7 @@ const AddTools = () => {
 													value={item.material}
 													label={index === 0 ? "Learning Materials" : ""}
 													placeholder={"EDAMS Technology"}
+													sublabel={`Enter the title of the tool's learning material`}
 												/>
 											</div>
 											<div className="">
@@ -649,6 +667,35 @@ const AddTools = () => {
 									</span>
 									Add utility
 								</p>
+								<div>
+									<Controller
+										name="additionalInformation"
+										control={control}
+										rules={
+											{
+												// required: "This field is required",
+											}
+										}
+										render={({ field: { value, onChange, name } }) => (
+											<TextBox
+												name={name}
+												value={value}
+												onChange3={onChange}
+												label={"Additional Information"}
+												placeholder={"Any other information"}
+												setState={(e: any[]) => {
+													onChange(e);
+												}}
+												type="editor"
+											/>
+										)}
+									/>
+									{errors.additionalInformation && (
+										<p className="text-[#dc2626] text-xs">
+											{errors.additionalInformation.message}
+										</p>
+									)}
+								</div>
 							</div>
 							<div className="mt-8">
 								<div
