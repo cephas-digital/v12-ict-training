@@ -1,10 +1,12 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Close from "../../assets/icons/close.svg";
 import Reset from "../../assets/icons/reset.svg";
 import SearchInput from "../partials/inputs";
 import { NormalBtn } from "../partials/buttons";
 import SideModalcontainer from "./sidemodalcontainer";
 import { ExpertisePill } from "../partials/box";
+import { useRawdataStore } from "../../data/stores/loggerStore";
+import { apiCall } from "../../data/useFetcher";
 
 const filters = [
 	{
@@ -98,8 +100,31 @@ const StartMapping = ({
 		}));
 	};
 	const anyOptionsSelected = Object.values(selectedOptions).some(options =>
-		Array.isArray(options) ? options.length > 0 : options !== ""
-	);
+			Array.isArray(options) ? options.length > 0 : options !== ""
+		),
+		{ getDynamicLogger } = useRawdataStore();
+
+	useEffect(() => {
+		if (selectedOptions["REGION"]?.length > 0) {
+			let newObj = { REGION: selectedOptions?.["REGION"] };
+			handleReset("COUNTRY", "checkbox");
+			apiCall({
+				type: "post",
+				url: `/api/v1/tools/manage-region-country?pagination=not`,
+				data: {
+					toolSelection: Object.entries(newObj)
+						.map(([key, value]) => ({
+							category: key,
+							data: Array.isArray(value) ? value : [value], // Ensure data is always an array
+						}))
+						?.filter(it => it?.data?.length > 0),
+				},
+				getter: (d: any) => getDynamicLogger(d, "regionCountry"),
+			});
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [selectedOptions?.["REGION"]]);
+
 	return (
 		<div>
 			<SideModalcontainer>

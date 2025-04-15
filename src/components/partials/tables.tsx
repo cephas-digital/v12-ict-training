@@ -66,18 +66,18 @@ const ProductTable = ({ products, start }) => {
             </span>
             <div className="flex justify-end">
               {!start && (
-                <button className="w-[25px] h-[25px] flex justify-center items-center text-xl font-bold bg-[#D2D7D4]">
+                <button type="button" className="w-[25px] h-[25px] flex justify-center items-center text-xl font-bold bg-[#D2D7D4]">
                   <img src={Pending} alt="" className="" />
                 </button>
               )}
               {start && (
                 <>
                   {product?.status === "good" ? (
-                    <button className="w-[25px] h-[25px] flex justify-center items-center text-xl font-bold bg-[#BAFED2]">
+                    <button type="button" className="w-[25px] h-[25px] flex justify-center items-center text-xl font-bold bg-[#BAFED2]">
                       <img src={Good} alt="" className="" />
                     </button>
                   ) : (
-                    <button className="w-[25px] h-[25px] flex justify-center items-center text-xl font-bold bg-[#EF444433]">
+                    <button type="button" className="w-[25px] h-[25px] flex justify-center items-center text-xl font-bold bg-[#EF444433]">
                       <img src={Bad} alt="" className="" />
                     </button>
                   )}

@@ -28,10 +28,10 @@ import { useRawdataStore } from "../../data/stores/loggerStore";
 import { apiCall } from "../../data/useFetcher";
 import DOMPurify from "dompurify";
 import {
-  ComposableMap,
-  Geographies,
-  Geography,
-  ZoomableGroup,
+	ComposableMap,
+	Geographies,
+	Geography,
+	ZoomableGroup,
 } from "react-simple-maps";
 import { feature } from "topojson-client";
 import InfoModal from "../../components/modals/infomodal";
@@ -44,85 +44,85 @@ import { Tooltip as ReactTooltip } from "react-tooltip";
 import PdfPrint from "../pdf";
 import MobileAccessWarning from "../../components/mobileaccess";
 
-export const createMarkup = (html) => {
-  return {
-    __html: DOMPurify.sanitize(html),
-  };
+export const createMarkup = html => {
+	return {
+		__html: DOMPurify.sanitize(html),
+	};
 };
 
 export let getCountries = async ({ setCountries }) => {
-  try {
-    let res = await axios.get(
-      `https://restcountries.com/v3.1/all?fields=name,flags,region,capital,timezones,altSpellings,cioc,cca3,cca2,latlng,fifa`,
-      {
-        headers: {
-          Authorization: null,
-        },
-        baseURL: null,
-      }
-    );
-    console.log({ rd: res }, "countries");
-    setCountries(res?.data?.data || res?.data);
-  } catch (err) {
-    if (err?.response?.status === 429 || err?.response?.status === 405)
-      toast.error(err?.response?.data ? err?.response?.data : err?.message);
-    console.log({ err });
-  }
+	try {
+		let res = await axios.get(
+			`https://restcountries.com/v3.1/all?fields=name,flags,region,capital,timezones,altSpellings,cioc,cca3,cca2,latlng,fifa`,
+			{
+				headers: {
+					Authorization: null,
+				},
+				baseURL: null,
+			}
+		);
+		console.log({ rd: res }, "countries");
+		setCountries(res?.data?.data || res?.data);
+	} catch (err) {
+		if (err?.response?.status === 429 || err?.response?.status === 405)
+			toast.error(err?.response?.data ? err?.response?.data : err?.message);
+		console.log({ err });
+	}
 };
 
 const Dashboard = () => {
-  const [start, setStart] = useState(false),
-    [info, setInfo] = useState<any>(""),
-    [modal, setModal] = useState(""),
-    [tab, setTab] = useState("overview"),
-    navigate = useNavigate(),
-    [hoveredTool, setHoveredTool] = useState(null);
-  const tabs = ["overview", "about data tool"];
-  const products = [
-      { name: "Asset inventory", status: "good" },
-      { name: "Asset (system) renewal/replacement", status: "good" },
-      { name: "Sewerage system integrity", status: "bad" },
-      { name: "Planned maintenance", status: "bad" },
-      { name: "Sanitation Facilities Database", status: "bad" },
-    ],
-    optimization = [
-      { name: "Resource Optimization", status: "good" },
-      { name: "Performance Monitoring", status: "good" },
-      { name: "Seewerage management efficiency", status: "bad" },
-      { name: "Non Sewered Sanitation Service Management", status: "bad" },
-    ],
-    resiliency = [
-      { name: "Recordable incidents of injury or illness", status: "good" },
-      { name: "Risk assessment and response preparedness", status: "bad" },
-      { name: "Ongoing operational resilliency", status: "good" },
-    ];
+	const [start, setStart] = useState(false),
+		[info, setInfo] = useState<any>(""),
+		[modal, setModal] = useState(""),
+		[tab, setTab] = useState("overview"),
+		navigate = useNavigate(),
+		[hoveredTool, setHoveredTool] = useState(null);
+	const tabs = ["overview", "about data tool"];
+	const products = [
+			{ name: "Asset inventory", status: "good" },
+			{ name: "Asset (system) renewal/replacement", status: "good" },
+			{ name: "Sewerage system integrity", status: "bad" },
+			{ name: "Planned maintenance", status: "bad" },
+			{ name: "Sanitation Facilities Database", status: "bad" },
+		],
+		optimization = [
+			{ name: "Resource Optimization", status: "good" },
+			{ name: "Performance Monitoring", status: "good" },
+			{ name: "Seewerage management efficiency", status: "bad" },
+			{ name: "Non Sewered Sanitation Service Management", status: "bad" },
+		],
+		resiliency = [
+			{ name: "Recordable incidents of injury or illness", status: "good" },
+			{ name: "Risk assessment and response preparedness", status: "bad" },
+			{ name: "Ongoing operational resilliency", status: "good" },
+		];
 
-  // const sanitationTools = [
-  //   { name: "APAM", details: "APAM is a management tool..." },
-  //   { name: "EDAMS IMS", details: "EDAMS IMS information..." },
-  //   { name: "Equiserve", details: "Equiserve details..." },
-  //   { name: "ERP System - Nakuru", details: "ERP System for Nakuru..." },
-  //   {
-  //     name: "Indah Water Malaysia Planning tool",
-  //     details: "NWASCO NIS details...",
-  //   },
-  //   {
-  //     name: "Integrated Management Information System (IMIS)",
-  //     details: "Real-time monitoring system...",
-  //   },
-  //   {
-  //     name: "IMIS Dhaka",
-  //     details:
-  //       "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s",
-  //   },
-  //   {
-  //     name: "Lusaka  Sanitation System",
-  //     details:
-  //       "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s",
-  //   },
-  // ];
+	// const sanitationTools = [
+	//   { name: "APAM", details: "APAM is a management tool..." },
+	//   { name: "EDAMS IMS", details: "EDAMS IMS information..." },
+	//   { name: "Equiserve", details: "Equiserve details..." },
+	//   { name: "ERP System - Nakuru", details: "ERP System for Nakuru..." },
+	//   {
+	//     name: "Indah Water Malaysia Planning tool",
+	//     details: "NWASCO NIS details...",
+	//   },
+	//   {
+	//     name: "Integrated Management Information System (IMIS)",
+	//     details: "Real-time monitoring system...",
+	//   },
+	//   {
+	//     name: "IMIS Dhaka",
+	//     details:
+	//       "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s",
+	//   },
+	//   {
+	//     name: "Lusaka  Sanitation System",
+	//     details:
+	//       "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s",
+	//   },
+	// ];
 
-  let { getDynamicLogger, getLogger, data } = useRawdataStore(),
+	let { getDynamicLogger, getLogger, data } = useRawdataStore(),
 		{ mapTools, kpidata, regionCountry }: any = useRawdataStore(),
 		tools = data?.docs?.sort(
 			(

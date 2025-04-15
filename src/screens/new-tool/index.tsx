@@ -22,7 +22,7 @@ const AddTools = () => {
 		[getSearch] = useSearchParams();
 
 	let { getLogger, data, getDynamicLogger } = useRawdataStore(),
-		{ kpidata }: any = useRawdataStore(),
+		{ kpidata, regionCountry }: any = useRawdataStore(),
 		tools = data?.docs?.sort(
 			(
 				a: { category: { toString: () => string } },
@@ -94,7 +94,23 @@ const AddTools = () => {
 		init3: {
 			address?: string;
 		} = {},
-		[itemUtil, setItemUtil] = useState([init3]);
+		[itemUtil, setItemUtil] = useState([init3]),
+		regionTools = regionCountry?.docs,
+		[newTool, setNewTool] = useState<any>(null);
+
+	useEffect(() => {
+		if (regionTools && tools) {
+			let filteredArray = tools.filter(
+				(item1: any) =>
+					!regionTools.some((item2: any) => item1?.category === item2?.category)
+			);
+
+			filteredArray?.splice(1, 0, ...regionTools);
+			setNewTool(filteredArray);
+
+			// console.log({ filteredArray, regionTools, tools });
+		}
+	}, [regionTools, tools]);
 
 	let [loading, setLoading] = useState(null),
 		[preloading, setPreLoading] = useState(true),
@@ -219,11 +235,18 @@ const AddTools = () => {
 			url: `/api/v1/rawdata?pagination=not`,
 			getter: (d: any) => getLogger(d),
 		});
+		apiCall({
+			type: "get",
+			url: `/api/v1/tools/manage-region-country?pagination=not`,
+			getter: (d: any) => getDynamicLogger(d, "regionCountry"),
+		});
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	useEffect(() => {
+		getDynamicLogger(null, "kpidata");
 		if (selection?.["APPLICATION LEVEL"]) {
+			console.log({ s: selection?.["APPLICATION LEVEL"] });
 			apiCall({
 				type: "get",
 				url: `/api/v1/rawdata/manage-kpis?category=APPLICATION LEVEL&data=${selection?.["APPLICATION LEVEL"]}&pagination=not`,
@@ -435,13 +458,13 @@ const AddTools = () => {
 												value={value}
 												onChange3={onChange}
 												label={"Description"}
-												placeholder={"Tell us about your tool and company here"}
+												// placeholder={"Tell us about your tool and company here"}
 												setState={(e: any[]) => {
 													onChange(e);
 												}}
 												required
 												type="editor"
-												sublabel={`Describe the tool’s purpose, key features, and how it benefits users or organizations. Include details like functionality, integrations, and target audience if applicable.`}
+												placeholder={`Describe the tool’s purpose, key features, and how it benefits users or organizations. Include details like functionality, integrations, and target audience if applicable.`}
 											/>
 										)}
 									/>
@@ -499,10 +522,10 @@ const AddTools = () => {
 													name={name}
 													value={value}
 													label={"Website"}
-													placeholder={"Type your website"}
+													// placeholder={"Type your website"}
 													onChange={onChange}
 													required
-													sublabel={`Enter the website of the tool or tool owner`}
+													placeholder={`Enter the website of the tool or tool owner`}
 												/>
 											)}
 										/>
@@ -590,8 +613,8 @@ const AddTools = () => {
 													}
 													value={item.material}
 													label={index === 0 ? "Learning Materials" : ""}
-													placeholder={"EDAMS Technology"}
-													sublabel={`Enter the title of the tool's learning material`}
+													// placeholder={"EDAMS Technology"}
+													placeholder={`Enter the title of the tool's learning material`}
 												/>
 											</div>
 											<div className="">
@@ -752,7 +775,7 @@ const AddTools = () => {
 					{modal === "start" && (
 						<StartMapping
 							handleClose={() => setModal("")}
-							data={tools}
+							data={newTool}
 							handleComplete={da => {
 								setSelection(da);
 								setModal("");

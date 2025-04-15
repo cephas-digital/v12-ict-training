@@ -188,7 +188,9 @@ export const ProductTableRadio = ({ handleKpi, formIndex, product, index }) => {
 
 	return (
 		<>
-			<button className="flex justify-center items-center text-xlg gap-3">
+			<button
+				type={"button"}
+				className="flex justify-center items-center text-xlg gap-3">
 				<span>Yes</span>
 				<input
 					type="radio"
@@ -200,7 +202,9 @@ export const ProductTableRadio = ({ handleKpi, formIndex, product, index }) => {
 				/>
 			</button>
 
-			<button className="flex justify-center items-center text-lg gap-3">
+			<button
+				type={"button"}
+				className="flex justify-center items-center text-lg gap-3">
 				<span>No</span>
 				<input
 					type="radio"
