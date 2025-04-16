@@ -184,6 +184,7 @@ const Dashboard = () => {
 			getter: (d: any) => getDynamicLogger(d, "regionCountry"),
 		});
 		getCountries({ setCountries });
+		document.title = "Tools Map Dashboard";
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 	const introRef = useRef(null);
