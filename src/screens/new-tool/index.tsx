@@ -3,7 +3,12 @@ import MainContainer from "../../components/app/maincontainer";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { MainBtn } from "../../components/app/buttons";
-import { ModalSelect, NewInput, TextBox } from "../../components/inputs/main";
+import {
+	ImageBox,
+	ModalSelect,
+	NewInput,
+	TextBox,
+} from "../../components/inputs/main";
 import StartMapping from "../../components/modals/select-tool";
 import { useRawdataStore } from "../../data/stores/loggerStore";
 import { apiCall } from "../../data/useFetcher";
@@ -89,6 +94,7 @@ const AddTools = () => {
 		init2: {
 			material?: string;
 			link?: string;
+			logo?: string | File;
 		} = {},
 		[itemForm, setItemForm] = useState([init2]),
 		init3: {
@@ -115,9 +121,77 @@ const AddTools = () => {
 	let [loading, setLoading] = useState(null),
 		[preloading, setPreLoading] = useState(true),
 		[info, setInfo] = useState<any>(""),
+		[logo, setLogo] = useState<File | null>(null),
 		{ returnErrors } = useErrorStore();
 	const onSubmit = async (data: any) => {
 		setLoading(true);
+
+		if (logo) {
+			let { response, errArr, errMsg } = await apiCall({
+				type: "post",
+				url: `/api/v1/file?returnOriginal=true`,
+				data: {
+					intendedFile: logo,
+				},
+				headers: {
+					"Content-Type": "multipart/form-data",
+				},
+				noToast: true,
+			});
+			// console.log({ response, errArr, errMsg });
+			if (errArr) {
+				setLoading(false);
+				return returnErrors(errArr);
+			}
+			if (errMsg) {
+				setLoading(false);
+				return toast.error(errMsg);
+			}
+			if (response) {
+				let dd = response?.data?.data || response?.data || response;
+				data.logo = dd?.[0]?.url;
+			}
+		}
+
+		let newItemsForm = itemForm;
+		if (itemForm?.length > 0) {
+			let uploadedVersion = [];
+			for (let u = 0; u < itemForm?.length; u++) {
+				const element = itemForm?.[u];
+				if (element?.material && element?.logo) {
+					if (element?.logo) {
+						let { response, errArr, errMsg } = await apiCall({
+							type: "post",
+							url: `/api/v1/file?returnOriginal=true`,
+							data: {
+								intendedFile: element?.logo,
+							},
+							headers: {
+								"Content-Type": "multipart/form-data",
+							},
+							noToast: true,
+						});
+						// console.log({ response, errArr, errMsg });
+						if (errArr) {
+							setLoading(false);
+							return returnErrors(errArr);
+						}
+						if (errMsg) {
+							setLoading(false);
+							return toast.error(errMsg);
+						}
+						if (response) {
+							let dd = response?.data?.data || response?.data || response;
+							uploadedVersion?.push({
+								material: element?.material,
+								link: dd?.[0]?.url,
+							});
+						}
+					}
+				}
+			}
+			newItemsForm = uploadedVersion;
+		}
 
 		let { response, errArr, errMsg } = await apiCall({
 			type: "post",
@@ -150,7 +224,7 @@ const AddTools = () => {
 									usecaseCategory: it?.usecaseCategory,
 								};
 							}),
-						resources: itemForm?.filter(it => it?.link && it?.material),
+						resources: newItemsForm?.filter(it => it?.link && it?.material),
 						utilities: itemUtil?.filter(it => it?.address),
 					},
 				],
@@ -301,11 +375,11 @@ const AddTools = () => {
 	};
 
 	const handleInputChangeForMutipleItem = (
-		event: React.ChangeEvent<HTMLInputElement>,
+		event: React.ChangeEvent<HTMLInputElement> | any,
 		index: number,
 		field: string
 	) => {
-		const { value } = event.target;
+		const { value } = event?.target;
 		let itemValue = value;
 
 		setItemForm(prevRows => {
@@ -572,21 +646,26 @@ const AddTools = () => {
 										name="logo"
 										control={control}
 										rules={{
-											required: "This field is required",
-											pattern: {
-												value:
-													/(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/gi,
-												message: "Invalid url format",
-											},
+											required: !logo ? "This field is required" : false,
+											// pattern: {
+											// 	value:
+											// 		/(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/gi,
+											// 	message: "Invalid url format",
+											// },
 										}}
 										render={({ field: { value, onChange, name } }) => (
-											<NewInput
+											<ImageBox
 												type="url"
 												name={name}
 												value={value}
 												label={"Logo"}
 												placeholder={"Type your logo url "}
 												onChange={onChange}
+												setState={(e: any) => {
+													setLogo(e);
+												}}
+												data={value}
+												logo={logo}
 											/>
 										)}
 									/>
@@ -618,7 +697,7 @@ const AddTools = () => {
 												/>
 											</div>
 											<div className="">
-												<NewInput
+												{/* <NewInput
 													label={index === 0 ? "Link" : ""}
 													placeholder="https://www.google.com"
 													onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
@@ -626,6 +705,26 @@ const AddTools = () => {
 													}
 													type="url"
 													value={item.link}
+												/> */}
+												<ImageBox
+													type="url"
+													// name={name}
+													// value={value}
+													label={"Value"}
+													placeholder={"Type your logo url "}
+													setState={(e: any) => {
+														handleInputChangeForMutipleItem(
+															{
+																target: {
+																	value: e,
+																},
+															},
+															index,
+															"logo"
+														);
+													}}
+													data={item?.link}
+													logo={item?.logo as File}
 												/>
 											</div>
 											<div

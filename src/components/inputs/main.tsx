@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useRef } from "react";
 import { IInputProps } from "../../utils/types";
 import { Icon } from "@iconify/react";
 import { FaAngleDown } from "react-icons/fa";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
+import { toast } from "react-toastify";
 
 const Inputs: React.FC<IInputProps> = ({
 	name,
@@ -131,7 +132,7 @@ export const NewInput = ({
 				}}
 				type="text"
 				placeholder={placeholder}
-				className="h-11 w-full mt-2 rounded-lg pl-6 text-sm font-normal inter text-[#64748B]"
+				className="h-11 w-full mt-2 rounded-lg pl-6 text-sm font-normal inter placeholder:text-[#64748B]"
 				onChange={onChange}
 				onKeyUp={onKeyUp}
 				name={name}
@@ -171,7 +172,7 @@ export const TextBox = ({
 					value={value}
 					onChange={e => setState(e)}
 					placeholder={placeholder}
-					className="text-sm w-full font-normal inter text-[#64748B] rounded-lg"
+					className="text-sm w-full font-normal inter placeholder:text-[#64748B] rounded-lg"
 				/>
 			) : (
 				<textarea
@@ -179,11 +180,102 @@ export const TextBox = ({
 					value={value}
 					onChange={onChange3}
 					placeholder={placeholder}
-					className="mt-2 text-sm h-28 w-full font-normal inter text-[#64748B] rounded-lg pt-5 pl-6 border"
+					className="mt-2 text-sm h-28 w-full font-normal inter placeholder:text-[#64748B] rounded-lg pt-5 pl-6 border"
 					id=""
 					style={{ height: "10rem", resize: "none" }}
 				/>
 			)}
+			{sublabel && (
+				<small className="text-[#334155] text-xs font-thin inter block">
+					{sublabel}
+				</small>
+			)}
+		</div>
+	);
+};
+
+export const ImageBox = ({
+	label,
+	setState,
+	sublabel,
+	required,
+	logo,
+	data,
+}: InputProps & {
+	logo?: File;
+	data?: any;
+}) => {
+	let fileRef = useRef<HTMLInputElement>(null),
+		handleChangeImage = e => {
+			const file = e.target.files[0];
+			let err = "";
+
+			if (!file) err = `File, ${file?.name} does not exist`;
+			if (label === "Logo")
+				if (!file.type.includes("image"))
+					err = `File, ${file?.name} format not supported`;
+
+			if (err) {
+				return toast.error(err);
+			} else {
+				// setLogo(file);
+
+				setState(file);
+			}
+		};
+	return (
+		<div>
+			{label && (
+				<label className="text-[#334155] font-medium text-sm inter">
+					{label}
+					{required && "*"}
+				</label>
+			)}
+			<div
+				onClick={() => fileRef.current && fileRef.current.click()}
+				className="text-center rounded-lg border border-dashed border-gray-400 bg-[#cbd5e052] p-4 space-y-2 cursor-pointer">
+				{logo ? (
+					<>
+						{logo?.type?.includes("image") ? (
+							<img
+								src={URL.createObjectURL(logo)}
+								alt=""
+								className="mx-auto mb-2"
+							/>
+						) : (
+							<div>
+								<img
+									src={data || require("../../assets/images/file-icon2.png")}
+									alt=""
+									className="mx-auto mb-2"
+								/>
+								<p className="f-bold">{logo?.name}</p>
+							</div>
+						)}
+					</>
+				) : (
+					<div>
+						<img
+							src={data || require("../../assets/images/file-icon2.png")}
+							alt=""
+							className="mx-auto mb-2"
+						/>
+						<p className="f-bold">
+							Select a {label === "Logo" && `PNG or JPG`} file to upload. File
+							size should not be more than 2mb
+						</p>
+						<p className="c text-gray-500">or drag and drop it here</p>
+					</div>
+				)}
+				<input
+					ref={fileRef}
+					type="file"
+					style={{ width: "0" }}
+					className="absolute -z-10"
+					onChange={handleChangeImage}
+					accept={label === "Logo" ? "image/*" : ""}
+				/>
+			</div>
 			{sublabel && (
 				<small className="text-[#334155] text-xs font-thin inter block">
 					{sublabel}
