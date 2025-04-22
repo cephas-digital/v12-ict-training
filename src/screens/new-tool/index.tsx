@@ -283,14 +283,22 @@ const AddTools = () => {
 					if (newD?.website) updReset.website = newD?.website;
 					if (newD?.description) updReset.description = newD?.description;
 					if (Object.keys(updReset)?.length > 0) reset(updReset);
-					if (newD?.region)
-						setSelection((prev: any) => {
-							return { ...prev, REGION: [newD?.region] };
+					let newSelect: any = {};
+
+					if (newD?.region) newSelect.REGION = [newD?.region];
+					// setSelection((prev: any) => {
+					// 	return { ...prev, REGION: [newD?.region] };
+					// });
+					if (newD?.country) newSelect.COUNTRY = [newD?.country];
+					// setSelection((prev: any) => {
+					// 	return { ...prev, COUNTRY: [newD?.country] };
+					// });
+
+					if (Object.keys(newSelect)?.length > 0) {
+						setSelection(prev => {
+							return { ...prev, ...newSelect };
 						});
-					if (newD?.country)
-						setSelection((prev: any) => {
-							return { ...prev, COUNTRY: [newD?.country] };
-						});
+					}
 
 					return;
 				}
@@ -691,7 +699,7 @@ const AddTools = () => {
 														)
 													}
 													value={item.material}
-													label={index === 0 ? "Learning Materials" : ""}
+													label={index === 0 ? "Materials Title" : ""}
 													// placeholder={"EDAMS Technology"}
 													placeholder={`Enter the title of the tool's learning material`}
 												/>
@@ -710,7 +718,7 @@ const AddTools = () => {
 													type="url"
 													// name={name}
 													// value={value}
-													label={"Value"}
+													label={"Material"}
 													placeholder={"Type your logo url "}
 													setState={(e: any) => {
 														handleInputChangeForMutipleItem(
