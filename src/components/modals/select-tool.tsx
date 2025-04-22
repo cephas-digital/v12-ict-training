@@ -91,6 +91,7 @@ const StartMapping = ({
 			}
 			return prev;
 		});
+		if (filterId === "REGION") handleReset("COUNTRY", "checkbox");
 	};
 
 	const handleReset = (filterId: string, type: "radio" | "checkbox") => {
@@ -107,7 +108,11 @@ const StartMapping = ({
 	useEffect(() => {
 		if (selectedOptions["REGION"]?.length > 0) {
 			let newObj = { REGION: selectedOptions?.["REGION"] };
-			handleReset("COUNTRY", "checkbox");
+			if (
+				!defaultSelection?.["COUNTRY"] ||
+				defaultSelection?.["COUNTRY"]?.length === 0
+			)
+				handleReset("COUNTRY", "checkbox");
 			apiCall({
 				type: "post",
 				url: `/api/v1/tools/manage-region-country?pagination=not`,
@@ -124,6 +129,9 @@ const StartMapping = ({
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [selectedOptions?.["REGION"]]);
+
+	console.log({ selectedOptions, defaultSelection });
+	
 
 	return (
 		<div>
