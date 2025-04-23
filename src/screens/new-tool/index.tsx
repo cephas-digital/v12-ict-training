@@ -293,6 +293,8 @@ const AddTools = () => {
 					// setSelection((prev: any) => {
 					// 	return { ...prev, COUNTRY: [newD?.country] };
 					// });
+					if (newD?.toolCategory)
+						newSelect["APPLICATION LEVEL"] = newD?.toolCategory;
 
 					if (Object.keys(newSelect)?.length > 0) {
 						setSelection(prev => {
@@ -319,7 +321,7 @@ const AddTools = () => {
 		});
 		apiCall({
 			type: "get",
-			url: `/api/v1/tools/manage-region-country?pagination=not`,
+			url: `/api/v1/tools/manage-region-country?pagination=not&useHardCoded=true`,
 			getter: (d: any) => getDynamicLogger(d, "regionCountry"),
 		});
 		// eslint-disable-next-line react-hooks/exhaustive-deps
@@ -607,7 +609,7 @@ const AddTools = () => {
 													// placeholder={"Type your website"}
 													onChange={onChange}
 													required
-													placeholder={`Enter the website of the tool or tool owner`}
+													placeholder={`Tool Owner's Website`}
 												/>
 											)}
 										/>
@@ -637,7 +639,7 @@ const AddTools = () => {
 													name={name}
 													value={value}
 													label={"Webinar"}
-													placeholder={"Type your webinar "}
+													placeholder={"Link to Tool's Webinar"}
 													onChange={onChange}
 												/>
 											)}
@@ -699,7 +701,11 @@ const AddTools = () => {
 														)
 													}
 													value={item.material}
-													label={index === 0 ? "Materials Title" : ""}
+													label={
+														index === 0
+															? "Title of Tool's learning material"
+															: ""
+													}
 													// placeholder={"EDAMS Technology"}
 													placeholder={`Enter the title of the tool's learning material`}
 												/>
