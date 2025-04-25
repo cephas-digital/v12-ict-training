@@ -115,7 +115,7 @@ const StartMapping = ({
 				handleReset("COUNTRY", "checkbox");
 			apiCall({
 				type: "post",
-				url: `/api/v1/tools/manage-region-country?pagination=not`,
+				url: `/api/v1/tools/manage-region-country?pagination=not&useHardCoded=true`,
 				data: {
 					toolSelection: Object.entries(newObj)
 						.map(([key, value]) => ({
