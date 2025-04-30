@@ -52,6 +52,8 @@ const AddTools = () => {
 				webinar: "",
 				logo: "",
 				additionalInformation: "",
+				toolCreatedBy: "",
+				toolOwnerAddress: "",
 			},
 		}),
 		// kpisList = [
@@ -548,7 +550,7 @@ const AddTools = () => {
 												}}
 												required
 												type="editor"
-												placeholder={`Describe the tool’s purpose, key features, and how it benefits users or organizations. Include details like functionality, integrations, and target audience if applicable.`}
+												placeholder={`Describe the tool, company, tool’s purpose, key features, and how it benefits users or organizations.`}
 											/>
 										)}
 									/>
@@ -651,6 +653,62 @@ const AddTools = () => {
 										)}
 									</div>
 								</div>
+								<div className="grid grid-cols-2 gap-5 mb-4">
+									<div>
+										<Controller
+											name="toolCreatedBy"
+											control={control}
+											rules={{
+												required: "This field is required",
+											}}
+											render={({ field: { value, onChange, name } }) => (
+												<NewInput
+													type="text"
+													name={name}
+													value={value}
+													label={"Tool’s Created By"}
+													onChange={onChange}
+													required
+													placeholder={`Tool’s Created By`}
+												/>
+											)}
+										/>
+										{errors.toolCreatedBy && (
+											<p className="text-[#dc2626] text-xs">
+												{errors.toolCreatedBy.message}
+											</p>
+										)}
+									</div>
+									<div>
+										<Controller
+											name="toolOwnerAddress"
+											control={control}
+											rules={{
+												required: "This field is required",
+												// pattern: {
+												// 	value:
+												// 		/(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/gi,
+												// 	message: "Invalid url format",
+												// },
+											}}
+											render={({ field: { value, onChange, name } }) => (
+												<NewInput
+													type="text"
+													name={name}
+													value={value}
+													label={"Tool Owner Address"}
+													placeholder={"Enter Address"}
+													onChange={onChange}
+												/>
+											)}
+										/>
+										{errors.toolOwnerAddress && (
+											<p className="text-[#dc2626] text-xs">
+												{errors.toolOwnerAddress.message}
+											</p>
+										)}
+									</div>
+								</div>
 								<div className="mb-4">
 									<Controller
 										name="logo"
@@ -685,33 +743,36 @@ const AddTools = () => {
 										</p>
 									)}
 								</div>
-								<label className="text-[#334155] font-medium text-sm inter mt-4">
-									Resources
-								</label>
-								{itemForm?.map((item, index) => (
-									<>
-										<div className="relative grid grid-cols-2 w-4/5 gap-5">
-											<div>
-												<NewInput
-													onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-														handleInputChangeForMutipleItem(
-															e,
-															index,
-															"material"
-														)
-													}
-													value={item.material}
-													label={
-														index === 0
-															? "Title of Tool's learning material"
-															: ""
-													}
-													// placeholder={"EDAMS Technology"}
-													placeholder={`Enter the title of the tool's learning material`}
-												/>
-											</div>
-											<div className="">
-												{/* <NewInput
+								<div className="pt-5">
+									<label className="text-[#334155] font-medium text-sm inter mt-4">
+										Resources
+									</label>
+									{itemForm?.map((item, index) => (
+										<>
+											<div className="relative grid grid-cols-2 w-4/5 gap-5">
+												<div>
+													<NewInput
+														onChange={(
+															e: React.ChangeEvent<HTMLInputElement>
+														) =>
+															handleInputChangeForMutipleItem(
+																e,
+																index,
+																"material"
+															)
+														}
+														value={item.material}
+														label={
+															index === 0
+																? "Title of Tool's learning material"
+																: ""
+														}
+														// placeholder={"EDAMS Technology"}
+														placeholder={`Enter the title of the tool's learning material`}
+													/>
+												</div>
+												<div className="">
+													{/* <NewInput
 													label={index === 0 ? "Link" : ""}
 													placeholder="https://www.google.com"
 													onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
@@ -720,89 +781,96 @@ const AddTools = () => {
 													type="url"
 													value={item.link}
 												/> */}
-												<ImageBox
-													type="url"
-													// name={name}
-													// value={value}
-													label={"Material"}
-													placeholder={"Type your logo url "}
-													setState={(e: any) => {
-														handleInputChangeForMutipleItem(
-															{
-																target: {
-																	value: e,
+													<ImageBox
+														type="url"
+														// name={name}
+														// value={value}
+														label={"Material"}
+														placeholder={"Type your logo url "}
+														setState={(e: any) => {
+															handleInputChangeForMutipleItem(
+																{
+																	target: {
+																		value: e,
+																	},
 																},
-															},
-															index,
-															"logo"
-														);
-													}}
-													data={item?.link}
-													logo={item?.logo as File}
-												/>
+																index,
+																"logo"
+															);
+														}}
+														data={item?.link}
+														logo={item?.logo as File}
+													/>
+												</div>
+												<div
+													onClick={() => handleDeleteRowForMutipleItem(index)}
+													className="md:absolute self-center -right-20 cursor-pointer">
+													<p className="text-sm text-red-600 flex items-center md:mt-2 gap-2">
+														<span>
+															<MdDelete />
+														</span>
+														Remove
+													</p>
+												</div>
 											</div>
-											<div
-												onClick={() => handleDeleteRowForMutipleItem(index)}
-												className="md:absolute self-center -right-20 cursor-pointer">
-												<p className="text-sm text-red-600 flex items-center md:mt-2 gap-2">
-													<span>
-														<MdDelete />
-													</span>
-													Remove
-												</p>
-											</div>
-										</div>
-									</>
-								))}
-								<p
-									onClick={addRowForMutipleItem}
-									className="flex items-center gap-2 text-bluerolodex f-medium my-3 cursor-pointer">
-									<span>
-										<IoIosAdd />
-									</span>
-									Add resource
-								</p>
-								<label className="text-[#334155] font-medium text-sm inter mt-4">
-									Utilities
-								</label>
-								{itemUtil?.map((item, index) => (
-									<>
-										<div className="relative grid w-4/5 gap-5">
-											<div>
-												<NewInput
-													onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-														handleInputChangeForMutipleItemUtil(
-															e,
-															index,
-															"address"
-														)
+										</>
+									))}
+									<p
+										onClick={addRowForMutipleItem}
+										className="flex items-center gap-2 text-bluerolodex f-medium my-3 cursor-pointer">
+										<span>
+											<IoIosAdd />
+										</span>
+										Add resource
+									</p>
+								</div>
+								<div className="hidden">
+									<label className="text-[#334155] font-medium text-sm inter mt-4">
+										Utilities
+									</label>
+									{itemUtil?.map((item, index) => (
+										<>
+											<div className="relative grid w-4/5 gap-5">
+												<div>
+													<NewInput
+														onChange={(
+															e: React.ChangeEvent<HTMLInputElement>
+														) =>
+															handleInputChangeForMutipleItemUtil(
+																e,
+																index,
+																"address"
+															)
+														}
+														value={item.address}
+														label={index === 0 ? "Address" : ""}
+														placeholder={"EDAMS Technology"}
+													/>
+												</div>
+												<div
+													onClick={() =>
+														handleDeleteRowForMutipleItemUtil(index)
 													}
-													value={item.address}
-													label={index === 0 ? "Address" : ""}
-													placeholder={"EDAMS Technology"}
-												/>
+													className="md:absolute self-center -right-20 cursor-pointer">
+													<p className="text-sm text-red-600 flex items-center md:mt-2 gap-2">
+														<span>
+															<MdDelete />
+														</span>
+														Remove
+													</p>
+												</div>
 											</div>
-											<div
-												onClick={() => handleDeleteRowForMutipleItemUtil(index)}
-												className="md:absolute self-center -right-20 cursor-pointer">
-												<p className="text-sm text-red-600 flex items-center md:mt-2 gap-2">
-													<span>
-														<MdDelete />
-													</span>
-													Remove
-												</p>
-											</div>
-										</div>
-									</>
-								))}
-								<p
-									onClick={addRowForMutipleItemUtils}
-									className="flex items-center gap-2 text-bluerolodex f-medium my-3 cursor-pointer">
-									<span>
-										<IoIosAdd />
-									</span>
-									Add utility
-								</p>
+										</>
+									))}
+									<p
+										onClick={addRowForMutipleItemUtils}
+										className="flex items-center gap-2 text-bluerolodex f-medium my-3 cursor-pointer">
+										<span>
+											<IoIosAdd />
+										</span>
+										Add utility
+									</p>
+								</div>
 								<div>
 									<Controller
 										name="additionalInformation"
