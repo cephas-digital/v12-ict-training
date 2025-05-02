@@ -666,10 +666,10 @@ const AddTools = () => {
 													type="text"
 													name={name}
 													value={value}
-													label={"Tool’s Created By"}
+													label={"Tool Developed By"}
 													onChange={onChange}
 													required
-													placeholder={`Tool’s Created By`}
+													placeholder={`Tool Developed By`}
 												/>
 											)}
 										/>
@@ -697,7 +697,7 @@ const AddTools = () => {
 													name={name}
 													value={value}
 													label={"Tool Owner Address"}
-													placeholder={"Enter Address"}
+													placeholder={"Enter Full Address"}
 													onChange={onChange}
 												/>
 											)}
