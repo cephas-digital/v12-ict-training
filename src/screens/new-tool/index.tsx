@@ -623,39 +623,6 @@ const AddTools = () => {
 									</div>
 									<div>
 										<Controller
-											name="webinar"
-											control={control}
-											rules={
-												{
-													// required: "This field is required",
-													// pattern: {
-													// 	value:
-													// 		/(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/gi,
-													// 	message: "Invalid url format",
-													// },
-												}
-											}
-											render={({ field: { value, onChange, name } }) => (
-												<NewInput
-													type="url"
-													name={name}
-													value={value}
-													label={"Webinar"}
-													placeholder={"Link to Tool's Webinar"}
-													onChange={onChange}
-												/>
-											)}
-										/>
-										{errors.webinar && (
-											<p className="text-[#dc2626] text-xs">
-												{errors.webinar.message}
-											</p>
-										)}
-									</div>
-								</div>
-								<div className="grid grid-cols-2 gap-5 mb-4">
-									<div>
-										<Controller
 											name="toolCreatedBy"
 											control={control}
 											rules={{
@@ -679,35 +646,35 @@ const AddTools = () => {
 											</p>
 										)}
 									</div>
-									<div>
-										<Controller
-											name="toolOwnerAddress"
-											control={control}
-											rules={{
-												required: "This field is required",
-												// pattern: {
-												// 	value:
-												// 		/(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/gi,
-												// 	message: "Invalid url format",
-												// },
-											}}
-											render={({ field: { value, onChange, name } }) => (
-												<NewInput
-													type="text"
-													name={name}
-													value={value}
-													label={"Tool Owner Address"}
-													placeholder={"Enter Full Address"}
-													onChange={onChange}
-												/>
-											)}
-										/>
-										{errors.toolOwnerAddress && (
-											<p className="text-[#dc2626] text-xs">
-												{errors.toolOwnerAddress.message}
-											</p>
+								</div>
+								<div>
+									<Controller
+										name="toolOwnerAddress"
+										control={control}
+										rules={{
+											required: "This field is required",
+											// pattern: {
+											// 	value:
+											// 		/(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/gi,
+											// 	message: "Invalid url format",
+											// },
+										}}
+										render={({ field: { value, onChange, name } }) => (
+											<NewInput
+												type="text"
+												name={name}
+												value={value}
+												label={"Tool Owner Address"}
+												placeholder={"Enter Full Address"}
+												onChange={onChange}
+											/>
 										)}
-									</div>
+									/>
+									{errors.toolOwnerAddress && (
+										<p className="text-[#dc2626] text-xs">
+											{errors.toolOwnerAddress.message}
+										</p>
+									)}
 								</div>
 								<div className="mb-4">
 									<Controller
@@ -747,6 +714,37 @@ const AddTools = () => {
 									<label className="text-[#334155] font-medium text-sm inter mt-4">
 										Resources
 									</label>
+									<div className="py-4">
+										<Controller
+											name="webinar"
+											control={control}
+											rules={
+												{
+													// required: "This field is required",
+													// pattern: {
+													// 	value:
+													// 		/(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/gi,
+													// 	message: "Invalid url format",
+													// },
+												}
+											}
+											render={({ field: { value, onChange, name } }) => (
+												<NewInput
+													type="url"
+													name={name}
+													value={value}
+													label={"Webinar"}
+													placeholder={"Link to Tool's Webinar"}
+													onChange={onChange}
+												/>
+											)}
+										/>
+										{errors.webinar && (
+											<p className="text-[#dc2626] text-xs">
+												{errors.webinar.message}
+											</p>
+										)}
+									</div>
 									{itemForm?.map((item, index) => (
 										<>
 											<div className="relative grid grid-cols-2 w-4/5 gap-5">
