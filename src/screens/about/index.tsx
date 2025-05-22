@@ -15,7 +15,7 @@ import { MainFooter } from "../../components/cards/sections";
 
 const AboutPage = () => {
   return (
-    <div className="lg:pt-20">
+    <div className="lg:pt-20 md:pt-20 pt-16 overflow-x-hidden">
       <Navbar />
       <section>
         <CenteredHero
@@ -51,7 +51,7 @@ const AboutPage = () => {
       <section>
         <AwardsRecognition />
       </section>
-      <section>
+      <section data-aos="zoom-in" data-aos-duration="1500">
         <div className="py-16 lg:px-5 md:px-5 px-5">
           <p className=" font-Outfit font-bold text-center mb-4 md:text-4xl text-3xl text-[#1F2937]">
             Ready to Transform Your Digital Future?

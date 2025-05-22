@@ -183,7 +183,11 @@ const CardGrid = ({
         <h2 className="text-2xl md:text-3xl font-bold text-center mb-10">
           {sectionTitle}
         </h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div
+          data-aos="zoom-in"
+          data-aos-duration="1500"
+          className="grid grid-cols-1 md:grid-cols-3 gap-8"
+        >
           {items.map((item, index) => (
             <Card
               key={item.id || index}

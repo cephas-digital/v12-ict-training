@@ -100,6 +100,8 @@ export const CenteredHero = ({
         >
           <div className="space-y-8">
             <h1
+              data-aos="fade-down-right"
+              data-aos-duration="1500"
               className={classNames(
                 " lg:text-5xl md:text-4xl text-5xl font-bold font-Outfit tracking-normal ",
                 backgroundImage ? "text-white" : textColor
@@ -172,6 +174,8 @@ export const FlexHero = ({
           <div className="flex flex-col justify-center space-y-5">
             <div className="space-y-2">
               <h1
+                data-aos="fade-down-right"
+                data-aos-duration="1500"
                 className={`classNames(
                   " lg:text-3xl md:text-3xl text-5xl lg:leading-none md:leading-10 leading-tight font-bold tracking-tighter text-[#1E293B] font-Outfit sm:text-4xl md:text-4xl",
                   textColor ${css}

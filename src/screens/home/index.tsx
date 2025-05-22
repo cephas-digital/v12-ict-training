@@ -49,7 +49,7 @@ import {
 
 const Home = () => {
   return (
-    <div className="bg-white lg:pt-20">
+    <div className="bg-white lg:pt-20 overflow-x-hidden">
       <Navbar />
       <CenteredHero
         title="Empower Your Future with Professional ICT Training"

@@ -83,7 +83,11 @@ export const MissionVisionValues = ({
         withBackground ? "bg-gray-50" : ""
       } ${className}`}
     >
-      <div className="container mx-auto px-4">
+      <div
+        data-aos="flip-up"
+        data-aos-duration="1500"
+        className="container mx-auto px-4"
+      >
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {items.map((item) => (
             <div
@@ -265,6 +269,8 @@ export const ServicesGrid = ({
 
   return (
     <section
+      data-aos="zoom-in"
+      data-aos-duration="1500"
       className={`py-12 ${withBackground ? "bg-gray-50" : ""} ${className}`}
     >
       <div className="container  mx-auto px-4">
@@ -461,7 +467,11 @@ export const MissionVisionAbout = ({
         withBackground ? "bg-gray-50" : ""
       } ${className}`}
     >
-      <div className="container mx-auto px-4">
+      <div
+        data-aos="fade-left"
+        data-aos-duration="1500"
+        className="container mx-auto px-4"
+      >
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {/* Mission */}
           <div>
@@ -474,7 +484,7 @@ export const MissionVisionAbout = ({
           </div>
 
           {/* Vision */}
-          <div>
+          <div data-aos="fade-right" data-aos-duration="1500">
             <h2 className="text-2xl font-bold font-Outfit mb-4">
               {vision.title}
             </h2>

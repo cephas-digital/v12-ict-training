@@ -39,7 +39,12 @@ export const FAQSection = ({
 
         <div className="max-w-3xl mx-auto space-y-4">
           {faqs.map((faq, index) => (
-            <div key={faq.id} className="bg-gray-50 rounded-lg overflow-hidden">
+            <div
+              data-aos="fade-right"
+              data-aos-duration="1500"
+              key={faq.id}
+              className="bg-gray-50 rounded-lg overflow-hidden"
+            >
               <button
                 className="w-full flex items-center justify-between p-4 text-left font-medium focus:outline-none"
                 onClick={() => toggleFAQ(index)}
@@ -69,7 +74,7 @@ export const FAQSection = ({
         {viewAllLink && (
           <div className="text-center mt-8">
             <a
-              href={viewAllLink}
+              href="#"
               className="text-[#0066CC] font-Outfit font-normal text-base hover:text-blue-600 "
             >
               {viewAllText}

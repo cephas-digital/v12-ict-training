@@ -16,7 +16,11 @@ export const StaticMap = ({
   caption,
 }: StaticMapProps) => {
   return (
-    <div className={`${className}`}>
+    <div
+      data-aos="zoom-out"
+      data-aos-duration="1500"
+      className={`${className}`}
+    >
       <div className="rounded-lg overflow-hidden" style={{ width, height }}>
         <img
           src={imageUrl || "/placeholder.svg"}

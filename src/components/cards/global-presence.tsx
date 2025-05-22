@@ -3,7 +3,11 @@ import serviceimg from "../../assets/images/serviceimg.png";
 
 const GlobalPresence = () => {
   return (
-    <div className="py-16 lg:px-5 md:px-5 px-5">
+    <div
+      data-aos="fade-right"
+      data-aos-duration="1500"
+      className="py-16 lg:px-5 md:px-5 px-5"
+    >
       {/* Heading */}
       <div>
         <p className="font-Outfit text-[#111827] md:text-3xl text-2xl font-bold text-center">

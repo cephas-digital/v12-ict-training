@@ -15,7 +15,7 @@ import { CommonQuestions } from "../../components/cards/additional-sections";
 
 const ContactUs = () => {
   return (
-    <div className="lg:pt-20 md:pt-20 pt-16">
+    <div className="lg:pt-20 md:pt-20 pt-16 overflow-x-hidden">
       <Navbar />
       <section>
         <CenteredHero
@@ -37,12 +37,16 @@ const ContactUs = () => {
       <section className=" px-5">
         <GetInTouchWithMap />
       </section>
-      <section className="">
+      <section data-aos="fade-left" data-aos-duration="1500" className="">
         <WaysToConnect className=" px-5" />
       </section>
 
       <section>
-        <BusinessHoursSection className=" lg:px-20 md:px-10 px-5" />
+        <BusinessHoursSection
+          data-aos="fade-right"
+          data-aos-duration="1500"
+          className=" lg:px-20 md:px-10 px-5"
+        />
       </section>
 
       {/* FAQ Section */}

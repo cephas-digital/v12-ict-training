@@ -174,7 +174,11 @@ const CenteredGrid = ({
     switch (variant) {
       case "industries":
         return (
-          <div className={getItemClasses()}>
+          <div
+            data-aos="flip-up"
+            data-aos-duration="1500"
+            className={getItemClasses()}
+          >
             <div className="text-blue-500 mb-4">
               {item.iconComponent ||
                 getIconComponent(item.icon || "", currentIconSize)}
@@ -187,7 +191,11 @@ const CenteredGrid = ({
 
       case "stats":
         return (
-          <div className={getItemClasses()}>
+          <div
+            data-aos="fade-left"
+            data-aos-duration="1500"
+            className={getItemClasses()}
+          >
             <div className="text-blue-500 mb-4">
               {item.iconComponent ||
                 getIconComponent(item.icon || "", currentIconSize)}
@@ -204,14 +212,26 @@ const CenteredGrid = ({
       case "benefits":
         return (
           <div className={getItemClasses()}>
-            <div className="text-blue-500 mb-4">
+            <div
+              data-aos="fade-left"
+              data-aos-duration="1500"
+              className="text-blue-500 mb-4"
+            >
               {item.iconComponent ||
                 getIconComponent(item.icon || "", currentIconSize)}
             </div>
-            <h3 className="font-bold mb-2 font-Outfit text-[#1E293B] text-xl">
+            <h3
+              data-aos="fade-right"
+              data-aos-duration="1500"
+              className="font-bold mb-2 font-Outfit text-[#1E293B] text-xl"
+            >
               {item.title}
             </h3>
-            <p className="text-[#64748B] text-base font-normal font-Inter">
+            <p
+              data-aos="fade-left"
+              data-aos-duration="1500"
+              className="text-[#64748B] text-base font-normal font-Inter"
+            >
               {item.description}
             </p>
           </div>
@@ -235,7 +255,11 @@ const CenteredGrid = ({
 
       case "team":
         return (
-          <div className={getItemClasses()}>
+          <div
+            data-aos="flip-left"
+            data-aos-duration="1500"
+            className={getItemClasses()}
+          >
             {item.image && (
               <div className="mb-4 overflow-hidden rounded-full w-[192px] h-[192px]">
                 <img
@@ -257,11 +281,19 @@ const CenteredGrid = ({
       case "timeline":
         return (
           <div className={getItemClasses()}>
-            <div className="text-[#4488F7] mb-4">
+            <div
+              data-aos="fade-left"
+              data-aos-duration="1500"
+              className="text-[#4488F7] mb-4"
+            >
               {item.iconComponent ||
                 getIconComponent(item.icon || "", currentIconSize)}
             </div>
-            <h3 className="font-Outfit font-normal text-xl text-[#000] mb-1">
+            <h3
+              data-aos="fade-right"
+              data-aos-duration="1500"
+              className="font-Outfit font-normal text-xl text-[#000] mb-1"
+            >
               {item.title}
             </h3>
           </div>

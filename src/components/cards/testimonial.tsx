@@ -102,7 +102,11 @@ export const TestimonialSlider = ({
   );
 
   return (
-    <section className={`py-16  ${className}`}>
+    <section
+      data-aos="flip-up"
+      data-aos-duration="1500"
+      className={`py-16  ${className}`}
+    >
       <div className="container mx-auto px-4">
         <h2 className="text-2xl md:text-3xl font-bold text-[#1F2937] font-Outfit  text-center mb-12">
           {title}

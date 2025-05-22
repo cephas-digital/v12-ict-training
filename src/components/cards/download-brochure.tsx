@@ -55,7 +55,11 @@ export const DownloadBrochure = ({
   };
 
   return (
-    <section className={`py-16 ${backgroundColor} ${className}`}>
+    <section
+      data-aos="zoom-in"
+      data-aos-duration="1500"
+      className={`py-16 ${backgroundColor} ${className}`}
+    >
       <div className="container mx-auto px-4 text-center">
         <h2 className="text-2xl md:text-3xl font-bold mb-5 font-Outfit ">
           {title}

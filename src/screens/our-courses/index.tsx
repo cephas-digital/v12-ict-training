@@ -13,7 +13,7 @@ import { MainFooter } from "../../components/cards/sections";
 
 const OurCourses = () => {
   return (
-    <div className="lg:pt-20">
+    <div className="lg:pt-20 md:pt-20 pt-16 overflow-x-hidden">
       <Navbar />
       <section>
         <FlexHero

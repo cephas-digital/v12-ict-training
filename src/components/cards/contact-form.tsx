@@ -91,11 +91,15 @@ export const ContactForm = ({
   // Basic contact form without map (two-column layout)
   if (!withMap) {
     return (
-      <section className={`py-16 ${className}`}>
+      <section
+        data-aos="zoom-in"
+        data-aos-duration="1500"
+        className={`py-16 ${className}`}
+      >
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
             {/* Contact Information */}
-            <div>
+            <div data-aos="fade-up" data-aos-duration="1500">
               <h2 className="text-2xl mb-6 font-Outfit font-normal text-[#000]">
                 Get in Touch
               </h2>
@@ -165,7 +169,7 @@ export const ContactForm = ({
             </div>
 
             {/* Contact Form */}
-            <div>
+            <div data-aos="fade-down" data-aos-duration="1500">
               <h2 className="text-2xl font-Outfit font-bold mb-6">
                 Send us a Message
               </h2>
@@ -247,7 +251,11 @@ export const ContactForm = ({
 
   // Contact form with map (three-column layout)
   return (
-    <section className={`py-16 ${className}`}>
+    <section
+      data-aos="zoom-in"
+      data-aos-duration="1500"
+      className={`py-16 ${className}`}
+    >
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Contact Information */}
