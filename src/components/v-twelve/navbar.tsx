@@ -40,7 +40,7 @@ export const Navbar = ({
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
-    <header className="w-full py-2 bg-white lg:px-16 md:px-10 px-5">
+    <header className="w-full py-2 bg-white lg:px-16 md:px-10 px-5 fixed top-0 left-0 right-0 z-40">
       <div className="container flex h-16 items-center justify-between px-4 md:px-6">
         <NewLogo />
         <div className=" flex items-center lg:gap-32">

@@ -15,7 +15,7 @@ import { CommonQuestions } from "../../components/cards/additional-sections";
 
 const ContactUs = () => {
   return (
-    <div>
+    <div className="lg:pt-20">
       <Navbar />
       <section>
         <CenteredHero

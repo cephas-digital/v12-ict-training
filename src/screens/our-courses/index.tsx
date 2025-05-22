@@ -13,7 +13,7 @@ import { MainFooter } from "../../components/cards/sections";
 
 const OurCourses = () => {
   return (
-    <div>
+    <div className="lg:pt-20">
       <Navbar />
       <section>
         <FlexHero
@@ -23,7 +23,7 @@ const OurCourses = () => {
           imageAlt="Person working on laptop"
           variant="light"
           showButton={false}
-          className=" py-16 bg-[#F5F9FF] lg:px-16 md:px-10 px-5"
+          className=" py-16 bg-[#eef3fa] lg:px-16 md:px-10 px-5"
           css="max-w-5xl"
         />
       </section>

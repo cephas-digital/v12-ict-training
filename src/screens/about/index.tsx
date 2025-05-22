@@ -15,7 +15,7 @@ import { MainFooter } from "../../components/cards/sections";
 
 const AboutPage = () => {
   return (
-    <div>
+    <div className="lg:pt-20">
       <Navbar />
       <section>
         <CenteredHero
