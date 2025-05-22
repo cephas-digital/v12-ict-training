@@ -27,6 +27,11 @@ module.exports = {
           600: "#000929",
         },
       },
+      fontFamily: {
+        Outfit: ["Outfit", "sans-serif"],
+        Inter: ["Inter", "sans-serif"],
+
+      },
     },
   },
   plugins: [],

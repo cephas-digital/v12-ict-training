@@ -1,23 +1,18 @@
 import React from "react";
-import LogoIcon from "../../assets/icons/newlogo.svg";
+import LogoIcon from "../../assets/images/vlogo.png";
+import LogoIconS from "../../assets/images/footerlogo.png";
 import { useNavigate } from "react-router";
 
 const Logo = () => {
   const navigate = useNavigate();
   return (
     <div>
-      <h3
-        onClick={() => navigate("/")}
-        className="lg:text-lg text-base cursor-pointer text-white inter font-extrabold"
-      >
-        Water & Sanitation Tools Map
-      </h3>
-      {/* <img
+      <img
         onClick={() => navigate("/")}
         src={LogoIcon}
         alt=""
-        className="cursor-pointer"
-      /> */}
+        className="cursor-pointer h-16 w-20 mb-5"
+      />
     </div>
   );
 };
@@ -30,7 +25,7 @@ export const NewLogo = () => {
         onClick={() => navigate("/")}
         src={LogoIcon}
         alt=""
-        className="cursor-pointer"
+        className="cursor-pointer w-20 h-16"
       />
     </div>
   );

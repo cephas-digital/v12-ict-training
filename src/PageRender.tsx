@@ -21,6 +21,10 @@ const PageRender = () => {
     "departments",
     "levels",
     "principal-officer",
+    "about",
+    "our-courses",
+    "contact-us",
+    "enroll-now",
   ];
 
   let pageName = "";
