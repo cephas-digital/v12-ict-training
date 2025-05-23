@@ -42,7 +42,7 @@ const Card = ({
 
       {/* Conditional rendering based on card type */}
       {type === "courses" && (
-        <div className=" px-5 pb-5">
+        <div className=" px-5 pt-5 pb-5">
           <h3 className="text-xl text-[#000] font-Outfit font-semibold mb-2">
             {title}
           </h3>
