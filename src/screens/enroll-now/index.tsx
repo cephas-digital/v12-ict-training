@@ -21,7 +21,7 @@ const EnrollNow = () => {
           imageAlt="Person working on laptop"
           variant="light"
           showButton={false}
-          className=" py-16 bg-[#eef3fa] lg:px-16 md:px-10 px-5"
+          className=" py-16 bg-[#EFF6FF] lg:px-16 md:px-10 px-5"
           css=" lg:w-[500px] mb-2"
         />
       </section>

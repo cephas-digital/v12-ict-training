@@ -25,7 +25,7 @@ const ContactUs = () => {
           showButton={false}
           buttonText=""
           buttonLink="/contact-us"
-          className=" py-24 bg-[#eef3fa]"
+          className=" py-24 bg-[#EFF6FF]"
           css="max-w-5xl"
         />
       </section>

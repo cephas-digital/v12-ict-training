@@ -56,7 +56,7 @@ export const OurStory = ({
             {stats && stats.length > 0 && (
               <div className="grid grid-cols-3 gap-4 text-center">
                 {stats.map((stat, index) => (
-                  <div key={index}>
+                  <div className=" bg-[#F9FAFB] p-5 rounded-lg" key={index}>
                     <div className="text-[#2563EB] font-normal font-Outfit text-2xl md:text-3xl ">
                       {stat.value}
                     </div>

@@ -26,8 +26,8 @@ const AboutPage = () => {
           buttonText="Explore Courses"
           buttonLink="/our-courses"
           backgroundImage={abouthero}
-          overlayColor="#2563EB"
-          overlayOpacity={15}
+          overlayColor="#020819"
+          overlayOpacity={40}
           className=" py-24"
           css="max-w-5xl"
         />
