@@ -26,9 +26,9 @@ const AboutPage = () => {
           buttonText="Explore Courses"
           buttonLink="/our-courses"
           backgroundImage={abouthero}
-          overlayColor="#020819"
+          overlayGradient="bg-gradient-to-r from-blue-400 via-[#415685] to-[#3F495B]"
           overlayOpacity={40}
-          className=" py-24"
+          className="py-24"
           css="max-w-5xl"
         />
       </section>
@@ -43,7 +43,7 @@ const AboutPage = () => {
         <OurLeadershipTeam className="" />
       </section>
       <section>
-        <ExperienceStats className=" bg-[#F9FAFB]" />
+        <ExperienceStats className=" bg-[#F9FAFB] " />
       </section>
       <section>
         <GlobalPresence />
