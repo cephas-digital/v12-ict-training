@@ -1,5 +1,3 @@
-"use client";
-
 import type React from "react";
 import { useState } from "react";
 import { FaClock, FaEnvelope, FaMapMarkerAlt, FaPhone } from "react-icons/fa";

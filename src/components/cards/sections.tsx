@@ -77,12 +77,12 @@ const testimonialsData = [
 // Contact Info Data
 const contactInfoData = {
   address: {
-    street: "123 Tech Street, Digital City",
-    city: "DC",
+    street: "V12 Digital Solutions",
+    city: "124, City Road NA, LONDON, , EC1V 2NX United Kingdom",
     zip: "12345",
   },
-  phone: "+1 (555) 123-4567",
-  email: "info@techedupro.com",
+  phone: "+447733714715",
+  email: "info@v12digitals.co.uk",
   hours: {
     weekdays: "Monday - Friday: 9:00 AM - 6:00 PM",
     weekend: "Weekend: Closed",
