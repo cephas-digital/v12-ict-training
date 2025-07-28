@@ -20,15 +20,17 @@ const EnrollNow = () => {
           imageSrc={courseimg}
           imageAlt="Person working on laptop"
           variant="light"
-          showButton={false}
+          showButton={true}
+          buttonText="Enroll Now"
+          buttonLink="https://docs.google.com/forms/d/e/1FAIpQLScNyxSx6KjvbHGfcxGg-4AWPHa_vBMl_ThAQysDIQ_Tcd7Oag/viewform?embedded=true"
           className=" py-16 bg-[#EFF6FF] lg:px-16 md:px-10 px-5"
           css=" lg:w-[500px] mb-2"
         />
       </section>
 
-      <section>
+      {/* <section>
         <EnrollmentForm />
-      </section>
+      </section> */}
 
       <section>
         <WhyLearnWithUs className=" lg:px-16 md:px-10 px-5" />
