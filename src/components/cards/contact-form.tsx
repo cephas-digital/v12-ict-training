@@ -291,7 +291,6 @@ export const ContactForm = ({
                   <p className="text-[#4B5563] font-Inter text-base font-normal">
                     {contactInfo.phone}
                     <br />
-                    +1 (555) 987-6543
                   </p>
                 </div>
               </div>
@@ -305,9 +304,8 @@ export const ContactForm = ({
                     Email
                   </h3>
                   <p className="text-[#4B5563] font-Inter text-base font-normal">
-                    info@ictsolutions.com
+                    info@v12digitals.co.uk
                     <br />
-                    support@ictsolutions.com
                   </p>
                 </div>
               </div>
