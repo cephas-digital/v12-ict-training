@@ -118,10 +118,10 @@ const footerData: {
     { label: "Contact Us", href: "/contact" },
   ],
   contactInfo: {
-    address: "123 Tech Street",
-    city: "Digital City, DC 12345",
-    email: "info@techedupro.com",
-    phone: "+1 (555) 123-4567",
+    address: "V12 Digital Solutions",
+    city: "124, City Road NA, LONDON, EC1V 2NX United Kingdom",
+    email: "info@v12digitals.co.uk",
+    phone: "+447733714715",
   },
   socialLinks: [
     { platform: "facebook", href: "https://facebook.com" },
