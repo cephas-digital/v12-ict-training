@@ -53,7 +53,7 @@ const inquiriesData = [
     icon: "business",
     title: "Business Development",
     email: "info@v12digitals.co.uk",
-    phone: "+1 (555) 345-6789",
+    phone: "+447733714715",
   },
 ];
 
@@ -73,7 +73,7 @@ const connectData = [
     title: "Sales Inquiries",
     description: "Talk to our sales team about solutions",
     email: "info@v12digitals.co.uk",
-    phone: "+1 (555) 987-6543",
+    phone: "+447733714715",
   },
   {
     id: 3,
@@ -81,7 +81,7 @@ const connectData = [
     title: "Partnership Opportunities",
     description: "Explore business collaboration options",
     email: "info@v12digitals.co.uk",
-    phone: "+1 (555) 456-7890",
+    phone: "+447733714715",
   },
 ];
 
