@@ -3,6 +3,7 @@ import { BrowserRouter as Router } from "react-router-dom";
 import Routers from "./Router";
 import "./App.css";
 import { SetDefaultHeaders } from "./data/Config";
+import { WhatsappButton } from "./components/v-twelve/whatsapp-button";
 
 SetDefaultHeaders();
 
@@ -12,6 +13,7 @@ function App() {
       <Router>
         <Routers />
       </Router>
+      <WhatsappButton phoneNumber="+447733714715" />
     </div>
   );
 }

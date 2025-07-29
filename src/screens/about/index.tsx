@@ -39,9 +39,9 @@ const AboutPage = () => {
         <OurMissionVisionValues iconSize={48} />
       </section>
       {/* Team Section */}
-      <section>
+      {/* <section>
         <OurLeadershipTeam className="" />
-      </section>
+      </section> */}
       <section>
         <ExperienceStats className=" bg-[#F9FAFB] " />
       </section>

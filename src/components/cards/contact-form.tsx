@@ -167,7 +167,7 @@ export const ContactForm = ({
             </div>
 
             {/* Contact Form */}
-            <div data-aos="fade-down" data-aos-duration="1500">
+            {/* <div data-aos="fade-down" data-aos-duration="1500">
               <h2 className="text-2xl font-Outfit font-bold mb-6">
                 Send us a Message
               </h2>
@@ -240,7 +240,7 @@ export const ContactForm = ({
                   </div>
                 )}
               </form>
-            </div>
+            </div> */}
           </div>
         </div>
       </section>
@@ -255,7 +255,7 @@ export const ContactForm = ({
       className={`py-16 ${className}`}
     >
       <div className="container mx-auto px-4">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* Contact Information */}
           <div>
             <h2 className="text-2xl mb-6 font-Outfit font-bold text-[#000]">
@@ -273,9 +273,7 @@ export const ContactForm = ({
                   <p className="text-[#4B5563] font-Inter text-base font-normal">
                     {contactInfo.address.street}
                     <br />
-                    {contactInfo.address.city}, {contactInfo.address.zip}
-                    <br />
-                    United States
+                    {contactInfo.address.city}
                   </p>
                 </div>
               </div>
@@ -380,7 +378,7 @@ export const ContactForm = ({
           </div>
 
           {/* Contact Form */}
-          <div className="">
+          {/* <div className="">
             <h2 className="text-2xl font-Outfit font-bold mb-6">
               Send us a Message
             </h2>
@@ -499,7 +497,7 @@ export const ContactForm = ({
                 </div>
               )}
             </form>
-          </div>
+          </div> */}
 
           {/* Map */}
           <div>
@@ -523,8 +521,6 @@ export const ContactForm = ({
               {contactInfo.address.street}
               <br />
               {contactInfo.address.city}, {contactInfo.address.zip}
-              <br />
-              United States
             </p>
           </div>
         </div>

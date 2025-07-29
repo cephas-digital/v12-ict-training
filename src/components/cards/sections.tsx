@@ -79,7 +79,7 @@ const contactInfoData = {
   address: {
     street: "V12 Digital Solutions",
     city: "124, City Road NA, LONDON, , EC1V 2NX United Kingdom",
-    zip: "12345",
+    zip: "",
   },
   phone: "+447733714715",
   email: "info@v12digitals.co.uk",

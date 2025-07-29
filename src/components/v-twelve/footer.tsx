@@ -130,7 +130,7 @@ export const Footer = ({
               ))}
             </div>
 
-            {newsletter && (
+            {/* {newsletter && (
               <>
                 <h3 className="text-lg font-bold font-Outfit mb-4">
                   Newsletter
@@ -153,7 +153,7 @@ export const Footer = ({
                   </button>
                 </form>
               </>
-            )}
+            )} */}
           </div>
         </div>
 
